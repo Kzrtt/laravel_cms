@@ -2,44 +2,36 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'users';
+    protected $primaryKey = 'usr_id';
+    public $timestamps = true;
+
+    const CREATED_AT = 'usr_created_at';
+    const UPDATED_AT = 'usr_updated_at';
+
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'usr_email',
+        'usr_password',
+        'usr_level',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function getPerson() {
+        return $this->belongsTo(Person::class, 'persons_pes_id', 'pes_id');
+    }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+    public function getProfile() {
+        return $this->belongsToMany(Profile::class, 'profiles_prf_id', 'prf_id');
+    }
+
+    public function getRepresentedAgent() {
+        return $this->hasOne(UserRepresentedAgent::class, 'users_usr_id', 'usr_id');
+    }
+
 }
