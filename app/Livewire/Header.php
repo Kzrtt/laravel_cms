@@ -8,13 +8,14 @@ use Symfony\Component\Yaml\Yaml;
 class Header extends Component
 {
     public $menuTabs = array();
+    public $configTabs = array();
     public $initialTab = "";
-    public $teste = "teste";
+    public $showNotification = true;
+    public $showConfig = true;
 
     public function changeScreen($local)
     {
-        dd($local);
-        //$this->dispatch('changeScreen', local: $local);
+        $this->dispatch('changeScreen', mode: ScreenRenderer::MODE_LIST, local: $local);
     }
 
     public function mount() {
@@ -23,10 +24,33 @@ class Header extends Component
 
         $tabId = 1;
         $subTabId = 1;
+        $configTabId = 1;
         foreach ($menuConfig['Areas'] as $area => $dataArea) {
+            //? Menu Config
+            if($area == "Notifications") {
+                continue;
+            }
+            
+            if($area == "Sistema") {
+                foreach($dataArea['subItens'] as $subItem => $value) {
+                    $this->configTabs[] = array(
+                        "id" => $configTabId,
+                        "name" => $value['name'],
+                        "icon" => $value['icon'],
+                        "area" => $subItem,
+                    );
+
+                    $configTabId++;
+                }
+
+                continue;
+            }
+
+            //? Menu
             if(!isset($menuTabs[$area])) {
-                if($tabId == 1)
+                if($tabId == 1) {
                     $this->initialTab = $area;
+                }
 
                 $this->menuTabs[$area] = array(
                     "name" => $dataArea['name'], 

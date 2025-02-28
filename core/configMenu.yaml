@@ -86,3 +86,33 @@ Areas:
         icon: fad fa-headset
         actions: [Consult, Update, Close]
         showIf: session@level in [Administrator, IT, Support]
+  
+  Sistema:
+    subItens:
+      Profile:
+        name: Perfis de Acesso
+        description: Área de controle de perfis de acesso
+        icon: fad fa-lock
+        actions: [Consult, Update, Insert]
+        showIf: session@level in [Administrator, Entity]
+      Users:
+        name: Usuários
+        description: Área de gestão de usuários
+        icon: fad fa-user-shield
+        actions: [Consult, Update, Insert, Delete]
+        showIf: session@level in [Administrator, Entity]
+      Person:
+        name: Operadores
+        description: Área de gestão de operadores
+        icon: fad fa-user-circle
+        actions: [Consult, Update, Insert, Delete]
+        showIf: session@level in [Administrator, Entity]
+
+  Notifications:
+    subItens:
+      Notification:
+        name: Notificações
+        description: Área de controle das notificações
+        icon: fad fa-bell
+        actions: [Consult]
+
