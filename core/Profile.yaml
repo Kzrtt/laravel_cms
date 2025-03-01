@@ -1,0 +1,51 @@
+Profile:
+  listingConfig:
+    grid:
+      prf_id:
+        name: Id
+        tagStyle: 'mb-4'
+        labelStyle: 'font-semibold text-primary-400 text-xl pb-2'
+        fieldStyle: 'text-xl'
+        html: 'p'
+      prf_name:
+        name: Nome
+        labelStyle: 'font-semibold text-primary-400 text-md'
+        fieldStyle: ''
+        html: 'p'
+      prf_level:
+        name: Nível
+        labelStyle: 'font-semibold text-primary-400 text-md'
+        fieldStyle: 'mt-1'
+        html: 'p'
+      prf_status:
+        name: Status
+        labelStyle: 'font-semibold text-primary-400 text-md'
+        fieldStyle: ''
+        listingFunction: getStatusBadge
+        html: 'span'
+    table:
+      prf_id:
+        name: Id
+        style: "font-semibold"
+      prf_name:
+        name: Nome
+        style: "font-semibold"
+      prf_level:
+        name: Nível
+        style: "font-semibold"
+      prf_status:
+        name: Status
+        style: ""
+        listingFunction: getStatusBadge
+  formConfig:
+  buttonsConfig:
+    showDeleteButton: 
+      value: true
+    showEditButton: 
+      value: true
+    showDetailsButton: 
+      value: true
+    showInsertButton: 
+      value: true
+    showSearchButton: 
+      value: true

@@ -44,4 +44,14 @@
     --color-success-700: #14973d;
     --color-success-800: #118335;
     --color-success-900: #0e6f2d;
+
+    --color-danger-100: #ffe5e5;
+    --color-danger-200: #fcb2b2;
+    --color-danger-300: #f68080;
+    --color-danger-400: #f04d4d;
+    --color-danger-500: #ea1a1a;
+    --color-danger-600: #d41717;
+    --color-danger-700: #bf1414;
+    --color-danger-800: #a91111;
+    --color-danger-900: #940e0e;
 }

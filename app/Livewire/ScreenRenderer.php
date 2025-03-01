@@ -22,11 +22,14 @@ class ScreenRenderer extends Component
     public function updateView($mode, $data) {      
         switch ($mode) {
             case $this::MODE_LIST:
+                $filePath = base_path('core/'.$data['local'].'.yaml');
+
                 $this->params = array(
-                    "_local" => $data['local'],
+                    "_local" => file_exists($filePath) ? $data['local'] : "dashboard",
                     "_icon" => $data['icon'],
                     "_mode" => $this::MODE_LIST,
                 );
+
                 break;
         }
 
