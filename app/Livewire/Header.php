@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\config\HeaderToggleParams;
 use Livewire\Component;
 use Symfony\Component\Yaml\Yaml;
 
@@ -13,9 +14,9 @@ class Header extends Component
     public $showNotification = true;
     public $showConfig = true;
 
-    public function changeScreen($local)
+    public function changeScreen($data)
     {
-        $this->dispatch('changeScreen', mode: ScreenRenderer::MODE_LIST, local: $local);
+        $this->dispatch('changeScreen', mode: ScreenRenderer::MODE_LIST, data: $data);
     }
 
     public function mount() {
