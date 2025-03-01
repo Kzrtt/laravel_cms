@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Users extends Model
 {
     use HasFactory;
 
@@ -27,7 +27,7 @@ class User extends Model
     }
 
     public function getProfile() {
-        return $this->belongsToMany(Profile::class, 'profiles_prf_id', 'prf_id');
+        return $this->belongsTo(Profile::class, 'profiles_prf_id', 'prf_id');
     }
 
     public function getRepresentedAgent() {

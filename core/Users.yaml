@@ -1,0 +1,72 @@
+Users:
+  startsOn:
+    value: 'grid'
+  listingConfig:
+    grid: 
+      usr_id:
+        name: Id
+        tagStyle: 'mb-4'
+        labelStyle: 'font-semibold text-primary-400 text-xl pb-2'
+        fieldStyle: 'text-xl'
+        html: 'p'
+      usr_email:
+        name: Email
+        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
+        fieldStyle: 'truncate'
+        html: 'p'
+      usr_level:
+        name: Nível
+        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
+        fieldStyle: ''
+        html: 'p'
+      usr_created_at:
+        name: Criado Em
+        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
+        fieldStyle: ''
+        listingFunction: getDate
+        html: 'p'
+      persons_pes_id:
+        name: Pessoa
+        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
+        fieldStyle: ''
+        getRelation: "getPerson->pes_name"
+        html: 'p'
+      profiles_prf_id:
+        name: Perfil
+        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
+        fieldStyle: ''
+        getRelation: "getProfile->prf_name"
+        html: 'p'
+    table:
+      usr_id:
+        name: Id
+        style: "font-semibold"
+      usr_email:
+        name: Email
+        style: "font-semibold"
+      usr_level:
+        name: Nível
+        style: "font-semibold"
+      usr_created_at:
+        name: Criado Em
+        style: "font-semibold"
+        listingFunction: getDate
+      persons_pes_id:
+        name: Pessoa
+        style: 'font-semibold'
+        getRelation: "getPerson->pes_name"
+      profiles_prf_id:
+        name: Perfil
+        style: 'font-semibold'
+        getRelation: "getProfile->prf_name"
+  buttonsConfig:
+    showDeleteButton: 
+      value: true
+    showEditButton: 
+      value: true
+    showDetailsButton: 
+      value: true
+    showInsertButton: 
+      value: true
+    showSearchButton: 
+      value: true

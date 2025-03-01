@@ -17,5 +17,9 @@
 
             return $html;
         }
+
+        public function getDate($date) {
+            return $date->format('d/m/Y');
+        }
     }
 ?>

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\CMSFunctions;
 use App\Models\Profile;
+use App\Models\Users;
 use Livewire\Component;
 use Symfony\Component\Yaml\Yaml;
 
@@ -20,6 +21,7 @@ class ListComponent extends Component
         "showDetailsButton" => false,
         "showDeleteButton" => false
     );
+    public $startsOn = "list";
     
     public $listingData = array();
 
@@ -34,6 +36,10 @@ class ListComponent extends Component
         
         if(file_exists($filePath)) {
             $listingConfig = Yaml::parseFile($filePath)[$local];
+        }
+
+        if(key_exists('startsOn', $listingConfig)) {
+            $this->startsOn = $listingConfig['startsOn']['value'];
         }
 
         if(key_exists('listingConfig', $listingConfig)) {
@@ -51,7 +57,9 @@ class ListComponent extends Component
             }
         }
 
-        $this->listingData = Profile::all();
+        $modelClass = "App\\Models\\".$local;
+
+        $this->listingData = $modelClass::all();
     }
 
     public function render()

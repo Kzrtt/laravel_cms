@@ -4,7 +4,7 @@
     $functions = new CMSFunctions();
 ?>
 
-<div x-data="{ listingMode: 'list'}" class="w-4/5 flex flex-col justify-center p-5">
+<div x-data="{ listingMode: '{{$startsOn}}'}" class="w-4/5 flex flex-col justify-center p-5">
     <!-- Titulo da página -->
     <div class="flex flex-row items-center bg-white w-full container px-5 py-3 mt-4 rounded-lg">
         <i class="{{$params['_icon']}} ml-2 text-primary-500 text-3xl"></i>
@@ -72,7 +72,22 @@
                         <tr>
                             @foreach($tableConfig as $key => $data)
                                 <td class="px-6 py-4 whitespace-nowrap {{$data['style']}}">
-                                    @if(@$data['listingFunction'])
+                                    @if(@$data['getRelation']) 
+                                        @php
+                                            // Divide a string em segmentos
+                                            $segments = explode('->', $data['getRelation']); // ex: ['getPerson', 'getAddress', 'city']
+                                            $value = $object; // Inicia com o objeto principal
+
+                                            // Percorre cada segmento e atualiza o valor
+                                            foreach ($segments as $segment) {
+                                                // Se for método (começa com "get") ou propriedade, ambos funcionam da mesma forma
+                                                // Use "optional" para evitar erros se algum segmento for nulo
+                                                $value = optional($value)->{$segment};
+                                            }
+                                        @endphp
+
+                                        {{ $value }}
+                                    @elseif(@$data['listingFunction'])
                                         {!! $functions->{$data['listingFunction']}($object->$key) !!}
                                     @else
                                         {{ $object->$key }}
@@ -120,8 +135,30 @@
                             
                             <div class="px-4 py-2 mt-8 space-y-1">
                                 @foreach($gridConfig as $key => $data)
-                                    <{{$data['html']}} class="{{@$data['tagStyle']}}">
-                                        <span class="{{@$data['labelStyle']}}">{{$data['name']}}:</span> <span class="{{@$data['fieldStyle']}}">{{$object->$key}}</span>
+                                    <{{$data['html']}} class="{{@$data['tagStyle']}} w-full truncate">
+                                        <span class="{{@$data['labelStyle']}}">{{$data['name']}}:</span> 
+                                        <span class="{{@$data['fieldStyle']}}">
+                                            @if(@$data['getRelation']) 
+                                                @php
+                                                    // Divide a string em segmentos
+                                                    $segments = explode('->', $data['getRelation']); // ex: ['getPerson', 'getAddress', 'city']
+                                                    $value = $object; // Inicia com o objeto principal
+
+                                                    // Percorre cada segmento e atualiza o valor
+                                                    foreach ($segments as $segment) {
+                                                        // Se for método (começa com "get") ou propriedade, ambos funcionam da mesma forma
+                                                        // Use "optional" para evitar erros se algum segmento for nulo
+                                                        $value = optional($value)->{$segment};
+                                                    }
+                                                @endphp
+
+                                                {{ $value }}
+                                            @elseif(@$data['listingFunction'])
+                                                {!! $functions->{$data['listingFunction']}($object->$key) !!}
+                                            @else
+                                                {{ $object->$key }}
+                                            @endif
+                                        </span>
                                     </{{$data['html']}}>
                                 @endforeach
                             </div>

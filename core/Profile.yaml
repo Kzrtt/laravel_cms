@@ -17,12 +17,6 @@ Profile:
         labelStyle: 'font-semibold text-primary-400 text-md'
         fieldStyle: 'mt-1'
         html: 'p'
-      prf_status:
-        name: Status
-        labelStyle: 'font-semibold text-primary-400 text-md'
-        fieldStyle: ''
-        listingFunction: getStatusBadge
-        html: 'span'
     table:
       prf_id:
         name: Id
