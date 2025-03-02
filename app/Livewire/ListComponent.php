@@ -71,7 +71,7 @@ class ListComponent extends Component
 
         if(key_exists('buttonsConfig', $listingConfig)) {
             foreach ($listingConfig['buttonsConfig'] as $button => $data) {
-                $this->buttonsConfig[$button] = $data['value'];
+                $this->buttonsConfig[$button] = $data;
             }
         }
 
@@ -84,6 +84,12 @@ class ListComponent extends Component
         $this->identifier = $listingConfig['identifier'];
 
         $this->listingData = $daoCtrl->$getMethod($local);
+    }
+
+    //* Função que dispara evento para troca de tela para o form
+    public function addNew() {
+        //? Envia o mode para o ScreenRenderer e um data contendo(local, icon, customView[NULLABLE]])
+        $this->dispatch('changeScreen', mode: ScreenRenderer::MODE_FORM, data: $this->params);
     }
 
     //* Função que remove um registro

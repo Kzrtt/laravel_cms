@@ -60,16 +60,11 @@ Users:
         style: 'font-semibold'
         getRelation: "getProfile->prf_name"
   buttonsConfig:
-    showDeleteButton: 
-      value: true
-    showEditButton: 
-      value: true
-    showDetailsButton: 
-      value: true
-    showInsertButton: 
-      value: true
-    showSearchButton: 
-      value: true
+    showDeleteButton: true
+    showEditButton: true
+    showDetailsButton: true
+    showInsertButton: true
+    showSearchButton: true
   getConfig: 
     method: getAll
     controller: ListingCtrl

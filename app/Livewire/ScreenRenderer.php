@@ -43,10 +43,25 @@ class ScreenRenderer extends Component
                             : "dashboard"),
                     "_icon" => $data['icon'],
                     "_mode" => $this::MODE_LIST,
-                    "_customView" => $data['customView'],
+                    "_customView" => @$data['customView'] ? $data['customView'] : null,
                 );
 
                 break;
+            case $this::MODE_FORM:
+                //? Resgatando arquivo para verificar se vai ser um form-default
+                $filePath = base_path('core/'.$data['_local'].'.yaml');
+
+                //? Organizando valores para passar para a UI
+                $this->params = array(
+                    "_local" => file_exists($filePath) 
+                        ? $data['_local'] 
+                        : (@$data['customView'] 
+                            ? $data['customView'] 
+                            : "dashboard"),
+                    "_icon" => $data['_icon'],
+                    "_mode" => $this::MODE_FORM,
+                    "_customView" => @$data['customView'] ? $data['customView'] : null,
+                );
         }
 
         //? Armazenando na sessão qual a tela atual 

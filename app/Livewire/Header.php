@@ -94,7 +94,7 @@ class Header extends Component
         $params = null;
         $params = session('params', $params);
 
-        $this->initialSubTab = ucfirst($params['_local']);
+        $this->initialSubTab = $params != null ? ucfirst($params['_local']) : "";
     }   
 
     //* Carregando a view

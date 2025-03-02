@@ -35,16 +35,11 @@ Profile:
         listingFunction: getStatusBadge
   formConfig:
   buttonsConfig:
-    showDeleteButton: 
-      value: true
-    showEditButton: 
-      value: true
-    showDetailsButton: 
-      value: true
-    showInsertButton: 
-      value: true
-    showSearchButton: 
-      value: true
+    showDeleteButton: true
+    showEditButton: true
+    showDetailsButton: true
+    showInsertButton: true
+    showSearchButton: true
   getConfig: 
     method: getAll
     controller: ListingCtrl

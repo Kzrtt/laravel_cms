@@ -1,0 +1,50 @@
+Person:
+  startsOn: 'grid'
+  identifier: 'pes_id'
+  listingConfig:
+    grid:
+      pes_id:
+        name: Id
+        tagStyle: 'mb-4'
+        labelStyle: 'font-semibold text-primary-400 text-xl pb-2'
+        fieldStyle: 'text-xl'
+        html: 'p'
+      pes_name:
+        name: Nome
+        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
+        fieldStyle: 'truncate'
+        html: 'p'
+      pes_cpf:
+        name: Cpf
+        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
+        fieldStyle: 'truncate'
+        html: 'p'
+      pes_created_at:
+        name: Criado Em
+        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
+        fieldStyle: 'truncate'
+        html: 'p'
+        listingFunction: getDate
+    table:
+      pes_id:
+        name: Id
+        style: 'font-semibold'
+      pes_name:
+        name: Nome
+        style: 'font-semibold'
+      pes_cpf:
+        name: Cpf
+        style: 'font-semibold'
+      pes_created_at:
+        name: Criado Em
+        style: 'font-semibold'
+        listingFunction: getDate
+  buttonsConfig:
+    showDeleteButton: true
+    showEditButton: true
+    showDetailsButton: true
+    showInsertButton: true
+    showSearchButton: true
+  getConfig:
+    controller: ListingCtrl
+    method: getAll
