@@ -1,6 +1,6 @@
 Users:
-  startsOn:
-    value: 'grid'
+  startsOn: 'grid'
+  identifier: 'usr_id'
   listingConfig:
     grid: 
       usr_id:
@@ -70,3 +70,6 @@ Users:
       value: true
     showSearchButton: 
       value: true
+  getConfig: 
+    method: getAll
+    controller: ListingCtrl

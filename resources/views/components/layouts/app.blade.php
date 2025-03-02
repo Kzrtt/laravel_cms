@@ -7,7 +7,10 @@
         <title>{{ $title ?? 'Page Title' }}</title>
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome-pro-master.min.css?v=0.0.1') }}" />
+
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.x.x/dist/cdn.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         @livewireStyles
         @vite('resources/css/app.css')
     </head>
@@ -17,5 +20,6 @@
         {{ $slot }}
 
         @livewireScripts
+        <x-livewire-alert::scripts />
     </body>
 </html>

@@ -1,4 +1,6 @@
 Profile:
+  startsOn: grid
+  identifier: prf_id
   listingConfig:
     grid:
       prf_id:
@@ -43,3 +45,6 @@ Profile:
       value: true
     showSearchButton: 
       value: true
+  getConfig: 
+    method: getAll
+    controller: ListingCtrl

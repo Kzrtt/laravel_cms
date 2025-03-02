@@ -177,7 +177,9 @@
                                 @endif
 
                                 @if($buttonsConfig['showDeleteButton'])
-                                    <button class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm">
+                                    <button 
+                                        wire:click="delete({{$object->$identifier}})"
+                                        class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm">
                                         <i class="fad fa-trash-alt text-xl p-1"></i>
                                     </button>
                                 @endif

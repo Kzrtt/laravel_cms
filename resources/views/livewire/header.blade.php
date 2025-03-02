@@ -1,6 +1,6 @@
 <?php use App\Models\config\HeaderToggleParams; ?>
 
-<div x-data="{ selectedTab: '{{$initialTab}}', selectedSubTab: '', open: false }" class="w-full">
+<div x-data="{ selectedTab: '{{$initialTab}}', selectedSubTab: '{{$initialSubTab}}', open: false }" class="w-full">
     <div class="w-full bg-primary-300">
         <div class="container mx-auto px-4 py-1 pb-0">
             <!-- Conteúdo centralizado -->
@@ -63,9 +63,9 @@
 
             <template x-if="selectedTab && {{ json_encode($menuTabs) }}[selectedTab]">
                 <template x-for="subTab in {{ json_encode($menuTabs) }}[selectedTab].subTabs" :key="subTab.id">
-                    <button @click="selectedSubTab = subTab.id; $wire.changeScreen({ local: subTab.name, icon: subTab.icon })"
+                    <button @click="selectedSubTab = subTab.id; $wire.changeScreen({ local: subTab.name, icon: subTab.icon, customView: subTab.customView })"
                             :class="{
-                                'bg-primary-200/55 text-primary-600': selectedSubTab === subTab.id,
+                                'bg-primary-200/55 text-primary-600': selectedSubTab === subTab.id || selectedSubTab == subTab.area,
                                 'text-gray-400': selectedSubTab !== subTab.id,
                             }"
                             class="p-2 rounded-lg hover:text-primary-600"
@@ -94,7 +94,7 @@
         @foreach($configTabs as $item)
             <button 
                 @click="open = false"
-                wire:click='changeScreen(@json(["local" => $item["area"], "icon" => $item["icon"]]))'
+                wire:click='changeScreen(@json(["local" => $item["area"], "icon" => $item["icon"], "customView" => $item['customView'] ]))'
                 class="flex items-center w-full px-4 py-2 text-gray-400 hover:bg-primary-200/55 hover:text-primary-600"
             >
                 <i class="{{ $item['icon'] }} mr-2"></i>

@@ -11,6 +11,7 @@ Areas:
       Roles:
         name: Funções
         description: Gerenciamento de funções e permissões
+        customView: roles
         icon: fad fa-user-shield
         actions: [Consult, Update, Insert, Delete]
         showIf: session@level=Administrator
