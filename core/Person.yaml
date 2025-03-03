@@ -39,6 +39,79 @@ Person:
         name: Criado Em
         style: 'font-semibold'
         listingFunction: getDate
+  formConfig:
+    pes_name:
+      type: string
+      required: true
+      label: "Nome"
+      placeholder: "Informe o nome"
+      helper: "Nome do Usuário"
+      sizing: "mb-4 w-full max-w-2lg"
+      groupIn: "Dados Pessoais"
+      line: 1
+    pes_email:
+      type: string
+      required: true
+      label: "Email"
+      placeholder: "Informe o Email"
+      helper: "Email do Usuário"
+      groupIn: "Dados Pessoais"
+      sizing: "mb-4 w-full max-w-md"
+      line: 2
+    pes_phone:
+      type: string
+      required: false
+      label: "Telefone"
+      placeholder: "Informe o telefone"
+      helper: "Telefone do Usuário"
+      sizing: "mb-4 w-full max-w-md"
+      groupIn: "Dados Pessoais"
+      line: 2
+    pes_cpf:
+      type: string
+      required: true
+      label: "CPF"
+      placeholder: "Informe o cpf"
+      helper: "Documento do Usuário"
+      sizing: "mb-4 w-full max-w-md"
+      groupIn: "Dados Pessoais"
+      line: 2
+    pes_street:
+      type: string
+      required: true
+      label: "Logradouro"
+      placeholder: "Informe o nome"
+      helper: "Logradouro do Endereço"
+      sizing: "mb-4 w-full max-w-4xl"
+      groupIn: "Endereço"
+      line: 1
+    pes_complement:
+      type: string
+      required: true
+      label: "Complemento"
+      placeholder: "Informe o complemento"
+      helper: "Complemento do Endereço"
+      sizing: "mb-4 w-full max-w-lg"
+      groupIn: "Endereço"
+      line: 1
+    pes_neighborhood:
+      type: string
+      required: true
+      label: "Bairro"
+      placeholder: "Informe o bairro"
+      helper: "Bairro do Endereço"
+      sizing: "mb-4 w-full max-w-3xl"
+      groupIn: "Endereço"
+      line: 2
+    pes_postal_code:
+      type: string
+      required: true
+      label: "CEP"
+      placeholder: "Informe o cep"
+      helper: "CEP do Endereço"
+      sizing: "mb-4 w-full max-w-3xl"
+      groupIn: "Endereço"
+      line: 2
   buttonsConfig:
     showDeleteButton: true
     showEditButton: true

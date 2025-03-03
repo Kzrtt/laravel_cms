@@ -20,136 +20,40 @@
 
         <div class="border-[0.3px] mx-3 my-6 border-primary-300"></div>
 
-        <!-- Grupo de Inputs -->
-        <div>
-            <p class="text-black/75 ml-3 font-semibold text-xl p-0 mb-5">Dados Principais</p>
+        <form wire:submit.prevent="submitForm">
+            @foreach($formConfig as $group => $lines)
+                <div>
+                    <p class="text-black/75 ml-3 font-semibold text-xl p-0 mb-5">{{ $group }}</p>
 
-            <div class="flex flex-row space-x-4 mx-3">
-                <div class="mb-4 w-full max-w-2lg">
-                    <!-- Label -->
-                    <label for="razaoSocial" class="block mb-2 text-sm font-medium text-gray-700"> 
-                        Campo 1 <span class="text-red-500">*</span>
-                    </label>
-                    
-                    <!-- Input -->
-                    <input
-                        type="text"
-                        id="razaoSocial"
-                        name="razaoSocial"
-                        placeholder="Informe a campo 1"
-                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
-                    />
+                    @foreach($lines as $line => $fields)
+                        <div class="flex flex-row space-x-4 mx-3">
+                            @foreach($fields as $key => $data)
+                                <div class="{{ $data['sizing'] }}">
+                                    <label for="razaoSocial" class="block mb-2 text-sm font-medium text-gray-700"> 
+                                        {{ $data['label'] }} <span class="text-red-500">*</span>
+                                    </label>
 
-                    <!-- Texto de ajuda ou erro -->
-                    <p class="mt-2 text-xs text-secondary-500/60 font-semibold">Informe a campo 1</p>
+                                    <!-- Input -->
+                                    <input
+                                        type="text"
+                                        id="razaoSocial"
+                                        name="razaoSocial"
+                                        placeholder="{{ $data['placeholder'] }}"
+                                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
+                                    />
+
+                                    <!-- Texto de ajuda ou erro -->
+                                    <p class="mt-2 text-xs text-secondary-500/60 font-semibold">{{ $data['helper'] }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
                 </div>
 
-                <div class="mb-4 w-full max-w-sm">
-                    <!-- Label -->
-                    <label for="razaoSocial" class="block mb-2 text-sm font-medium text-gray-700"> 
-                        Campo 2 <span class="text-red-500">*</span>
-                    </label>
-                    
-                    <!-- Input -->
-                    <input
-                        type="text"
-                        id="razaoSocial"
-                        name="razaoSocial"
-                        placeholder="Informe a campo 2"
-                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
-                    />
+                <div class="border-[0.3px] mx-3 my-4 border-primary-300"></div>
+            @endforeach
+        </form>
 
-                    <!-- Texto de ajuda ou erro -->
-                    <p class="mt-2 text-xs text-secondary-500/60 font-semibold">Informe a campo 2</p>
-                </div>
-            </div>
-
-            <div class="flex flex-row space-x-4 mx-3">
-                <div class="mb-4 w-full max-w-2lg">
-                    <!-- Label -->
-                    <label for="razaoSocial" class="block mb-2 text-sm font-medium text-gray-700"> 
-                        Campo 3 <span class="text-red-500">*</span>
-                    </label>
-                    
-                    <!-- Input -->
-                    <input
-                        type="text"
-                        id="razaoSocial"
-                        name="razaoSocial"
-                        placeholder="Informe o campo 3"
-                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
-                    />
-
-                    <!-- Texto de ajuda ou erro -->
-                    <p class="mt-2 text-xs text-secondary-500/60 font-semibold">Informe o campo 3</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="border-[0.3px] mx-3 my-4 border-primary-300"></div>
-
-        <div>
-            <p class="text-black/75 ml-3 font-semibold text-xl p-0 mb-5">Dados Secundárias</p>
-
-            <div class="flex flex-row space-x-4 mx-3">
-                <div class="mb-4 w-full max-w-2md">
-                    <!-- Label -->
-                    <label for="razaoSocial" class="block mb-2 text-sm font-medium text-gray-700"> 
-                        Campo 1 <span class="text-red-500">*</span>
-                    </label>
-                    
-                    <!-- Input -->
-                    <input
-                        type="text"
-                        id="razaoSocial"
-                        name="razaoSocial"
-                        placeholder="Informe a campo 1"
-                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
-                    />
-
-                    <!-- Texto de ajuda ou erro -->
-                    <p class="mt-2 text-xs text-secondary-500/60 font-semibold">Informe a campo 1</p>
-                </div>
-
-                <div class="mb-4 w-full max-w-2md">
-                    <!-- Label -->
-                    <label for="razaoSocial" class="block mb-2 text-sm font-medium text-gray-700"> 
-                        Campo 2 <span class="text-red-500">*</span>
-                    </label>
-                    
-                    <!-- Input -->
-                    <input
-                        type="text"
-                        id="razaoSocial"
-                        name="razaoSocial"
-                        placeholder="Informe a campo 2"
-                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
-                    />
-
-                    <!-- Texto de ajuda ou erro -->
-                    <p class="mt-2 text-xs text-secondary-500/60 font-semibold">Informe a campo 2</p>
-                </div>
-
-                <div class="mb-4 w-full max-w-2md">
-                    <!-- Label -->
-                    <label for="razaoSocial" class="block mb-2 text-sm font-medium text-gray-700"> 
-                        Campo 2 <span class="text-red-500">*</span>
-                    </label>
-                    
-                    <!-- Input -->
-                    <input
-                        type="text"
-                        id="razaoSocial"
-                        name="razaoSocial"
-                        placeholder="Informe a campo 2"
-                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
-                    />
-
-                    <!-- Texto de ajuda ou erro -->
-                    <p class="mt-2 text-xs text-secondary-500/60 font-semibold">Informe a campo 2</p>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="flex flex-row justify-end w-full mt-6 bg-white p-5 rounded-lg">
@@ -161,7 +65,7 @@
                 &nbsp;<span class="font-semibold">Cancelar</span>&nbsp;
             </button>
 
-            <button class="bg-primary-300 text-white p-2 px-4 rounded-lg">
+            <button type="submit" class="bg-primary-300 text-white p-2 px-4 rounded-lg">
                 <i class="fad fa-check-circle p-1"></i>
                 &nbsp;<span class="font-semibold">Salvar</span>&nbsp;
             </button>
