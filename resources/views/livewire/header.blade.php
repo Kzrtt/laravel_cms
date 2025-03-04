@@ -63,7 +63,7 @@
 
             <template x-if="selectedTab && {{ json_encode($menuTabs) }}[selectedTab]">
                 <template x-for="subTab in {{ json_encode($menuTabs) }}[selectedTab].subTabs" :key="subTab.id">
-                    <button @click="selectedSubTab = subTab.id; $wire.changeScreen({ local: subTab.name, icon: subTab.icon, customView: subTab.customView })"
+                    <button @click="selectedSubTab = subTab.id; $wire.changeScreen({ local: subTab.name, icon: subTab.icon, title: subTab.name, customView: subTab.customView })"
                             :class="{
                                 'bg-primary-200/55 text-primary-600': selectedSubTab === subTab.id || selectedSubTab == subTab.area,
                                 'text-gray-400': selectedSubTab !== subTab.id,
@@ -94,7 +94,14 @@
         @foreach($configTabs as $item)
             <button 
                 @click="open = false"
-                wire:click='changeScreen(@json(["local" => $item["area"], "icon" => $item["icon"], "customView" => $item['customView'] ]))'
+                wire:click='changeScreen(
+                    {{ json_encode([
+                        "local" => $item["area"], 
+                        "icon" => $item["icon"], 
+                        "customView" => $item["customView"], 
+                        "title" => $item["name"],
+                    ]) }}
+                )'
                 class="flex items-center w-full px-4 py-2 text-gray-400 hover:bg-primary-200/55 hover:text-primary-600"
             >
                 <i class="{{ $item['icon'] }} mr-2"></i>

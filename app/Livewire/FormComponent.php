@@ -40,17 +40,13 @@ class FormComponent extends Component
     public function updateParams($params) { $this->params = $params; $this->renderUIViaYaml(); }
 
     //* Função que carrega os dados na tela
-    public function mount($local, $icon) {
+    public function mount($data) {
         //? Recebendo parametros
-        $this->params = array(
-            "_local" => $local,
-            "_icon" => $icon,
-        );
+        $this->params = $data;
 
         $this->rules = array();
         $this->validationAttributes = array();
         $this->messages = array();
-        $this->params = array();
         $this->formConfig = array();
         $this->formData = array();
         $this->identifierToField = array();
@@ -126,7 +122,7 @@ class FormComponent extends Component
                 position: "center"
             );
 
-            return $this->dispatch('back')->to(ScreenRenderer::class);
+            $this->dispatch('back')->to(ScreenRenderer::class);
         } catch (ValidationException $ex) {
             $this->dispatch('alert',
                 icon: "error",

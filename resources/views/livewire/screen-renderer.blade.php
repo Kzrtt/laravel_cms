@@ -3,41 +3,23 @@
 ?>
 
 
-<div class="flex justify-center w-full">   
-    <!-- Caso seja uma Listagem ->>
-    @if(isset($_mode) && $_mode == ScreenRenderer::MODE_LIST) 
-        <!-- Verificando se existe uma View Customizada ->>
-        @if(isset($_customView) && $_customView != null)
+<div class="flex justify-center w-full">  
+    @if($params['_view'] != "form-component" && $params['_view'] != "list-component")
+        @livewire(
+            $params['_view'],
+            $params,
+        )
+    @else
+        @if ($params['_mode'] != ScreenRenderer::MODE_FORM)
             @livewire(
-                $_customView,
-                ['local' => $_local, 'icon' => $_icon],
+                'list-component',
+                ["data" => $params]
             )
-        <!-- Renderizando Listagem Dinâmica --> 
-        @elseif ($_local != "dashboard")
-            @livewire(
-                "list-component", 
-                ['local' => $_local, 'icon' => $_icon]
-            )
-        <!-- Renderizando a Dashboard -->
         @else
-            @livewire("dashboard")
-        @endif
-    <!-- Caso seja um Formulário ->>
-    @elseif (isset($_mode) && $_mode == ScreenRenderer::MODE_FORM)
-        @if(isset($_customView) && $_customView != null)
             @livewire(
-                $_customView,
-                ['local' => $_local, 'icon' => $_icon],
+                'form-component',
+                ["data" => $params]
             )
-        <!-- Renderizando Listagem Dinâmica --> 
-        @elseif ($_local != "dashboard")
-            @livewire(
-                "form-component", 
-                ['local' => $_local, 'icon' => $_icon]
-            )
-        <!-- Renderizando a Dashboard -->
-        @else
-            @livewire("dashboard")
-        @endif
+        @endif 
     @endif
 </div>

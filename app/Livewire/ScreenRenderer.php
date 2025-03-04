@@ -15,10 +15,13 @@ use Livewire\Component;
 #[Layout('components.layouts.app')]
 class ScreenRenderer extends Component
 {
+    protected $listeners = ["changeScreen" => '$refresh', "back" => '$refresh'];
+
     //? Parametros vindos do click do menu
     public $params = array(
-        "_local" => "dashboard",
+        "_local" => "",
         "_mode" => self::MODE_LIST,
+        "_view" => "dashboard"
     );
 
     //? Parametros da tela anterior
@@ -41,44 +44,30 @@ class ScreenRenderer extends Component
     //* Função responsável por receber o evento de troca de tela
     #[On('changeScreen')]
     public function updateView($mode, $data) {   
-        $listener = "";
-
         //? Armazenando ultima tela
         session()->put('lastViewParams', $this->params);
-        
+
         switch ($mode) {
             //? Tela de Listagem
             case $this::MODE_LIST:
-                //? Resgatando arquivo para verificar se vai ser um list-default
-                $filePath = base_path('core/'.$data['local'].'.yaml');
-
                 //? Organizando valores para passar para a UI
                 $this->params = array(
-                    "_local" => file_exists($filePath) 
-                        ? $data['local'] 
-                        : (@$data['customView'] 
-                            ? $data['customView'] 
-                            : "dashboard"),
+                    "_title" => $data['title'],
+                    "_local" => $data['local'],
                     "_icon" => $data['icon'],
                     "_mode" => $this::MODE_LIST,
-                    "_customView" => @$data['customView'] ? $data['customView'] : null,
+                    "_view" => @$data['customView'] ? $data['customView'] : 'list-component',
                 );
 
                 break;
             case $this::MODE_FORM:
-                //? Resgatando arquivo para verificar se vai ser um form-default
-                $filePath = base_path('core/'.$data['_local'].'.yaml');
-
                 //? Organizando valores para passar para a UI
                 $this->params = array(
-                    "_local" => file_exists($filePath) 
-                        ? $data['_local'] 
-                        : (@$data['customView'] 
-                            ? $data['customView'] 
-                            : "dashboard"),
+                    "_local" => $data['_local'],
                     "_icon" => $data['_icon'],
+                    "_title" => $data['_title'],
                     "_mode" => $this::MODE_FORM,
-                    "_customView" => @$data['customView'] ? $data['customView'] : null,
+                    "_view" => @$data['_customView'] ? $data['_customView'] : 'form-component',
                 );
         }
 
@@ -89,20 +78,16 @@ class ScreenRenderer extends Component
 
     public function dispatchUpdateToChild() {
         $controller = "App\\Livewire\\";
-        if($this->params['_customView'] != null) {
-            //$this->dispatch("updateParams", $this->params)->to(app());
-        } else {
-            switch ($this->params['_mode']) {
-                case $this::MODE_LIST:
-                    $controller.= "ListComponent";
-                    break;
-                case $this::MODE_FORM:
-                    $controller.= "FormComponent";
-                    break;
-            }
+        switch ($this->params['_mode']) {
+            case $this::MODE_LIST:
+                $controller.= "ListComponent";
+                break;
+            case $this::MODE_FORM:
+                $controller.= "FormComponent";
+                break;
+        }
 
-            $this->dispatch("updateParams", $this->params)->to(app($controller)::class);
-        }         
+        $this->dispatch("updateParams", $this->params)->to(app($controller)::class);    
     }
 
     //* Função que recebe qual a tela atual se houver alguma
@@ -113,6 +98,6 @@ class ScreenRenderer extends Component
     //* Carregando a View
     public function render()
     {
-        return view("livewire.screen-renderer", $this->params);
+        return view("livewire.screen-renderer");
     }
 }

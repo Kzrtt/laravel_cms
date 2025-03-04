@@ -11,7 +11,7 @@
         <div class="flex flex-row items-center bg-white w-full container px-5 py-3 mt-4 rounded-lg">
             <i class="{{$params['_icon']}} ml-2 text-primary-500 text-3xl"></i>
             <div class="ml-3">
-                <p class="text-primary-500/55 ml-3 font-semibold text-xl p-0 m-0">{{$params['_local']}}</p>
+                <p class="text-primary-500/55 ml-3 font-semibold text-xl p-0 m-0">{{$params['_title']}}</p>
                 <p class="text-gray-300 ml-3 text-md p-0 m-0">Listagem de Registros</p>
             </div>
         </div> 
@@ -114,7 +114,9 @@
                                         @endif
 
                                         @if($buttonsConfig['showDeleteButton'])
-                                            <button class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm">
+                                            <button 
+                                                wire:click="delete({{$object->$identifier}})"
+                                                class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm">
                                                 <i class="fad fa-trash-alt text-xl p-1"></i>
                                             </button>
                                         @endif

@@ -85,6 +85,12 @@ class ListComponent extends Component
             }
         }
 
+        if(key_exists('formConfig', $listingConfig)) {
+            if(key_exists('view', $listingConfig['formConfig'])) {
+                $this->params['_customView'] = $listingConfig['formConfig']['view'];
+            }
+        }
+
         //? Carregando o controlador dinâmicamente
         $dao = $listingConfig['getConfig']['controller'];
         $getMethod = $listingConfig['getConfig']['method'];
@@ -97,12 +103,9 @@ class ListComponent extends Component
     }
 
     //* Função que carrega as configs para poder montar os params para a UI
-    public function mount($local, $icon) {
+    public function mount($data) {
         //? Recebendo parametros do click
-        $this->params = array(
-            "_local" => $local,
-            "_icon" => $icon,
-        );
+        $this->params = $data;
 
         $this->renderUIViaYaml();
     }
