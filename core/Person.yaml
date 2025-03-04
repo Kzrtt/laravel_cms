@@ -48,6 +48,10 @@ Person:
       helper: "Nome do Usuário"
       sizing: "mb-4 w-full max-w-2lg"
       groupIn: "Dados Pessoais"
+      identifier: "name"
+      validationRules: 
+        - "required"
+        - "min:3"
       line: 1
     pes_email:
       type: string
@@ -57,6 +61,9 @@ Person:
       helper: "Email do Usuário"
       groupIn: "Dados Pessoais"
       sizing: "mb-4 w-full max-w-md"
+      identifier: "email"
+      validationRules: 
+        - "required"
       line: 2
     pes_phone:
       type: string
@@ -66,6 +73,9 @@ Person:
       helper: "Telefone do Usuário"
       sizing: "mb-4 w-full max-w-md"
       groupIn: "Dados Pessoais"
+      identifier: "phone"
+      validationRules: 
+        - "required"
       line: 2
     pes_cpf:
       type: string
@@ -75,15 +85,33 @@ Person:
       helper: "Documento do Usuário"
       sizing: "mb-4 w-full max-w-md"
       groupIn: "Dados Pessoais"
+      identifier: "cpf"
+      validationRules: 
+        - "required"
       line: 2
     pes_street:
       type: string
       required: true
       label: "Logradouro"
-      placeholder: "Informe o nome"
+      placeholder: "Informe o Logradouro"
       helper: "Logradouro do Endereço"
-      sizing: "mb-4 w-full max-w-4xl"
+      sizing: "mb-4 w-full max-w-6xl"
       groupIn: "Endereço"
+      identifier: "street"
+      validationRules: 
+        - "required"
+      line: 1
+    pes_number:
+      type: string
+      required: true
+      label: "Número"
+      placeholder: "Informe o Número"
+      helper: "Número do Endereço"
+      sizing: "mb-4 w-full max-w-xs"
+      groupIn: "Endereço"
+      identifier: "number"
+      validationRules: 
+        - "required"
       line: 1
     pes_complement:
       type: string
@@ -91,9 +119,12 @@ Person:
       label: "Complemento"
       placeholder: "Informe o complemento"
       helper: "Complemento do Endereço"
-      sizing: "mb-4 w-full max-w-lg"
+      sizing: "mb-4 w-full max-w-3xl"
       groupIn: "Endereço"
-      line: 1
+      identifier: "complement"
+      validationRules: 
+        - "required"
+      line: 2
     pes_neighborhood:
       type: string
       required: true
@@ -102,6 +133,9 @@ Person:
       helper: "Bairro do Endereço"
       sizing: "mb-4 w-full max-w-3xl"
       groupIn: "Endereço"
+      identifier: "neighborhood"
+      validationRules: 
+        - "required"
       line: 2
     pes_postal_code:
       type: string
@@ -109,8 +143,11 @@ Person:
       label: "CEP"
       placeholder: "Informe o cep"
       helper: "CEP do Endereço"
-      sizing: "mb-4 w-full max-w-3xl"
+      sizing: "mb-4 w-full max-w-xs"
       groupIn: "Endereço"
+      identifier: "postal_code"
+      validationRules: 
+        - "required"
       line: 2
   buttonsConfig:
     showDeleteButton: true

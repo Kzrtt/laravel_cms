@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\config\HeaderToggleParams;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -22,12 +21,29 @@ class ScreenRenderer extends Component
         "_mode" => self::MODE_LIST,
     );
 
+    //? Parametros da tela anterior
+    public $lastView = array();
+
     public const MODE_LIST = "list";
     public const MODE_FORM = "form";
 
+    //* Função responsável por redirecionar o usuário para a ultima tela
+    #[On('back')]
+    public function back() {
+        $temp = $this->params;
+        $this->params = session("lastViewParams", $this->params);
+        $this->lastView = $temp;
+
+        session()->put('params', $this->params);
+        $this->js("window.location.reload()");
+    }
+
     //* Função responsável por receber o evento de troca de tela
     #[On('changeScreen')]
-    public function updateView($mode, $data) {      
+    public function updateView($mode, $data) {   
+        //? Armazenando ultima tela
+        session()->put('lastViewParams', $this->params);
+        
         switch ($mode) {
             //? Tela de Listagem
             case $this::MODE_LIST:

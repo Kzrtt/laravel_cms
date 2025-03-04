@@ -4,7 +4,7 @@
 
 <div class="flex justify-center w-full">
     <!-- Caso seja uma Listagem ->>
-    @if($_mode == ScreenRenderer::MODE_LIST) 
+    @if(isset($_mode) && $_mode == ScreenRenderer::MODE_LIST) 
         <!-- Verificando se existe uma View Customizada ->>
         @if(isset($_customView) && $_customView != null)
             @livewire(
@@ -22,7 +22,7 @@
             @livewire("dashboard")
         @endif
     <!-- Caso seja um Formulário ->>
-    @elseif ($_mode == ScreenRenderer::MODE_FORM)
+    @elseif (isset($_mode) && $_mode == ScreenRenderer::MODE_FORM)
         @if(isset($_customView) && $_customView != null)
             @livewire(
                 $_customView,

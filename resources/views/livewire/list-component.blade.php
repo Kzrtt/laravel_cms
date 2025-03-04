@@ -50,9 +50,9 @@
                 @if($buttonsConfig['showInsertButton'])
                     <button
                         wire:click="addNew"
-                        class="bg-primary-200/55 text-primary-600 p-2 rounded-lg hover:bg-primary-300 hover:text-white transition">
+                        class="bg-primary-200/55 text-primary-600 p-2 px-4 rounded-lg hover:bg-primary-300 hover:text-white transition">
                         <i class="fad fa-plus-circle p-1"></i>
-                        &nbsp;<span class="font-semibold">Adicionar</span>&nbsp;
+                        <span class="font-semibold">Adicionar</span>&nbsp;
                     </button>
                 @endif
             </div>

@@ -99,24 +99,21 @@ class ListComponent extends Component
             $genericCtrl = new GenericCtrl($this->params['_local']);
             $genericCtrl->delete($id);
 
-            $this->alert(
-                "success", 
-                "Registro removido!",
-                array(
-                    "position" => "center"
-                )
+            $this->dispatch('alert',
+                icon: "success",
+                title: "Registro Removido!",
+                position: "center"
             );
 
             $this->js("window.location.reload()");
         } catch (QueryException $ex) {
             if ($ex->getCode() == '23000') {
                 // Aqui você pode lançar um erro customizado ou retornar uma mensagem de erro
-                $this->alert(
-                    "warning", 
-                    "Não é possível apagar este '".$this->params['_local']."', pois há registros vinculados a ele.",
-                    array(
-                        "position" => "center"
-                    )
+                $this->dispatch('alert',
+                    icon: "warning",
+                    title: "Cuidado!",
+                    text: "Não é possível apagar este '".$this->params['_local']."', pois há registros vinculados a ele.",
+                    position: "center"
                 );
             }
         } 
