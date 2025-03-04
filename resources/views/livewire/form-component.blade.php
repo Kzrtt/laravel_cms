@@ -1,5 +1,6 @@
 <div class="w-4/5 flex flex-col justify-center p-5">
-    <form wire:submit.prevent="submitForm">
+    <p wire:loading>Carregando...</p>
+    <form wire:loading.remove wire:submit.prevent="submitForm">
 
         <!-- Alerta para Preenchimento dos Campos -->
         <div class="flex flex-row items-center bg-white w-full container px-5 py-4 mt-2 rounded-lg">

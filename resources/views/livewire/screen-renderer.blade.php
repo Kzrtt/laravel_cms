@@ -2,7 +2,8 @@
     use App\Livewire\ScreenRenderer
 ?>
 
-<div class="flex justify-center w-full">
+
+<div class="flex justify-center w-full">   
     <!-- Caso seja uma Listagem ->>
     @if(isset($_mode) && $_mode == ScreenRenderer::MODE_LIST) 
         <!-- Verificando se existe uma View Customizada ->>

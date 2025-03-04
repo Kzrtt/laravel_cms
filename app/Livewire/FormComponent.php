@@ -6,6 +6,7 @@ use App\Controllers\GenericCtrl;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Symfony\Component\Yaml\Yaml;
+use Livewire\Attributes\On;
 
 class FormComponent extends Component
 {
@@ -35,6 +36,9 @@ class FormComponent extends Component
         return $this->messages;
     }
 
+    #[On('updateParams')]
+    public function updateParams($params) { $this->params = $params; $this->renderUIViaYaml(); }
+
     //* Função que carrega os dados na tela
     public function mount($local, $icon) {
         //? Recebendo parametros
@@ -43,12 +47,24 @@ class FormComponent extends Component
             "_icon" => $icon,
         );
 
+        $this->rules = array();
+        $this->validationAttributes = array();
+        $this->messages = array();
+        $this->params = array();
+        $this->formConfig = array();
+        $this->formData = array();
+        $this->identifierToField = array();
+
+        $this->renderUIViaYaml();
+    }
+
+    public function renderUIViaYaml() {
         //? Carregando arquivo
-        $filePath = base_path('core/'.$local.'.yaml');
+        $filePath = base_path('core/'.$this->params['_local'].'.yaml');
         $formConfig = array();
 
         if(file_exists($filePath)) {
-            $formConfig = Yaml::parseFile($filePath)[$local];
+            $formConfig = Yaml::parseFile($filePath)[$this->params['_local']];
         }
 
         foreach ($formConfig['formConfig'] as $field => $data) {

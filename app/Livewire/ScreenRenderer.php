@@ -35,12 +35,14 @@ class ScreenRenderer extends Component
         $this->lastView = $temp;
 
         session()->put('params', $this->params);
-        $this->js("window.location.reload()");
+        $this->dispatchUpdateToChild();
     }
 
     //* Função responsável por receber o evento de troca de tela
     #[On('changeScreen')]
     public function updateView($mode, $data) {   
+        $listener = "";
+
         //? Armazenando ultima tela
         session()->put('lastViewParams', $this->params);
         
@@ -82,7 +84,25 @@ class ScreenRenderer extends Component
 
         //? Armazenando na sessão qual a tela atual 
         session()->put('params', $this->params);
-        $this->js("window.location.reload()");
+        $this->dispatchUpdateToChild();
+    }
+
+    public function dispatchUpdateToChild() {
+        $controller = "App\\Livewire\\";
+        if($this->params['_customView'] != null) {
+            //$this->dispatch("updateParams", $this->params)->to(app());
+        } else {
+            switch ($this->params['_mode']) {
+                case $this::MODE_LIST:
+                    $controller.= "ListComponent";
+                    break;
+                case $this::MODE_FORM:
+                    $controller.= "FormComponent";
+                    break;
+            }
+
+            $this->dispatch("updateParams", $this->params)->to(app($controller)::class);
+        }         
     }
 
     //* Função que recebe qual a tela atual se houver alguma

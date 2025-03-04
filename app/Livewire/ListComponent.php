@@ -7,6 +7,7 @@ use Illuminate\Database\QueryException;
 use Livewire\Component;
 use Symfony\Component\Yaml\Yaml;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\On;
 
 /**
  * Classe para tratamento da visualização dinâmica dos registros
@@ -17,6 +18,8 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 class ListComponent extends Component
 {
     use LivewireAlert;
+
+    protected $listeners = array("refresh" => '$refresh');
 
     //? Parametros vindo do screen-renderer através do click no menu
     public $params = array();
@@ -39,20 +42,27 @@ class ListComponent extends Component
     
     public $daoCtrl = null;
 
-    //* Função que carrega as configs para poder montar os params para a UI
-    public function mount($local, $icon) {
-        //? Recebendo parametros do click
-        $this->params = array(
-            "_local" => $local,
-            "_icon" => $icon,
+    #[On('updateParams')]
+    public function updateParams($params) { $this->params = $params; $this->renderUIViaYaml(); }
+
+    public function renderUIViaYaml() {
+        $this->tableConfig = array();
+        $this->gridConfig = array();
+        $this->buttonsConfig = array(
+            "showSearchButton" => true,
+            "showInsertButton" => true,
+            "showEditButton" => false,
+            "showDetailsButton" => false,
+            "showDeleteButton" => false
         );
+        $this->startsOn = "list";
 
         //? Carregando arquivo
-        $filePath = base_path('core/'.$local.'.yaml');
+        $filePath = base_path('core/'.$this->params['_local'].'.yaml');
         $listingConfig = array();
         
         if(file_exists($filePath)) {
-            $listingConfig = Yaml::parseFile($filePath)[$local];
+            $listingConfig = Yaml::parseFile($filePath)[$this->params['_local']];
         }
 
         //? Pegando configurações da tabela, grid e botões
@@ -83,13 +93,24 @@ class ListComponent extends Component
         //? Marcando campo do id
         $this->identifier = $listingConfig['identifier'];
 
-        $this->listingData = $daoCtrl->$getMethod($local);
+        $this->listingData = $daoCtrl->$getMethod($this->params['_local']);
+    }
+
+    //* Função que carrega as configs para poder montar os params para a UI
+    public function mount($local, $icon) {
+        //? Recebendo parametros do click
+        $this->params = array(
+            "_local" => $local,
+            "_icon" => $icon,
+        );
+
+        $this->renderUIViaYaml();
     }
 
     //* Função que dispara evento para troca de tela para o form
     public function addNew() {
         //? Envia o mode para o ScreenRenderer e um data contendo(local, icon, customView[NULLABLE]])
-        $this->dispatch('changeScreen', mode: ScreenRenderer::MODE_FORM, data: $this->params);
+        $this->dispatch('changeScreen', mode: ScreenRenderer::MODE_FORM, data: $this->params)->to(ScreenRenderer::class);
     }
 
     //* Função que remove um registro

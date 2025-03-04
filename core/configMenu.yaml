@@ -2,12 +2,6 @@ Areas:
   Gestao:
     name: Gestão
     subItens:
-      Users:
-        name: Usuários
-        description: Área de controle de Usuários
-        icon: fad fa-user
-        actions: [Consult, Update, Insert, Delete]
-        showIf: session@level in [Administrator]
       Roles:
         name: Funções
         description: Gerenciamento de funções e permissões
