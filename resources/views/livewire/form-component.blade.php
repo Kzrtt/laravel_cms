@@ -1,5 +1,6 @@
 <div class="w-4/5 flex flex-col justify-center p-5">
     <p wire:loading>Carregando...</p>
+    <p wire:click="teste">teste</p>
     <form wire:loading.remove wire:submit.prevent="submitForm">
 
         <!-- Alerta para Preenchimento dos Campos -->
@@ -37,15 +38,41 @@
                                         {{ $data['label'] }} <span class="text-red-500">*</span>
                                     </label>
 
-                                    <!-- Input -->
-                                    <input
-                                        wire:model.lazy.debounce.500ms="formData.{{ $data['identifier'] }}"
-                                        type="text"
-                                        id="{{ $data['identifier'] }}"
-                                        name="{{ $data['identifier'] }}"
-                                        placeholder="{{ $data['placeholder'] }}"
-                                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
-                                    />
+                                    @if ($data['type'] == "select")
+                                        <div x-data
+                                            x-init="
+                                                new TomSelect($refs.formData.{{ $data['identifier'] }}, {
+                                                    plugins: ['remove_button']
+                                                    onChange: function(value) {
+                                                        @this.set('formData.{{ $data['identifier'] }}', value)
+                                                    }
+                                                })
+                                            "
+
+                                            wire:ignore
+                                        >
+                                            <select 
+                                                x-ref="selectUser" 
+                                                placeholder="Selecione o {{ $data['label'] }}"
+                                                class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
+                                            >
+                                                <option value="">Selecionar...</option>
+                                                @foreach ($data['values'] as $key => $value)
+                                                    <option value="{{ $key }}">{{ $value }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @else
+                                        <!-- Input -->
+                                        <input
+                                            wire:model.lazy.debounce.500ms="formData.{{ $data['identifier'] }}"
+                                            type="text"
+                                            id="{{ $data['identifier'] }}"
+                                            name="{{ $data['identifier'] }}"
+                                            placeholder="{{ $data['placeholder'] }}"
+                                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
+                                        />
+                                    @endif
 
                                     <!-- Texto de ajuda ou erro -->
                                     @error('formData.name')

@@ -89,66 +89,118 @@ Person:
       validationRules: 
         - "required"
       line: 2
-    pes_street:
-      type: string
+    city: 
+      type: relation
       required: true
-      label: "Logradouro"
-      placeholder: "Informe o Logradouro"
-      helper: "Logradouro do Endereço"
-      sizing: "mb-4 w-full max-w-6xl"
+      label: "Cidade"
+      placeholder: "Selecione a Cidade"
+      helper: "Cidade do Endereço"
+      sizing: "mb-4 w-4/4"
       groupIn: "Endereço"
-      identifier: "street"
-      validationRules: 
+      identifier: "uf"
+      validations: 
         - "required"
       line: 1
-    pes_number:
-      type: string
+    uf: 
+      type: select
+      values:
+        AC: "Acre"
+        AL: "Alagoas"
+        AP: "Amapá"
+        AM: "Amazonas"
+        BA: "Bahia"
+        CE: "Ceará"
+        DF: "Distrito Federal"
+        ES: "Espírito Santo"
+        GO: "Goiás"
+        MA: "Maranhão"
+        MT: "Mato Grosso"
+        MS: "Mato Grosso do Sul"
+        MG: "Minas Gerais"
+        PA: "Pará"
+        PB: "Paraíba"
+        PR: "Paraná"
+        PE: "Pernambuco"
+        PI: "Piauí"
+        RJ: "Rio de Janeiro"
+        RN: "Rio Grande do Norte"
+        RS: "Rio Grande do Sul"
+        RO: "Rondônia"
+        RR: "Roraima"
+        SC: "Santa Catarina"
+        SP: "São Paulo"
+        SE: "Sergipe"
+        TO: "Tocantins"
       required: true
-      label: "Número"
-      placeholder: "Informe o Número"
-      helper: "Número do Endereço"
-      sizing: "mb-4 w-full max-w-xs"
+      label: "Estado"
+      placeholder: "Selecione o Estado"
+      helper: "Estado do Endereço"
+      sizing: "mb-4 w-1/6"
       groupIn: "Endereço"
-      identifier: "number"
-      validationRules: 
+      identifier: "uf"
+      validations: 
         - "required"
       line: 1
-    pes_complement:
-      type: string
-      required: true
-      label: "Complemento"
-      placeholder: "Informe o complemento"
-      helper: "Complemento do Endereço"
-      sizing: "mb-4 w-full max-w-3xl"
-      groupIn: "Endereço"
-      identifier: "complement"
-      validationRules: 
-        - "required"
-      line: 2
     pes_neighborhood:
       type: string
       required: true
       label: "Bairro"
       placeholder: "Informe o bairro"
       helper: "Bairro do Endereço"
-      sizing: "mb-4 w-full max-w-3xl"
+      sizing: "mb-4 w-2/4"
       groupIn: "Endereço"
       identifier: "neighborhood"
       validationRules: 
         - "required"
       line: 2
+    pes_street:
+      type: string
+      required: true
+      label: "Logradouro"
+      placeholder: "Informe o Logradouro"
+      helper: "Logradouro do Endereço"
+      sizing: "mb-4 w-2/4"
+      groupIn: "Endereço"
+      identifier: "street"
+      validationRules: 
+        - "required"
+      line: 2
+    pes_number:
+      type: string
+      required: true
+      label: "Número"
+      placeholder: "Informe o Número"
+      helper: "Número do Endereço"
+      sizing: "mb-4 w-1/4"
+      groupIn: "Endereço"
+      identifier: "number"
+      validationRules: 
+        - "required"
+      line: 2
+    pes_complement:
+      type: string
+      required: true
+      label: "Complemento"
+      placeholder: "Informe o complemento"
+      helper: "Complemento do Endereço"
+      sizing: "mb-4 w-4/4"
+      groupIn: "Endereço"
+      identifier: "complement"
+      validationRules: 
+        - "required"
+      line: 3    
     pes_postal_code:
       type: string
       required: true
       label: "CEP"
       placeholder: "Informe o cep"
       helper: "CEP do Endereço"
-      sizing: "mb-4 w-full max-w-xs"
+      sizing: "mb-4 w-1/6"
       groupIn: "Endereço"
       identifier: "postal_code"
       validationRules: 
         - "required"
-      line: 2
+      line: 3
   buttonsConfig:
     showDeleteButton: true
     showEditButton: true

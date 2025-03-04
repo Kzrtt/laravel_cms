@@ -7,6 +7,11 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
 
+        <!-- Tom Select -->
+        <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
+
         @livewireStyles
         @vite(['resources/css/app.css', 'public/css/font-awesome-pro-master.min.css?v=0.0.1'])
     </head>

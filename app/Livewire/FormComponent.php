@@ -100,6 +100,10 @@ class FormComponent extends Component
         }
     }
 
+    public function teste() {
+        dd($this->formData);
+    }
+
     //* Função que envia o formulário
     public function submitForm() {
         try {
