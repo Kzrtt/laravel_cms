@@ -42,7 +42,6 @@ Person:
   formConfig:
     pes_name:
       type: string
-      required: true
       label: "Nome"
       placeholder: "Informe o nome"
       helper: "Nome do Usuário"
@@ -55,7 +54,6 @@ Person:
       line: 1
     pes_email:
       type: string
-      required: true
       label: "Email"
       placeholder: "Informe o Email"
       helper: "Email do Usuário"
@@ -67,19 +65,15 @@ Person:
       line: 2
     pes_phone:
       type: string
-      required: false
       label: "Telefone"
       placeholder: "Informe o telefone"
       helper: "Telefone do Usuário"
       sizing: "mb-4 w-full max-w-md"
       groupIn: "Dados Pessoais"
       identifier: "phone"
-      validationRules: 
-        - "required"
       line: 2
     pes_cpf:
       type: string
-      required: true
       label: "CPF"
       placeholder: "Informe o cpf"
       helper: "Documento do Usuário"
@@ -89,20 +83,26 @@ Person:
       validationRules: 
         - "required"
       line: 2
-    city: 
+    city_cit_id: 
       type: relation
-      required: true
       label: "Cidade"
       placeholder: "Selecione a Cidade"
       helper: "Cidade do Endereço"
       sizing: "mb-4 w-4/4"
       groupIn: "Endereço"
-      identifier: "uf"
-      validations: 
+      identifier: "city"
+      validationRules: 
         - "required"
+      values:
       line: 1
     uf: 
       type: select
+      updateRemoteField:
+        remoteIdentifier: city
+        remoteEntity: City
+        remoteAtrr: cit_uf
+        key: cit_id
+        value: cit_name
       values:
         AC: "Acre"
         AL: "Alagoas"
@@ -131,19 +131,17 @@ Person:
         SP: "São Paulo"
         SE: "Sergipe"
         TO: "Tocantins"
-      required: true
       label: "Estado"
       placeholder: "Selecione o Estado"
       helper: "Estado do Endereço"
       sizing: "mb-4 w-1/6"
       groupIn: "Endereço"
       identifier: "uf"
-      validations: 
+      validationRules: 
         - "required"
       line: 1
     pes_neighborhood:
       type: string
-      required: true
       label: "Bairro"
       placeholder: "Informe o bairro"
       helper: "Bairro do Endereço"
@@ -155,7 +153,6 @@ Person:
       line: 2
     pes_street:
       type: string
-      required: true
       label: "Logradouro"
       placeholder: "Informe o Logradouro"
       helper: "Logradouro do Endereço"
@@ -167,7 +164,6 @@ Person:
       line: 2
     pes_number:
       type: string
-      required: true
       label: "Número"
       placeholder: "Informe o Número"
       helper: "Número do Endereço"
@@ -179,19 +175,15 @@ Person:
       line: 2
     pes_complement:
       type: string
-      required: true
       label: "Complemento"
       placeholder: "Informe o complemento"
       helper: "Complemento do Endereço"
       sizing: "mb-4 w-4/4"
       groupIn: "Endereço"
       identifier: "complement"
-      validationRules: 
-        - "required"
       line: 3    
     pes_postal_code:
       type: string
-      required: true
       label: "CEP"
       placeholder: "Informe o cep"
       helper: "CEP do Endereço"

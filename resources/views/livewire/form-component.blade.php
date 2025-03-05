@@ -1,6 +1,5 @@
 <div class="w-4/5 flex flex-col justify-center p-5">
     <p wire:loading>Carregando...</p>
-    <p wire:click="teste">teste</p>
     <form wire:loading.remove wire:submit.prevent="submitForm">
 
         <!-- Alerta para Preenchimento dos Campos -->
@@ -33,35 +32,28 @@
                     @foreach($lines as $line => $fields)
                         <div class="flex flex-row space-x-4 mx-3">
                             @foreach($fields as $key => $data)
-                                <div class="{{ $data['sizing'] }}">
+                                <div x-data class="{{ $data['sizing'] }}">
                                     <label for="{{ $data['identifier'] }}" class="block mb-2 text-sm font-medium text-gray-700"> 
-                                        {{ $data['label'] }} <span class="text-red-500">*</span>
+                                        {{ $data['label'] }} @isset($data['required']) <span class="text-red-500">*</span> @endisset
                                     </label>
 
-                                    @if ($data['type'] == "select")
-                                        <div x-data
-                                            x-init="
-                                                new TomSelect($refs.formData.{{ $data['identifier'] }}, {
-                                                    plugins: ['remove_button']
-                                                    onChange: function(value) {
-                                                        @this.set('formData.{{ $data['identifier'] }}', value)
-                                                    }
-                                                })
-                                            "
+                                    @if ($data['type'] == "select" || $data['type'] == "relation")
+                                        <select 
+                                            wire:model.lazy="formData.{{ $data['identifier'] }}"
 
-                                            wire:ignore
+                                            @isset($data['updateRemoteField'])
+                                                wire:change="updateRemoteField('{{ $data['identifier'] }}', @js($data['updateRemoteField']) )"
+                                            @endisset
+
+                                            placeholder="Selecione o {{ $data['label'] }}"
+                                            id="{{ $data['identifier'] }}"
+                                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
                                         >
-                                            <select 
-                                                x-ref="selectUser" 
-                                                placeholder="Selecione o {{ $data['label'] }}"
-                                                class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
-                                            >
-                                                <option value="">Selecionar...</option>
-                                                @foreach ($data['values'] as $key => $value)
-                                                    <option value="{{ $key }}">{{ $value }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                            <option value="">Selecionar...</option>
+                                            @foreach ($selectsPopulate[$data['identifier']] as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                            @endforeach
+                                        </select>
                                     @else
                                         <!-- Input -->
                                         <input

@@ -23,6 +23,7 @@ class FormComponent extends Component
 
     //? Dados que vão ser carregados do form para o controller
     public $formData = array();
+    public $selectsPopulate = array();
 
     //? Map associativo para construir parametro do insert
     public $identifierToField = array();
@@ -73,7 +74,15 @@ class FormComponent extends Component
                 $this->formConfig[$data['groupIn']][$data['line']] = array();
             }
 
-            $this->formConfig[$data['groupIn']][$data['line']][] = $data;
+            if($data['type'] == "select" || $data['type'] == "relation") {
+                if(!isset($this->selectsPopulate[$data['identifier']])) {
+                    $this->selectsPopulate[$data['identifier']] = array();
+                }
+
+                if(@$data['values']) {
+                    $this->selectsPopulate[$data['identifier']] = $data['values'];
+                }
+            }
 
             //? Adicionando as validações nos campos
             if(isset($data['validationRules'])) {
@@ -84,12 +93,19 @@ class FormComponent extends Component
                     } else {
                         $rule = $validation;
                     }
+
+                    if($rule == "required") {
+                        $data['required'] = true;
+                    }
+
                     $this->messages['formData.'.$data['identifier'].'.'.$rule] = getMessageForValidation($rule);
                     $validationString.= $validation . "|";
                 }
 
                 $this->rules['formData.'.$data['identifier']] = $validationString;
             }
+
+            $this->formConfig[$data['groupIn']][$data['line']][] = $data;
             
             //? Passando aliases para os campos
             $this->validationAttributes['formData.'.$data['identifier']] = $data['label'];
@@ -98,6 +114,17 @@ class FormComponent extends Component
             $this->formData[$data['identifier']] = "";
             $this->identifierToField[$data['identifier']] = $field;
         }
+    }
+
+    public function updateRemoteField($parentIdentifier, $updateRemoteConfig) {
+        $remoteEntity = app("App\\Models\\".$updateRemoteConfig['remoteEntity']);
+        
+        $remoteData = $remoteEntity::where(
+            $updateRemoteConfig['remoteAtrr'], 
+            $this->formData[$parentIdentifier]
+        )->pluck($updateRemoteConfig['value'], $updateRemoteConfig['key'])->toArray();
+
+        $this->selectsPopulate[$updateRemoteConfig['remoteIdentifier']] = $remoteData;
     }
 
     public function teste() {

@@ -7,10 +7,10 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
 
-        <!-- Tom Select -->
-        <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
         @livewireStyles
         @vite(['resources/css/app.css', 'public/css/font-awesome-pro-master.min.css?v=0.0.1'])
