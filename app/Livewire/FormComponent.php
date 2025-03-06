@@ -4,10 +4,19 @@ namespace App\Livewire;
 
 use App\Controllers\GenericCtrl;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Symfony\Component\Yaml\Yaml;
 use Livewire\Attributes\On;
 
+/**
+ * Classe para tratamento da rendereização dos formulários de maneira dinâmica
+ * usando um arquivo .yaml previamente estruturados
+ * 
+ * @author Felipe Kurt <fe.hatunaqueton@gmail.com>
+ */
+
+#[Layout('components.layouts.app')]
 class FormComponent extends Component
 {
     //? Parametros usados pelo próprio livewire através das funções protected
@@ -37,13 +46,11 @@ class FormComponent extends Component
         return $this->messages;
     }
 
-    #[On('updateParams')]
-    public function updateParams($params) { $this->params = $params; $this->renderUIViaYaml(); }
-
     //* Função que carrega os dados na tela
-    public function mount($data) {
+    public function mount($local) {
         //? Recebendo parametros
-        $this->params = $data;
+        $this->params = session('params');
+        $this->params['_local'] = $local;
 
         $this->rules = array();
         $this->validationAttributes = array();
@@ -117,12 +124,12 @@ class FormComponent extends Component
     }
 
     public function updateRemoteField($parentIdentifier, $updateRemoteConfig) {
-        $remoteEntity = app("App\\Models\\".$updateRemoteConfig['remoteEntity']);
-        
-        $remoteData = $remoteEntity::where(
-            $updateRemoteConfig['remoteAtrr'], 
-            $this->formData[$parentIdentifier]
-        )->pluck($updateRemoteConfig['value'], $updateRemoteConfig['key'])->toArray();
+        $genericCtrl = new GenericCtrl($this->params['_local']);
+
+        $remoteData = $genericCtrl->getRemoteData(
+            $this->formData[$parentIdentifier], 
+            $updateRemoteConfig
+        );
 
         $this->selectsPopulate[$updateRemoteConfig['remoteIdentifier']] = $remoteData;
     }

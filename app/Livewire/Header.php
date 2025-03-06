@@ -22,11 +22,13 @@ class Header extends Component
     public $showNotification = true;
     public $showConfig = true;
 
-    //* Método que dispara evento ao ScreenRenderer para troca da tela a ser apresentada
     public function changeScreen($data)
     {
-        //? Envia o mode para o ScreenRenderer e um data contendo(local, icon, customView[NULLABLE]])
-        $this->dispatch('changeScreen', mode: ScreenRenderer::MODE_LIST, data: $data);
+        session()->put('params', $data);
+
+        $route = $data['_view'] ?? "list.component";
+
+        return redirect()->route($route, ["local" => $data['_local']]);
     }
 
     //* Função que carrega os parâmetros para a UI para renderização do menu

@@ -13,6 +13,17 @@
             return $registry;
         }
 
+        public function getRemoteData($value, $remoteConfig) {
+            $remoteEntity = app("App\\Models\\".$remoteConfig['remoteEntity']);
+        
+            $remoteData = $remoteEntity::where(
+                $remoteConfig['remoteAtrr'], 
+                $value,
+            )->pluck($remoteConfig['value'], $remoteConfig['key'])->toArray();
+
+            return $remoteData;
+        }
+
         public function delete($id) {
             $registry = $this->model::findOrFail($id);
             return $registry->delete();

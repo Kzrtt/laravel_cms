@@ -1,5 +1,5 @@
 Profile:
-  startsOn: grid
+  startsOn: list
   identifier: prf_id
   listingConfig:
     grid:
@@ -39,7 +39,7 @@ Profile:
     showDeleteButton: true
     showEditButton: true
     showDetailsButton: true
-    showInsertButton: true
+    showInsertButton: false
     showSearchButton: true
   getConfig: 
     method: getAll

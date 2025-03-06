@@ -59,6 +59,8 @@ Users:
         name: Perfil
         style: 'font-semibold'
         getRelation: "getProfile->prf_name"
+  formConfig:
+    view: "user-form"
   buttonsConfig:
     showDeleteButton: true
     showEditButton: true

@@ -74,6 +74,8 @@ class ScreenRenderer extends Component
         //? Armazenando na sessão qual a tela atual 
         session()->put('params', $this->params);
         $this->dispatchUpdateToChild();
+
+        return redirect()->route('list.component', ["local" => $this->params['_local']]);
     }
 
     public function dispatchUpdateToChild() {

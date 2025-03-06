@@ -7,6 +7,7 @@ use Illuminate\Database\QueryException;
 use Livewire\Component;
 use Symfony\Component\Yaml\Yaml;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 
 /**
@@ -15,6 +16,8 @@ use Livewire\Attributes\On;
  * 
  * @author Felipe Kurt <fe.hatunaqueton@gmail.com>
  */
+
+#[Layout('components.layouts.app')]
 class ListComponent extends Component
 {
     use LivewireAlert;
@@ -22,7 +25,10 @@ class ListComponent extends Component
     protected $listeners = array("refresh" => '$refresh');
 
     //? Parametros vindo do screen-renderer através do click no menu
-    public $params = array();
+    public $params = array(
+        "_icon" => "fad fa-yin-yang",
+        "_title" => "Desconhecido",
+    );
     
     //? Configurações da tabela, grid e botões da tela
     public $tableConfig = array();
@@ -35,15 +41,14 @@ class ListComponent extends Component
         "showDeleteButton" => false
     );
     public $startsOn = "list";
+
+    public $viewForm = "form.component";
     
     //? Registros para a listagem na página
     public $listingData = array();
     public $identifier = "";
     
     public $daoCtrl = null;
-
-    #[On('updateParams')]
-    public function updateParams($params) { $this->params = $params; $this->renderUIViaYaml(); }
 
     public function renderUIViaYaml() {
         $this->tableConfig = array();
@@ -87,7 +92,7 @@ class ListComponent extends Component
 
         if(key_exists('formConfig', $listingConfig)) {
             if(key_exists('view', $listingConfig['formConfig'])) {
-                $this->params['_customView'] = $listingConfig['formConfig']['view'];
+                $this->viewForm = $listingConfig['formConfig']['view'];
             }
         }
 
@@ -103,17 +108,18 @@ class ListComponent extends Component
     }
 
     //* Função que carrega as configs para poder montar os params para a UI
-    public function mount($data) {
+    public function mount($local) {
         //? Recebendo parametros do click
-        $this->params = $data;
-
+        $this->params = session('params');
+        $this->params['_local'] = $local;
         $this->renderUIViaYaml();
     }
 
-    //* Função que dispara evento para troca de tela para o form
+    //* Função que troca de tela para o form
     public function addNew() {
-        //? Envia o mode para o ScreenRenderer e um data contendo(local, icon, customView[NULLABLE]])
-        $this->dispatch('changeScreen', mode: ScreenRenderer::MODE_FORM, data: $this->params)->to(ScreenRenderer::class);
+        $route = $this->viewForm;
+    
+        return redirect()->route($route, ["local" => $this->params['_local']]);
     }
 
     //* Função que remove um registro
