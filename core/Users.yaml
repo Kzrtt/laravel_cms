@@ -61,6 +61,77 @@ Users:
         getRelation: "getProfile->prf_name"
   formConfig:
     view: "user-form"
+    usr_email:
+      type: string
+      label: "Email"
+      placeholder: "Informe o Email"
+      helper: "Email do Usuário"
+      groupIn: "Dados Usuário"
+      sizing: "mb-4 w-full max-w-md"
+      identifier: "email"
+      validationRules: 
+        - "required"
+      line: 1
+    usr_password:
+      type: string
+      label: "Senha"
+      placeholder: "Informe o Email"
+      helper: "Email do Usuário"
+      groupIn: "Dados Usuário"
+      sizing: "mb-4 w-full max-w-md"
+      identifier: "email"
+      validationRules: 
+        - "required"
+      line: 1
+    confirm_password:
+      type: string
+      label: "Confirmar Senha"
+      placeholder: "Confirme a senha"
+      helper: "Confirme a senha"
+      sizing: "mb-4 w-1/3"
+      groupIn: "Dados Usuário"
+      identifier: "confirm_password"
+      validationRules: 
+        - "required"
+      line: 1
+    persons_pes_id:
+      type: relation
+      label: "Operador"
+      placeholder: "Selecione o Operador"
+      helper: "Pessoa vinculada a esse usuário"
+      sizing: "mb-4 w-2/3"
+      groupIn: "Dados Usuário"
+      identifier: "persons"
+      validationRules: 
+        - "required"
+      fillOnStart:  
+        controller: GenericCtrl
+        params:
+          model: "Person"
+        method: getAll
+        pluck:
+          - pes_name
+          - pes_id
+      line: 2
+    profiles_prf_id:
+      type: relation
+      label: "Perfil de Acesso"
+      placeholder: "Selecione o Perfil de Acesso"
+      helper: "Perfil de Acesso desse usuário"
+      sizing: "mb-4 w-1/3"
+      groupIn: "Dados Usuário"
+      identifier: "profile"
+      validationRules: 
+        - "required"
+      fillOnStart:  
+        controller: GenericCtrl
+        params:
+          model: "Profile"
+        method: getAll
+        pluck:
+          - prf_name
+          - prf_id
+      line: 2
   buttonsConfig:
     showDeleteButton: true
     showEditButton: true

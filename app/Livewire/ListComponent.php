@@ -5,10 +5,9 @@ namespace App\Livewire;
 use App\Controllers\GenericCtrl;
 use Illuminate\Database\QueryException;
 use Livewire\Component;
-use Symfony\Component\Yaml\Yaml;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
+use App\Controllers\YamlInterpreter;
 
 /**
  * Classe para tratamento da visualização dinâmica dos registros
@@ -51,58 +50,20 @@ class ListComponent extends Component
     public $daoCtrl = null;
 
     public function renderUIViaYaml() {
-        $this->tableConfig = array();
-        $this->gridConfig = array();
-        $this->buttonsConfig = array(
-            "showSearchButton" => true,
-            "showInsertButton" => true,
-            "showEditButton" => false,
-            "showDetailsButton" => false,
-            "showDeleteButton" => false
-        );
-        $this->startsOn = "list";
+        $yamlInterpreter = new YamlInterpreter($this->params['_local']);
+        $listOutput = $yamlInterpreter->renderListUIData();
 
-        //? Carregando arquivo
-        $filePath = base_path('core/'.$this->params['_local'].'.yaml');
-        $listingConfig = array();
-        
-        if(file_exists($filePath)) {
-            $listingConfig = Yaml::parseFile($filePath)[$this->params['_local']];
-        }
-
-        //? Pegando configurações da tabela, grid e botões
-        if(key_exists('startsOn', $listingConfig)) {
-            $this->startsOn = $listingConfig['startsOn'];
-        }
-
-        if(key_exists('listingConfig', $listingConfig)) {
-            foreach ($listingConfig['listingConfig'] as $type => $data) {
-                foreach ($data as $field => $config) {
-                    $typeConfig = $type."Config";
-                    $this->$typeConfig[$field] = $config;
-                }            
-            }
-        }
-
-        if(key_exists('buttonsConfig', $listingConfig)) {
-            foreach ($listingConfig['buttonsConfig'] as $button => $data) {
-                $this->buttonsConfig[$button] = $data;
-            }
-        }
-
-        if(key_exists('formConfig', $listingConfig)) {
-            if(key_exists('view', $listingConfig['formConfig'])) {
-                $this->viewForm = $listingConfig['formConfig']['view'];
-            }
-        }
+        $this->startsOn = $listOutput['startsOn'];
+        $this->gridConfig = $listOutput['gridConfig'];
+        $this->tableConfig = $listOutput['tableConfig'];
+        $this->buttonsConfig = $listOutput['buttonsConfig'];
+        $this->viewForm = $listOutput['viewForm'];
+        $this->identifier = $listOutput['identifier'];
 
         //? Carregando o controlador dinâmicamente
-        $dao = $listingConfig['getConfig']['controller'];
-        $getMethod = $listingConfig['getConfig']['method'];
+        $dao = $listOutput['dao'];
+        $getMethod = $listOutput['getMethod'];
         $daoCtrl = app("App\\Controllers\\".$dao);
-
-        //? Marcando campo do id
-        $this->identifier = $listingConfig['identifier'];
 
         $this->listingData = $daoCtrl->$getMethod($this->params['_local']);
     }

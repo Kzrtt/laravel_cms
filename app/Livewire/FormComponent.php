@@ -6,8 +6,7 @@ use App\Controllers\GenericCtrl;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Symfony\Component\Yaml\Yaml;
-use Livewire\Attributes\On;
+use App\Controllers\YamlInterpreter;
 
 /**
  * Classe para tratamento da rendereização dos formulários de maneira dinâmica
@@ -19,23 +18,23 @@ use Livewire\Attributes\On;
 #[Layout('components.layouts.app')]
 class FormComponent extends Component
 {
-    //? Parametros usados pelo próprio livewire através das funções protected
+    //? Parametros usados pelo próprio livewire através das funções protected [YAML]
     public $rules = array();
     public $validationAttributes = array();
     public $messages = array();
-
-    //? Parametros vindo do screen-renderer através do click do botão de add
-    public $params = array();
     
-    //? Configurações para a UI do form
+    //? Configurações para a UI do form [YAML]
     public $formConfig = array();
 
-    //? Dados que vão ser carregados do form para o controller
+    //? Dados que vão ser carregados do form para o controller [YAML]
     public $formData = array();
     public $selectsPopulate = array();
 
-    //? Map associativo para construir parametro do insert
+    //? Map associativo para construir parametro do insert [YAML]
     public $identifierToField = array();
+
+    //? Parametros vindo do screen-renderer através do click do botão de add [YAML]
+    public $params = array();
 
     //* Funções para o tratamento de erros e validações do formulário
     protected function rules() {
@@ -64,63 +63,16 @@ class FormComponent extends Component
 
     public function renderUIViaYaml() {
         //? Carregando arquivo
-        $filePath = base_path('core/'.$this->params['_local'].'.yaml');
-        $formConfig = array();
+        $yamlInterpreter = new YamlInterpreter($this->params['_local']);
+        $formOutput = $yamlInterpreter->renderFormUIData();
 
-        if(file_exists($filePath)) {
-            $formConfig = Yaml::parseFile($filePath)[$this->params['_local']];
-        }
-
-        foreach ($formConfig['formConfig'] as $field => $data) {
-            //? Carregando configurações da UI do formulário
-            if(!isset($this->formConfig[$data['groupIn']])) {
-                $this->formConfig[$data['groupIn']] = array();
-            }
-
-            if(!isset($this->formConfig[$data['groupIn']][$data['line']])) {
-                $this->formConfig[$data['groupIn']][$data['line']] = array();
-            }
-
-            if($data['type'] == "select" || $data['type'] == "relation") {
-                if(!isset($this->selectsPopulate[$data['identifier']])) {
-                    $this->selectsPopulate[$data['identifier']] = array();
-                }
-
-                if(@$data['values']) {
-                    $this->selectsPopulate[$data['identifier']] = $data['values'];
-                }
-            }
-
-            //? Adicionando as validações nos campos
-            if(isset($data['validationRules'])) {
-                $validationString = "";
-                foreach ($data['validationRules'] as $validation) {
-                    if(strpos($validation, ":") !== false) {
-                        $rule = explode(":", $validation)[0];
-                    } else {
-                        $rule = $validation;
-                    }
-
-                    if($rule == "required") {
-                        $data['required'] = true;
-                    }
-
-                    $this->messages['formData.'.$data['identifier'].'.'.$rule] = getMessageForValidation($rule);
-                    $validationString.= $validation . "|";
-                }
-
-                $this->rules['formData.'.$data['identifier']] = $validationString;
-            }
-
-            $this->formConfig[$data['groupIn']][$data['line']][] = $data;
-            
-            //? Passando aliases para os campos
-            $this->validationAttributes['formData.'.$data['identifier']] = $data['label'];
-
-            //? Criando mapeamento entre identifiers e nomes no banco
-            $this->formData[$data['identifier']] = "";
-            $this->identifierToField[$data['identifier']] = $field;
-        }
+        $this->formConfig = $formOutput['formConfig'];
+        $this->selectsPopulate = $formOutput['selectsPopulate'];
+        $this->messages = $formOutput['messages'];
+        $this->rules = $formOutput['rules'];
+        $this->validationAttributes = $formOutput['validationAttributes'];
+        $this->formData = $formOutput['formData'];
+        $this->identifierToField = $formOutput['identifierToFied'];
     }
 
     public function updateRemoteField($parentIdentifier, $updateRemoteConfig) {

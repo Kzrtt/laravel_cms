@@ -13,6 +13,10 @@
             return $registry;
         }
 
+        public function getAll() {
+            return $this->model::select()->get();
+        }
+
         public function getRemoteData($value, $remoteConfig) {
             $remoteEntity = app("App\\Models\\".$remoteConfig['remoteEntity']);
         
