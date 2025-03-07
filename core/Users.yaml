@@ -141,3 +141,5 @@ Users:
   getConfig: 
     method: getAll
     controller: ListingCtrl
+    params: 
+      model: Users

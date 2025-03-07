@@ -61,8 +61,7 @@
             }
     
             //? Carregando o controlador dinâmicamente
-            $this->listOutput['dao'] = $listingConfig['getConfig']['controller'];
-            $this->listOutput['getMethod'] = $listingConfig['getConfig']['method'];
+            $this->listOutput['getConfig'] = $listingConfig['getConfig'];
     
             //? Marcando campo do id
             $this->listOutput['identifier'] = $listingConfig['identifier'];    

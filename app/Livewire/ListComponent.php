@@ -61,9 +61,9 @@ class ListComponent extends Component
         $this->identifier = $listOutput['identifier'];
 
         //? Carregando o controlador dinâmicamente
-        $dao = $listOutput['dao'];
-        $getMethod = $listOutput['getMethod'];
-        $daoCtrl = app("App\\Controllers\\".$dao);
+        $getConfig = $listOutput['getConfig'];
+        $getMethod = $getConfig['method'];
+        $daoCtrl = app()->makeWith("App\\Controllers\\".$getConfig['controller'], $getConfig['params']);
 
         $this->listingData = $daoCtrl->$getMethod($this->params['_local']);
     }

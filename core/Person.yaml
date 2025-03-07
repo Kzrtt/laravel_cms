@@ -40,6 +40,7 @@ Person:
         style: 'font-semibold'
         listingFunction: getDate
   formConfig:
+    view: "form.component"
     pes_name:
       type: string
       label: "Nome"
@@ -202,3 +203,5 @@ Person:
   getConfig:
     controller: ListingCtrl
     method: getAll
+    params: 
+      model: Person
