@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Controllers\YamlInterpreter;
+use App\Rules\ValidateCPF;
 
 /**
  * Classe para tratamento da rendereização dos formulários de maneira dinâmica
@@ -112,7 +113,7 @@ class FormComponent extends Component
                 position: "center"
             );
 
-            $this->dispatch('back')->to(ScreenRenderer::class);
+            $this->js("window.history.back()");
         } catch (ValidationException $ex) {
             $this->dispatch('alert',
                 icon: "error",

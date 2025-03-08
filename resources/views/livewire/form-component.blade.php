@@ -68,7 +68,7 @@
                                         @endif
 
                                         <!-- Texto de ajuda ou erro -->
-                                        @error('formData.name')
+                                        @error("formData." . $data['identifier'])
                                             <p class="mt-2 text-xs text-red-500 font-semibold">{{ $message }}</p>
                                         @else
                                             <p class="mt-2 text-xs text-secondary-500/60 font-semibold">{{ $data['helper'] }}</p>
