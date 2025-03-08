@@ -20,6 +20,8 @@ class Users extends Model
         'usr_email',
         'usr_password',
         'usr_level',
+        'persons_pes_id',
+        'profiles_prf_id',
     ];
 
     public function getPerson() {

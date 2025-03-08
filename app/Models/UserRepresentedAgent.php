@@ -16,9 +16,10 @@ class UserRepresentedAgent extends Model
     protected $fillable = [
         'ura_type',
         'represented_agent_id',
+        'users_usr_id'
     ];
 
     public function getUser() {
-        return $this->belongsTo(User::class, 'users_usr_id', 'usr_id');
+        return $this->belongsTo(Users::class, 'users_usr_id', 'usr_id');
     }
 }

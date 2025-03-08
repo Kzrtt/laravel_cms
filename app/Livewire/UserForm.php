@@ -5,6 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Controllers\YamlInterpreter;
+use Illuminate\Validation\ValidationException;
+use App\Controllers\GenericCtrl;
 
 #[Layout('components.layouts.app')]
 class UserForm extends Component
@@ -49,6 +51,9 @@ class UserForm extends Component
 
         $this->renderUIViaYaml();
 
+        $this->selectsPopulate['representedAgent'] = array();
+        $this->formData['representedAgent'] = "";
+
         $yamlPermissions = new YamlInterpreter('configMenu');
         $this->permissionsConfig = $yamlPermissions->getPermissionsFromConfig();
     }
@@ -64,7 +69,77 @@ class UserForm extends Component
         $this->rules = $formOutput['rules'];
         $this->validationAttributes = $formOutput['validationAttributes'];
         $this->formData = $formOutput['formData'];
-        $this->identifierToField = $formOutput['identifierToFied'];
+        $this->identifierToField = $formOutput['identifierToField'];
+    }
+
+    public function getRepresentedAgents() {
+        $profileCtrl = new GenericCtrl("Profile");
+        
+        $prfId = $this->formData['profile'];
+        $profile = $profileCtrl->getObject($prfId);
+
+        $fetchModel = "App\\Models\\".$profile->prf_entity;
+        $this->selectsPopulate['representedAgent'] = $fetchModel::select()->get()->pluck("est_fantasy", "est_id")->toArray();
+    }
+
+    public function submitForm() {
+        try {
+            $this->validate();
+
+            //? Criação do Usuário
+            $formData = array();
+            $genericCtrl = new GenericCtrl($this->params['_local']);
+            $profileCtrl = new GenericCtrl("Profile");
+            $userRepresentedAgentCtrl = new GenericCtrl("UserRepresentedAgent");
+
+            $profile = $profileCtrl->getObject($this->formData['profile']);
+
+            foreach ($this->formData as $identifier => $value) {
+                if($identifier == "representedAgent") {
+                    continue;
+                }
+                
+                $formData[$this->identifierToField[$identifier]] = $value;
+            }
+
+            $formData['usr_level'] = $profile->prf_entity;
+
+            $user = $genericCtrl->save($formData);
+
+            $userRepresentedAgentCtrl->save(
+                array(
+                    'ura_type' => $profile->prf_entity,
+                    'represented_agent_id' => $this->formData['representedAgent'],
+                    'users_usr_id' => $user->usr_id,
+                )
+            );
+
+            //? Atribuição das Permissões
+
+            $this->reset('formData');
+
+            $this->dispatch('alert',
+                icon: "success",
+                title: "Sucesso!",
+                position: "center"
+            );
+
+            $this->js("window.history.back()");
+        } catch (ValidationException $ex) {
+            $this->dispatch('alert',
+                icon: "error",
+                title: "Erro no Formulário",
+                text: $ex->validator->errors()->first(),
+                position: "center"
+            );
+        } catch (\Exception $ex) {
+            $this->dispatch('alert',
+                icon: "error",
+                title: "Erro Inesperado",
+                text: $ex->getMessage(),
+                position: "center"
+            );
+        }   
     }
     
     public function render()

@@ -13,6 +13,10 @@
             return $registry;
         }
 
+        public function getObject($id) {
+            return $this->model::find($id);
+        }
+
         public function getAll() {
             return $this->model::select()->get();
         }

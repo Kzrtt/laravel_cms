@@ -105,7 +105,7 @@ use Symfony\Component\Yaml\Yaml;
             $this->formOutput['rules'] = array();
             $this->formOutput['validationAttributes'] = array();
             $this->formOutput['formData'] = array();
-            $this->formOutput['identifierToFied'] = array();
+            $this->formOutput['identifierToField'] = array();
             
             //? Carregando arquivo
             $formConfig = array();

@@ -19,6 +19,6 @@ class UserPermission extends Model
     ];
 
     public function getUser() {
-        return $this->belongsTo(User::class, 'users_usr_id', 'usr_id');
+        return $this->belongsTo(Users::class, 'users_usr_id', 'usr_id');
     }
 }

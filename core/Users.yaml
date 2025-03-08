@@ -75,11 +75,11 @@ Users:
     usr_password:
       type: string
       label: "Senha"
-      placeholder: "Informe o Email"
-      helper: "Email do Usuário"
+      placeholder: "Informe a Senha"
+      helper: "Senha do Usuário"
       groupIn: "Dados Usuário"
       sizing: "mb-4 w-full max-w-md"
-      identifier: "email"
+      identifier: "password"
       validationRules: 
         - "required"
       line: 1
@@ -123,6 +123,8 @@ Users:
       identifier: "profile"
       validationRules: 
         - "required"
+      updateRemoteField:
+        customRemote: getRepresentedAgents
       fillOnStart:  
         controller: GenericCtrl
         params:

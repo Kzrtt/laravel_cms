@@ -14,8 +14,8 @@ Profile:
         labelStyle: 'font-semibold text-primary-400 text-md'
         fieldStyle: ''
         html: 'p'
-      prf_level:
-        name: Nível
+      prf_entity:
+        name: Entidade
         labelStyle: 'font-semibold text-primary-400 text-md'
         fieldStyle: 'mt-1'
         html: 'p'
@@ -26,8 +26,8 @@ Profile:
       prf_name:
         name: Nome
         style: "font-semibold"
-      prf_level:
-        name: Nível
+      prf_entity:
+        name: Entidade
         style: "font-semibold"
       prf_status:
         name: Status

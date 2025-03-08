@@ -19,6 +19,6 @@ class Profile extends Model
     protected $fillable = [
         'prf_name',
         'prf_status',
-        'prf_level',
+        'prf_entity',
     ];
 }
