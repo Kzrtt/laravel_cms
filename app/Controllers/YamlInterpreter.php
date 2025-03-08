@@ -8,10 +8,38 @@
         public $file = "";
         public $formOutput = array();
         public $listOutput = array();
+        public $permissionsOutput = array();
 
         public function __construct($local) {
             $this->local = $local;
             $this->file = base_path('core/'.$this->local.'.yaml');
+        }
+
+        public function getPermissionsFromConfig() {
+            $permissionsConfig = array();
+            if(file_exists($this->file)) {
+                $permissionsConfig = Yaml::parseFile($this->file)['Areas'];
+            }
+
+            foreach ($permissionsConfig as $group => $data) {
+                if(!isset($this->permissionsOutput[$group])) {
+                    $this->permissionsOutput[$group] = array(
+                        "name" => $data['name'],
+                        "subItens" => array(),
+                    );
+                }
+
+                foreach ($data['subItens'] as $area => $areaData) {
+                    if(!isset($this->permissionsOutput[$group][$area])) {
+                        $this->permissionsOutput[$group]['subItens'][] = array(
+                            "name" => $areaData['name'],
+                            "permissions" => $areaData['actions'],
+                        );
+                    }
+                }
+            }
+
+            return $this->permissionsOutput;
         }
 
         public function renderListUIData() {
@@ -119,7 +147,7 @@
 
                 //? Adicionando as validações nos campos
                 if(isset($data['validationRules'])) {
-                    $validationString = "";
+                    $validationArray = array();
                     foreach ($data['validationRules'] as $validation) {
                         if(strpos($validation, ":") !== false) {
                             $rule = explode(":", $validation)[0];
@@ -132,10 +160,16 @@
                         }
     
                         $this->formOutput['messages']['formData.'.$data['identifier'].'.'.$rule] = getMessageForValidation($rule);
-                        $validationString.= $validation . "|";
+                        $validationArray[] = $validation;
+                    }
+
+                    if(@$data['customValidation']) {
+                        $customRule = app("App\\Rules\\".$data['customValidation']);
+                        $object = new $customRule;
+                        $validationArray[] = $object;
                     }
     
-                    $this->formOutput['rules']['formData.'.$data['identifier']] = $validationString;
+                    $this->formOutput['rules']['formData.'.$data['identifier']] = $validationArray;
                 }
     
                 $this->formOutput['formConfig'][$data['groupIn']][$data['line']][] = $data;

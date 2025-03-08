@@ -81,6 +81,7 @@ Person:
       sizing: "mb-4 w-full max-w-md"
       groupIn: "Dados Pessoais"
       identifier: "cpf"
+      customValidation: ValidateCPF
       validationRules: 
         - "required"
       line: 2

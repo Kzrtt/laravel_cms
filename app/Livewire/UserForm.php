@@ -24,6 +24,8 @@ class UserForm extends Component
     //? Map associativo para construir parametro do insert [YAML]
     public $identifierToField = array();
 
+    public $permissionsConfig = array();
+
     public $params = array();
 
     protected function rules() {
@@ -46,6 +48,9 @@ class UserForm extends Component
         $this->identifierToField = array();
 
         $this->renderUIViaYaml();
+
+        $yamlPermissions = new YamlInterpreter('configMenu');
+        $this->permissionsConfig = $yamlPermissions->getPermissionsFromConfig();
     }
 
     public function renderUIViaYaml() {

@@ -1,9 +1,9 @@
 <?php
 
+use App\Livewire\Dashboard;
 use App\Livewire\FormComponent;
 use App\Livewire\ListComponent;
 use App\Livewire\Roles;
-use App\Livewire\ScreenRenderer;
 use App\Livewire\UserForm;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', ScreenRenderer::class);
+Route::get('/', Dashboard::class);
 Route::get('{local}/List', ListComponent::class)->name("list.component");
 Route::get('{local}/Form', FormComponent::class)->name("form.component");
 Route::get('{local}/UserForm', UserForm::class)->name("user-form");

@@ -17,4 +17,18 @@
             return isset($validationMap[$rule]) ? $validationMap[$rule] : "Erro no campo :attribute";
         }
     }
+
+    if(!function_exists("getFriendlyPermission")) {
+        function getFriendlyPermission($permission) {
+            $permissionMap = array(
+                "Consult" => "Consultar",
+                "Insert" => "Inserir",
+                "Delete" => "Deletar",
+                "Edit" => "Edição",
+            );
+
+            return isset($permissionMap[$permission]) ? $permissionMap[$permission] : "?";
+        }
+    }
+
 ?>

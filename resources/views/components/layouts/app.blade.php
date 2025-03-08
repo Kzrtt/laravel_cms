@@ -12,6 +12,8 @@
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
+        <wireui:scripts />
+
         @livewireStyles
         @vite(['resources/css/app.css', 'public/css/font-awesome-pro-master.min.css?v=0.0.1'])
     </head>

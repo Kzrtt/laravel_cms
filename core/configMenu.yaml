@@ -7,13 +7,19 @@ Areas:
         description: Gerenciamento de funções e permissões
         customView: roles
         icon: fad fa-user-shield
-        actions: [Consult, Update, Insert, Delete]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
         showIf: session@level=Administrator
       Reports:
         name: Relatórios
         description: Visualização de relatórios gerenciais
         icon: fad fa-chart-line
-        actions: [Consult, Export]
+        actions: 
+          - Consult
+          - Insert
         showIf: session@level in [Administrator, Manager]
 
   Financeiro:
@@ -23,19 +29,29 @@ Areas:
         name: Faturas
         description: Gestão de faturas e pagamentos
         icon: fad fa-file-invoice-dollar
-        actions: [Consult, Update, Insert, Delete]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
         showIf: session@level in [Administrator, Finance]
       Expenses:
         name: Despesas
         description: Controle de despesas operacionais
         icon: fad fa-money-bill-wave
-        actions: [Consult, Update, Insert, Delete]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
         showIf: session@level in [Administrator, Finance]
       Budget:
         name: Orçamento
         description: Planejamento e acompanhamento orçamentário
         icon: fad fa-wallet
-        actions: [Consult, Update]
+        actions: 
+          - Consult
+          - Insert
         showIf: session@level in [Administrator]
 
   RecursosHumanos:
@@ -45,19 +61,26 @@ Areas:
         name: Funcionários
         description: Cadastro e gerenciamento de funcionários
         icon: fad fa-users
-        actions: [Consult, Update, Insert, Delete]
+        actions: 
+          - Consult
         showIf: session@level in [Administrator, HR]
       Payroll:
         name: Folha de Pagamento
         description: Processamento da folha de pagamento
         icon: fad fa-file-invoice
-        actions: [Consult, Update, Generate]
+        actions: 
+          - Consult
+          - Insert
+          - Edit
         showIf: session@level in [HR]
       Recruitment:
         name: Recrutamento
         description: Gestão de processos seletivos
         icon: fad fa-user-plus
-        actions: [Consult, Update, Insert, Delete]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
         showIf: session@level in [Administrator, HR, Recruiter]
 
   TI:
@@ -67,47 +90,77 @@ Areas:
         name: Servidores
         description: Monitoramento e configuração de servidores
         icon: fad fa-server
-        actions: [Consult, Update, Restart]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
         showIf: session@level in [Administrator]
       Network:
         name: Rede
         description: Gerenciamento de dispositivos de rede
         icon: fad fa-network-wired
-        actions: [Consult, Update]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
         showIf: session@level in [Administrator, IT]
       Support:
         name: Suporte
         description: Atendimento e resolução de tickets de suporte
         icon: fad fa-headset
-        actions: [Consult, Update, Close]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
         showIf: session@level in [Administrator, IT, Support]
   
   Sistema:
+    name: Sistema
     subItens:
       Profile:
         name: Perfis de Acesso
         description: Área de controle de perfis de acesso
         icon: fad fa-lock
-        actions: [Consult, Update, Insert]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
         showIf: session@level in [Administrator, Entity]
       Users:
         name: Usuários
         description: Área de gestão de usuários
         icon: fad fa-user-shield
-        actions: [Consult, Update, Insert, Delete]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
         showIf: session@level in [Administrator, Entity]
       Person:
         name: Operadores
         description: Área de gestão de operadores
         icon: fad fa-user-circle
-        actions: [Consult, Update, Insert, Delete]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
         showIf: session@level in [Administrator, Entity]
 
   Notifications:
+    name: Notificações
     subItens:
       Notification:
         name: Notificações
         description: Área de controle das notificações
         icon: fad fa-bell
-        actions: [Consult]
+        actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
 
