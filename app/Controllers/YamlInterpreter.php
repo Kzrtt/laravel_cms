@@ -46,6 +46,7 @@ use Symfony\Component\Yaml\Yaml;
         public function renderListUIData() {
             $this->listOutput['tableConfig'] = array();
             $this->listOutput['gridConfig'] = array();
+            $this->listOutput['additionalSingleActions'] = array();
             $this->listOutput['buttonsConfig'] = array(
                 "showSearchButton" => true,
                 "showInsertButton" => true,
@@ -86,6 +87,12 @@ use Symfony\Component\Yaml\Yaml;
             if(key_exists('formConfig', $listingConfig)) {
                 if(key_exists('view', $listingConfig['formConfig'])) {
                     $this->listOutput['viewForm'] = $listingConfig['formConfig']['view'];
+                }
+            }
+
+            if(isset($listingConfig['additionalSingleActions'])) {
+                foreach ($listingConfig['additionalSingleActions'] as $name => $data) {
+                    $this->listOutput['additionalSingleActions'][$name] = $data;
                 }
             }
     
@@ -172,7 +179,7 @@ use Symfony\Component\Yaml\Yaml;
     
                     $this->formOutput['rules']['formData.'.$data['identifier']] = $validationArray;
                 }
-    
+
                 $this->formOutput['formConfig'][$data['groupIn']][$data['line']][] = $data;
                 
                 //? Passando aliases para os campos

@@ -32,6 +32,7 @@ class ListComponent extends Component
     //? Configurações da tabela, grid e botões da tela
     public $tableConfig = array();
     public $gridConfig = array();
+    public $additionalSingleData = array();
     public $buttonsConfig = array(
         "showSearchButton" => true,
         "showInsertButton" => true,
@@ -59,6 +60,7 @@ class ListComponent extends Component
         $this->buttonsConfig = $listOutput['buttonsConfig'];
         $this->viewForm = $listOutput['viewForm'];
         $this->identifier = $listOutput['identifier'];
+        $this->additionalSingleData = $listOutput['additionalSingleActions'];
 
         //? Carregando o controlador dinâmicamente
         $getConfig = $listOutput['getConfig'];

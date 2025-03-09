@@ -121,6 +121,16 @@
                                                     <i class="fad fa-trash-alt text-xl p-1"></i>
                                                 </button>
                                             @endif
+
+                                            @if(isset($additionalSingleData))
+                                                @foreach ($additionalSingleData as $name => $buttonData)
+                                                    <button 
+                                                        wire:click=""
+                                                        class="{{ $buttonData['style'] }}">
+                                                        <i class="{{ $buttonData['icon'] }} text-xl p-1"></i>
+                                                    </button>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -170,7 +180,7 @@
                                         @endforeach
                                     </div>
 
-                                    <div class="flex flex-row justify-end space-x-2 mt-8 mb-4 mr-4">
+                                    <div class="flex flex-wrap gap-2 justify-end mt-8 mb-4 mr-4">
                                         @if($buttonsConfig['showDetailsButton'])
                                             <button class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:bg-blue-500 hover:shadow-sm">
                                                 <i class="fad fa-info-circle text-xl p-1"></i>
@@ -189,6 +199,16 @@
                                                 class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm">
                                                 <i class="fad fa-trash-alt text-xl p-1"></i>
                                             </button>
+                                        @endif
+
+                                        @if(isset($additionalSingleData))
+                                            @foreach ($additionalSingleData as $name => $buttonData)
+                                                <button 
+                                                    @click="{{ $buttonData['onTap'] }}"
+                                                    class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:bg-blue-500 hover:shadow-sm">
+                                                    <i class="{{ $buttonData['icon'] }} text-xl p-1"></i>
+                                                </button>
+                                            @endforeach
                                         @endif
                                     </div>
                                 </div>
