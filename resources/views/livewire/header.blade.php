@@ -7,8 +7,8 @@
             <div class="flex items-center justify-between pb-0">
                 
                 <!-- Logo -->
-                <div class="flex items-center space-x-10 mt-1">
-                    <div class="flex items-center">
+                <div class="flex items-center space-x-10 mt-1 hover:cursor-pointer">
+                    <div @click="window.location.href = '/'" class="flex items-center">
                         <img src="{{ url('images/laravel_logo.png') }}" class="h-15 w-23">
                         <span class="text-xl font-bold text-primary-900/50 mt-1">LaravelCMS</span>
                     </div>
@@ -57,7 +57,7 @@
 
     <div class="bg-white py-3">
         <div class="container mx-auto space-x-4 ml-52">
-            <button @click="selectedSubTab = ''" class="p-2 rounded-lg bg-primary-200/55">
+            <button @click="selectedSubTab = ''; window.location.href = '/'" class="p-2 rounded-lg bg-primary-200/55 hover:cursor-pointer">
                 <i class="fad fa-home text-primary-600 p-1"></i>&nbsp;<span class="text-primary-600 font-semibold">Home</span>&nbsp;
             </button>
 
