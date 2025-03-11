@@ -73,7 +73,7 @@ class FormComponent extends Component
         $this->rules = $formOutput['rules'];
         $this->validationAttributes = $formOutput['validationAttributes'];
         $this->formData = $formOutput['formData'];
-        $this->identifierToField = $formOutput['identifierToFied'];
+        $this->identifierToField = $formOutput['identifierToField'];
     }
 
     public function updateRemoteField($parentIdentifier, $updateRemoteConfig) {
