@@ -1,3 +1,18 @@
-<div>
+<div class="flex flex-col justify-center items-center">
     <h1>Dashboard</h1>
+
+    <div class="w-100">
+        <x-select label="Order Status" placeholder="Select one status"
+            :options="[
+                ['name' => 'Active', 'id' => 1, 'description' => 'The status is active'],
+                ['name' => 'Pending', 'id' => 2, 'description' => 'The status is pending'],
+                ['name' => 'Stuck', 'id' => 3, 'description' => 'The status is stuck'],
+                ['name' => 'Done', 'id' => 4, 'description' => 'The status is done'],
+            ]" option-label="name" option-value="id"
+        />
+    </div>
+
+    <div class="mt-10">
+        <x-custom-button color="primary" click="" clickType="wire" text="teste"/>
+    </div>
 </div>  

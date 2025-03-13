@@ -27,7 +27,7 @@
                                 'bg-primary-300/20 text-primary-400': listingMode === 'list',
                                 'hover:bg-gray-300/20 text-gray-400': listingMode !== 'list'
                             }"
-                            class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm">
+                            class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm hover:cursor-pointer">
 
                             <i class="fad fa-th-list  text-2xl p-1"></i>
                         </button>
@@ -37,14 +37,14 @@
                                 'bg-primary-300/20 text-primary-400': listingMode === 'grid',
                                 'hover:bg-gray-300/20 text-gray-400': listingMode !== 'grid'
                             }" 
-                            class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm">
+                            class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm hover:cursor-pointer">
                             <i class="fad fa-th-large text-2xl p-1"></i>
                         </button>
                     </div>
 
                     <div class="space-x-4">
                         @if($buttonsConfig['showSearchButton'])
-                            <button class="bg-primary-300 text-white p-2 px-4 rounded-lg">
+                            <button class="bg-primary-300 text-white p-2 px-4 rounded-lg hover:cursor-pointer">
                                 <i class="fad fa-search p-1"></i>
                                 &nbsp;<span class="font-semibold">Buscar</span>&nbsp;
                             </button>
@@ -53,7 +53,7 @@
                         @if($buttonsConfig['showInsertButton'])
                             <button
                                 wire:click="addNew"
-                                class="bg-primary-200/55 text-primary-600 p-2 px-4 rounded-lg hover:bg-primary-300 hover:text-white transition">
+                                class="bg-primary-200/55 text-primary-600 p-2 px-4 rounded-lg hover:bg-primary-300 hover:text-white transition hover:cursor-pointer">
                                 <i class="fad fa-plus-circle p-1"></i>
                                 <span class="font-semibold">Adicionar</span>&nbsp;
                             </button>
@@ -103,13 +103,13 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="w-full flex justify-end space-x-2">
                                             @if($buttonsConfig['showDetailsButton'])
-                                                <button class="p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:bg-blue-500 hover:shadow-sm">
+                                                <button class="p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:bg-blue-500 hover:shadow-sm hover:cursor-pointer">
                                                     <i class="fad fa-info-circle text-xl p-1"></i>
                                                 </button>
                                             @endif
 
                                             @if($buttonsConfig['showEditButton'])
-                                                <button class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm">
+                                                <button class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm hover:cursor-pointer">
                                                     <i class="fad fa-edit text-xl p-1"></i>
                                                 </button>
                                             @endif
@@ -117,7 +117,7 @@
                                             @if($buttonsConfig['showDeleteButton'])
                                                 <button 
                                                     wire:click="delete({{$object->$identifier}})"
-                                                    class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm">
+                                                    class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm hover:cursor-pointer">
                                                     <i class="fad fa-trash-alt text-xl p-1"></i>
                                                 </button>
                                             @endif
@@ -182,13 +182,13 @@
 
                                     <div class="flex flex-wrap gap-2 justify-end mt-8 mb-4 mr-4">
                                         @if($buttonsConfig['showDetailsButton'])
-                                            <button class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:bg-blue-500 hover:shadow-sm">
+                                            <button class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:cursor-pointer hover:bg-blue-500 hover:shadow-sm">
                                                 <i class="fad fa-info-circle text-xl p-1"></i>
                                             </button>
                                         @endif
 
                                         @if($buttonsConfig['showEditButton'])
-                                            <button class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm">
+                                            <button class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:cursor-pointer hover:text-white hover:bg-success-500 hover:shadow-sm">
                                                 <i class="fad fa-edit  text-xl p-1"></i>
                                             </button>
                                         @endif
@@ -196,7 +196,7 @@
                                         @if($buttonsConfig['showDeleteButton'])
                                             <button 
                                                 wire:click="delete({{$object->$identifier}})"
-                                                class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm">
+                                                class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:cursor-pointer hover:text-white hover:bg-primary-500 hover:shadow-sm">
                                                 <i class="fad fa-trash-alt text-xl p-1"></i>
                                             </button>
                                         @endif
