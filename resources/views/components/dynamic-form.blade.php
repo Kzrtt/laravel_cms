@@ -16,7 +16,11 @@
                                     wire:model.lazy="formData.{{ $data['identifier'] }}"
 
                                     @isset($data['updateRemoteField'])
-                                        wire:change="updateRemoteField('{{ $data['identifier'] }}', @js($data['updateRemoteField']) )"
+                                        @if (@$data['updateRemoteField']['customRemote'])
+                                            wire:change="{{ $data['updateRemoteField']['customRemote'] }}()"
+                                        @else
+                                            wire:change="updateRemoteField('{{ $data['identifier'] }}', @js($data['updateRemoteField']) )"
+                                        @endif
                                     @endisset
 
                                     placeholder="Selecione o {{ $data['label'] }}"

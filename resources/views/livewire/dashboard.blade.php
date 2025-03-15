@@ -12,7 +12,27 @@
         />
     </div>
 
-    <div class="mt-10">
-        <x-custom-button color="primary" click="" clickType="wire" text="teste"/>
+    <div class="mt-10 space-x-4">
+        <x-custom-button 
+            color="primary" 
+            click="console.log('teste');" 
+            clickType="alpine" 
+            text="teste"
+            icon="fad fa-yin-yang"
+        />
+
+        <x-custom-button 
+            color="secondary" 
+            click="console.log('teste');" 
+            clickType="alpine" 
+            text="teste"
+        />
+
+        <x-custom-button 
+            color="warning" 
+            click="console.log('teste');" 
+            clickType="alpine" 
+            text="teste"
+        />
     </div>
 </div>  

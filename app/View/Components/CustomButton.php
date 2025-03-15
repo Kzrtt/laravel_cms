@@ -12,16 +12,18 @@ class CustomButton extends Component
     public $click;
     public $clickType;
     public $text;
+    public $icon;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($color, $click, $clickType, $text)
+    public function __construct($color, $click, $clickType, $text, $icon = "fad fa-home")
     {   
         $this->color = $color;
         $this->click = $click;
         $this->clickType = $clickType;
         $this->text = $text;
+        $this->icon = $icon;
     }
 
     /**

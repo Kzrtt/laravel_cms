@@ -204,8 +204,8 @@
                                         @if(isset($additionalSingleData))
                                             @foreach ($additionalSingleData as $name => $buttonData)
                                                 <button 
-                                                    @click="{{ $buttonData['onTap'] }}"
-                                                    class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:bg-blue-500 hover:shadow-sm">
+                                                    :wire:click="{{ $buttonData['onTap'] }}"
+                                                    class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:cursor-pointer hover:text-white hover:bg-blue-500 hover:shadow-sm">
                                                     <i class="{{ $buttonData['icon'] }} text-xl p-1"></i>
                                                 </button>
                                             @endforeach

@@ -72,6 +72,10 @@ class UserForm extends Component
         $this->identifierToField = $formOutput['identifierToField'];
     }
 
+    public function redirectToPermissions() {
+        
+    }
+
     public function getRepresentedAgents() {
         $profileCtrl = new GenericCtrl("Profile");
         
