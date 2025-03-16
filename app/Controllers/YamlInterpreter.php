@@ -34,6 +34,7 @@ use Symfony\Component\Yaml\Yaml;
                     if(!isset($this->permissionsOutput[$group][$area])) {
                         $this->permissionsOutput[$group]['subItens'][] = array(
                             "name" => $areaData['name'],
+                            "area" => $area,
                             "permissions" => $areaData['actions'],
                         );
                     }

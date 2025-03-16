@@ -24,4 +24,4 @@ Route::get('{local}/List', ListComponent::class)->name("list.component");
 Route::get('{local}/Form/{id?}', FormComponent::class)->name("form.component");
 Route::get('{local}/UserForm/{id?}', UserForm::class)->name("user-form");
 Route::get('{local}/ListRoles', Roles::class)->name("roles");
-Route::get('PermissionAssign/{id}', PermissionAssignScreen::class)->name("permission.assign");
+Route::get('PermissionAssign/{id}', PermissionAssignScreen::class)->name("permission-assign");

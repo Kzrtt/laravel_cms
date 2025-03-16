@@ -91,6 +91,10 @@ class ListComponent extends Component
         return redirect()->route($route, ["local" => $this->params['_local'], "id" => $id]);
     }
 
+    public function redirectTo($route, $id) {
+        return redirect()->route($route, ["id" => $id]);
+    }
+
     //* Função que remove um registro
     public function delete($id) {
         //TODO::Implementar validação de permissão para o delete com o Auth

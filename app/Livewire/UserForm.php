@@ -28,8 +28,6 @@ class UserForm extends Component
     //? Map associativo para construir parametro do insert [YAML]
     public $identifierToField = array();
 
-    public $permissionsConfig = array();
-
     public $params = array();
 
     protected function rules() {
@@ -56,9 +54,6 @@ class UserForm extends Component
 
         $this->selectsPopulate['representedAgent'] = array();
         $this->formData['representedAgent'] = "";
-
-        $yamlPermissions = new YamlInterpreter('configMenu');
-        $this->permissionsConfig = $yamlPermissions->getPermissionsFromConfig();
 
         if(!is_null($id)) {
             $genericCtrl = new GenericCtrl($local);
@@ -110,10 +105,6 @@ class UserForm extends Component
         $this->formData = $formOutput['formData'];
         $this->identifierToField = $formOutput['identifierToField'];
         $this->remoteUpdates = $formOutput['remoteUpdates'];
-    }
-
-    public function redirectToPermissions() {
-        
     }
 
     public function getRepresentedAgents() {
