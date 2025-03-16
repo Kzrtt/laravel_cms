@@ -29,7 +29,7 @@
                                 >
                                     <option value="">Selecionar...</option>
                                     @foreach ($selectsPopulate[$data['identifier']] as $key => $value)
-                                        <option value="{{ $key }}">{{ $value }}</option>
+                                        <option value="{{ $key }}" {{ $formData[$data['identifier']] == $key ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             @else

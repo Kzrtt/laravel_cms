@@ -113,6 +113,7 @@ use Symfony\Component\Yaml\Yaml;
             $this->formOutput['validationAttributes'] = array();
             $this->formOutput['formData'] = array();
             $this->formOutput['identifierToField'] = array();
+            $this->formOutput['remoteUpdates'] = array();
             
             //? Carregando arquivo
             $formConfig = array();
@@ -178,6 +179,10 @@ use Symfony\Component\Yaml\Yaml;
                     }
     
                     $this->formOutput['rules']['formData.'.$data['identifier']] = $validationArray;
+                }
+
+                if(isset($data['updateRemoteField'])) {
+                    $this->formOutput['remoteUpdates'][$data['identifier']] = $data['updateRemoteField'];
                 }
 
                 $this->formOutput['formConfig'][$data['groupIn']][$data['line']][] = $data;

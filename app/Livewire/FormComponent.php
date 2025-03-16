@@ -7,7 +7,6 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Controllers\YamlInterpreter;
-use App\Rules\ValidateCPF;
 
 /**
  * Classe para tratamento da rendereização dos formulários de maneira dinâmica
@@ -30,6 +29,7 @@ class FormComponent extends Component
     //? Dados que vão ser carregados do form para o controller [YAML]
     public $formData = array();
     public $selectsPopulate = array();
+    public $remoteUpdates = array();
 
     //? Map associativo para construir parametro do insert [YAML]
     public $identifierToField = array();
@@ -47,10 +47,11 @@ class FormComponent extends Component
     }
 
     //* Função que carrega os dados na tela
-    public function mount($local) {
+    public function mount($local, $id = null) {
         //? Recebendo parametros
         $this->params = session('params');
         $this->params['_local'] = $local;
+        $this->params['_id'] = $id;
 
         $this->rules = array();
         $this->validationAttributes = array();
@@ -60,6 +61,35 @@ class FormComponent extends Component
         $this->identifierToField = array();
 
         $this->renderUIViaYaml();
+
+        if(!is_null($id)) {
+            $genericCtrl = new GenericCtrl($local);
+            $className = "App\\Models\\".$local;
+            $object = $genericCtrl->getObject($id);
+            
+            if($object instanceof $className) {
+                $converted = [];
+                $objectArray = $object->toArray();
+
+                foreach ($this->identifierToField as $friendlyKey => $dbKey) {
+                    $converted[$friendlyKey] = array_key_exists($dbKey, $objectArray) ? $objectArray[$dbKey] : null;
+                }
+
+                $this->formData = array_merge($this->formData, $converted);
+            }
+
+            foreach ($this->remoteUpdates as $identifier => $remoteConfig) {
+                if (!empty($this->formData[$identifier])) {
+                    if (!empty($remoteConfig['customRemote'])) {
+                        $customMethod = $remoteConfig['customRemote'];
+                        $this->{$customMethod}();
+                    } else {
+                        $this->updateRemoteField($identifier, $remoteConfig);
+                    }
+                }
+            }
+            
+        }
     }
 
     public function renderUIViaYaml() {
@@ -74,6 +104,7 @@ class FormComponent extends Component
         $this->validationAttributes = $formOutput['validationAttributes'];
         $this->formData = $formOutput['formData'];
         $this->identifierToField = $formOutput['identifierToField'];
+        $this->remoteUpdates = $formOutput['remoteUpdates'];
     }
 
     public function updateRemoteField($parentIdentifier, $updateRemoteConfig) {
@@ -103,9 +134,12 @@ class FormComponent extends Component
                 $formData[$this->identifierToField[$identifier]] = $value;
             }
 
-            $genericCtrl->save($formData);
-
-            $this->reset('formData');
+            if(!is_null($this->params['_id'])) {
+                $genericCtrl->update($this->params['_id'], $formData);
+            } else {
+                $genericCtrl->save($formData);
+                $this->reset('formData');
+            }
 
             $this->dispatch('alert',
                 icon: "success",

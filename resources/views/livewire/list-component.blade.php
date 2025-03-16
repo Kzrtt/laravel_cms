@@ -109,7 +109,9 @@
                                             @endif
 
                                             @if($buttonsConfig['showEditButton'])
-                                                <button class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm hover:cursor-pointer">
+                                                <button
+                                                    wire:click="editRegistry({{ $object->$identifier }})"
+                                                    class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm hover:cursor-pointer">
                                                     <i class="fad fa-edit text-xl p-1"></i>
                                                 </button>
                                             @endif
@@ -188,7 +190,9 @@
                                         @endif
 
                                         @if($buttonsConfig['showEditButton'])
-                                            <button class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:cursor-pointer hover:text-white hover:bg-success-500 hover:shadow-sm">
+                                            <button
+                                                wire:click="editRegistry({{ $object->$identifier }})"
+                                                class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:cursor-pointer hover:text-white hover:bg-success-500 hover:shadow-sm">
                                                 <i class="fad fa-edit  text-xl p-1"></i>
                                             </button>
                                         @endif

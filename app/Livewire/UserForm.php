@@ -7,6 +7,7 @@ use Livewire\Attributes\Layout;
 use App\Controllers\YamlInterpreter;
 use Illuminate\Validation\ValidationException;
 use App\Controllers\GenericCtrl;
+use App\Models\UserRepresentedAgent;
 
 #[Layout('components.layouts.app')]
 class UserForm extends Component
@@ -22,6 +23,7 @@ class UserForm extends Component
     //? Dados que vão ser carregados do form para o controller [YAML]
     public $formData = array();
     public $selectsPopulate = array();
+    public $remoteUpdates = array();
 
     //? Map associativo para construir parametro do insert [YAML]
     public $identifierToField = array();
@@ -38,9 +40,10 @@ class UserForm extends Component
         return $this->messages;
     }
 
-    public function mount($local) {
+    public function mount($local, $id = null) {
         $this->params = session('params');
         $this->params['_local'] = $local;
+        $this->params['_id'] = $id;
 
         $this->rules = array();
         $this->validationAttributes = array();
@@ -56,6 +59,42 @@ class UserForm extends Component
 
         $yamlPermissions = new YamlInterpreter('configMenu');
         $this->permissionsConfig = $yamlPermissions->getPermissionsFromConfig();
+
+        if(!is_null($id)) {
+            $genericCtrl = new GenericCtrl($local);
+            $userRepresentedAgentCtrl = new GenericCtrl("UserRepresentedAgent");
+
+            $className = "App\\Models\\".$local;
+            $object = $genericCtrl->getObject($id);
+            $representedAgent = $userRepresentedAgentCtrl->getObjectByFields(
+                ["ura_type", "users_usr_id"],
+                [$object->usr_level, $object->usr_id]
+            );
+            
+            if($object instanceof $className) {
+                $converted = [];
+                $objectArray = $object->toArray();
+
+                foreach ($this->identifierToField as $friendlyKey => $dbKey) {
+                    $converted[$friendlyKey] = array_key_exists($dbKey, $objectArray) ? $objectArray[$dbKey] : null;
+                }
+
+                $this->formData = array_merge($this->formData, $converted);
+                $this->formData['representedAgent'] = $representedAgent->represented_agent_id;
+            }
+
+            foreach ($this->remoteUpdates as $identifier => $remoteConfig) {
+                if (!empty($this->formData[$identifier])) {
+                    if (!empty($remoteConfig['customRemote'])) {
+                        $customMethod = $remoteConfig['customRemote'];
+                        $this->{$customMethod}();
+                    } else {
+                        $this->updateRemoteField($identifier, $remoteConfig);
+                    }
+                }
+            }
+            
+        }
     }
 
     public function renderUIViaYaml() {
@@ -70,6 +109,7 @@ class UserForm extends Component
         $this->validationAttributes = $formOutput['validationAttributes'];
         $this->formData = $formOutput['formData'];
         $this->identifierToField = $formOutput['identifierToField'];
+        $this->remoteUpdates = $formOutput['remoteUpdates'];
     }
 
     public function redirectToPermissions() {
@@ -108,19 +148,40 @@ class UserForm extends Component
 
             $formData['usr_level'] = $profile->prf_entity;
 
-            $user = $genericCtrl->save($formData);
+            if(!is_null($this->params['_id'])) {
+                $user = $genericCtrl->update($this->params['_id'], $formData);
+                $uraClass = "App\\Models\\UserRepresentedAgent";
+                $representedAgent = $userRepresentedAgentCtrl->getObjectByFields(
+                    ["ura_type", "users_usr_id"],
+                    [$user->usr_level, $user->usr_id],
+                );
 
-            $userRepresentedAgentCtrl->save(
-                array(
-                    'ura_type' => $profile->prf_entity,
-                    'represented_agent_id' => $this->formData['representedAgent'],
-                    'users_usr_id' => $user->usr_id,
-                )
-            );
+                if($representedAgent instanceof $uraClass) {
+                    if($representedAgent->represented_agent_id != $this->formData['representedAgent']) {
+                        $userRepresentedAgentCtrl->save(
+                            array(
+                                'ura_type' => $profile->prf_entity,
+                                'represented_agent_id' => $this->formData['representedAgent'],
+                                'users_usr_id' => $user->usr_id,
+                            )
+                        );
 
-            //? Atribuição das Permissões
+                        $userRepresentedAgentCtrl->delete($representedAgent->ura_id);
+                    }
+                }
+            } else {
+                $user = $genericCtrl->save($formData);
+                $userRepresentedAgentCtrl->save(
+                    array(
+                        'ura_type' => $profile->prf_entity,
+                        'represented_agent_id' => $this->formData['representedAgent'],
+                        'users_usr_id' => $user->usr_id,
+                    )
+                );
 
-            $this->reset('formData');
+                $this->reset('formData');
+            }
+            
 
             $this->dispatch('alert',
                 icon: "success",
@@ -140,7 +201,7 @@ class UserForm extends Component
             $this->dispatch('alert',
                 icon: "error",
                 title: "Erro Inesperado",
-                text: $ex->getMessage(),
+                text: $ex->getMessage() . " | " . $ex->getFile() . " | " . $ex->getLine() ,
                 position: "center"
             );
         }   

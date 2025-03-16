@@ -14,11 +14,6 @@ Users:
         labelStyle: 'font-semibold text-primary-400 text-md pb-2'
         fieldStyle: 'truncate'
         html: 'p'
-      usr_level:
-        name: Nível
-        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
-        fieldStyle: ''
-        html: 'p'
       usr_created_at:
         name: Criado Em
         labelStyle: 'font-semibold text-primary-400 text-md pb-2'
@@ -43,9 +38,6 @@ Users:
         style: "font-semibold"
       usr_email:
         name: Email
-        style: "font-semibold"
-      usr_level:
-        name: Nível
         style: "font-semibold"
       usr_created_at:
         name: Criado Em

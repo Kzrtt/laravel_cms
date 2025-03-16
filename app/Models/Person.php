@@ -27,6 +27,7 @@ class Person extends Model
         'pes_postal_code',
         'pes_phone',
         'city_cit_id',
+        'pes_uf',
     ];
 
     public function getCity() {

@@ -22,4 +22,8 @@ class UserRepresentedAgent extends Model
     public function getUser() {
         return $this->belongsTo(Users::class, 'users_usr_id', 'usr_id');
     }
+
+    public function getAgent() {
+        return $this->morphTo(null, 'ura_type', 'represented_agent_id');
+    }
 }

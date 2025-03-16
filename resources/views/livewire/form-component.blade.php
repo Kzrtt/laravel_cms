@@ -26,7 +26,7 @@
 
                 <div class="border-[0.3px] mx-3 my-6 border-primary-300"></div>
 
-                <x-dynamic-form :formConfig="$formConfig" :selectsPopulate="$selectsPopulate" />
+                <x-dynamic-form :formConfig="$formConfig" :selectsPopulate="$selectsPopulate" :formData="$formData" />
             </div>
 
             <div class="flex flex-row justify-end w-full mt-6 bg-white p-5 rounded-lg">

@@ -97,7 +97,7 @@ Person:
         - "required"
       values:
       line: 1
-    uf: 
+    pes_uf: 
       type: select
       updateRemoteField:
         remoteIdentifier: city
