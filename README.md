@@ -17,7 +17,7 @@
 3. **Escolha entre a view genérica ou uma personalizada**, garantindo flexibilidade para diferentes casos de uso.  
 4. **Acelere o desenvolvimento** sem perder a capacidade de customização onde for necessário.  
 
-## Imagens
+## 🖼️ Prints do Projeto
 
 ![Dropdown que direciona para as telas de controle do sistema](./docs/settings-dropdown.png)
 ![Tela de listagem genérica renderizando o Person.yaml](./docs/list-persons.png)
