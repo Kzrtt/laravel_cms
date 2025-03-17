@@ -16,3 +16,11 @@
 2. **O LaravelCMS interpreta esses arquivos** e gera automaticamente a estrutura do CRUD.  
 3. **Escolha entre a view genérica ou uma personalizada**, garantindo flexibilidade para diferentes casos de uso.  
 4. **Acelere o desenvolvimento** sem perder a capacidade de customização onde for necessário.  
+
+## Imagens
+
+![Dropdown que direciona para as telas de controle do sistema](./docs/settings-dropdown.png)
+![Tela de listagem genérica renderizando o Person.yaml](./docs/list-persons.png)
+![Tela de formuário genérica renderizando o cadastro de Person.yaml](./docs/form-persons.png)
+![View customizada para criação dos usuários no modo de edição renderizando parcialmente o Users.yaml](./docs/edit-users.png)
+

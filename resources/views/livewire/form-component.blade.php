@@ -14,7 +14,7 @@
             <!-- Card do Formulário -->
             <div class="w-full mt-6 bg-white p-5 rounded-lg">
                 <div class="flex flex-row items-center justify-between">
-                    <p class="text-black/75 ml-3 font-semibold text-xl p-0 m-0">Formuário para criação de {{$params['_title']}}</p>
+                    <p class="text-black/75 ml-3 font-semibold text-xl p-0 m-0">Formuário para @php echo $isEdit ? "edição" : "criação" @endphp de {{$params['_title']}}</p>
 
                     <button 
                         type="button"

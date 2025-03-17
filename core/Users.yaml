@@ -92,7 +92,7 @@ Users:
     persons_pes_id:
       type: relation
       label: "Operador"
-      edit: true
+      edit: false
       placeholder: "Selecione o Operador"
       helper: "Pessoa vinculada a esse usuário"
       sizing: "mb-4 w-2/3"
@@ -112,7 +112,7 @@ Users:
     profiles_prf_id:
       type: relation
       label: "Perfil de Acesso"
-      edit: true
+      edit: false
       placeholder: "Selecione o Perfil de Acesso"
       helper: "Perfil de Acesso desse usuário"
       sizing: "mb-4 w-1/3"

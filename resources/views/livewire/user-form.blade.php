@@ -14,7 +14,7 @@
             <!-- Card do Formulário -->
             <div class="w-full mt-6 bg-white p-5 rounded-lg">
                 <div class="flex flex-row items-center justify-between">
-                    <p class="text-black/75 ml-3 font-semibold text-xl p-0 m-0">Formuário para criação de {{$params['_title']}}</p>
+                    <p class="text-black/75 ml-3 font-semibold text-xl p-0 m-0">Formuário para @php echo $isEdit ? "edição" : "criação" @endphp de {{$params['_title']}}</p>
 
                     <button 
                         type="button"
@@ -28,6 +28,11 @@
 
                 <x-dynamic-form :formConfig="$formConfig" :selectsPopulate="$selectsPopulate" :formData="$formData" :isEdit="$isEdit" />
                 
+                @php
+                    $disabled = $isEdit;
+                    $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : '';
+                @endphp
+
                 <div>
                     <p class="text-black/75 ml-3 font-semibold text-xl p-0 mb-5">Vínculo</p>
                     <div class="flex flex-row space-x-4 mx-3"> 
@@ -41,7 +46,8 @@
 
                                 placeholder="Selecione o Agente Representado"
                                 id="representedAgent"
-                                class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
+                                class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30 {{ $disabledClasses }} "
+                                @if ($disabled) disabled @endif                                    
                             >
                                 <option value="">Selecionar...</option>
                                 @foreach ($selectsPopulate['representedAgent'] as $key => $value)
