@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center items-center">
+<div class="flex flex-col justify-center items-center pt-10">
     <h1>Dashboard</h1>
 
     <div class="w-100">

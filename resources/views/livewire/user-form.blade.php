@@ -26,7 +26,7 @@
 
                 <div class="border-[0.3px] mx-3 my-6 border-primary-300"></div>
 
-                <x-dynamic-form :formConfig="$formConfig" :selectsPopulate="$selectsPopulate" :formData="$formData" />
+                <x-dynamic-form :formConfig="$formConfig" :selectsPopulate="$selectsPopulate" :formData="$formData" :isEdit="$isEdit" />
                 
                 <div>
                     <p class="text-black/75 ml-3 font-semibold text-xl p-0 mb-5">Vínculo</p>

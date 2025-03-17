@@ -30,6 +30,7 @@ class FormComponent extends Component
     public $formData = array();
     public $selectsPopulate = array();
     public $remoteUpdates = array();
+    public $isEdit = false;
 
     //? Map associativo para construir parametro do insert [YAML]
     public $identifierToField = array();
@@ -63,6 +64,8 @@ class FormComponent extends Component
         $this->renderUIViaYaml();
 
         if(!is_null($id)) {
+            $this->isEdit = true;
+
             $genericCtrl = new GenericCtrl($local);
             $className = "App\\Models\\".$local;
             $object = $genericCtrl->getObject($id);

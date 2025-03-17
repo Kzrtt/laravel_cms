@@ -6,6 +6,12 @@
             @foreach($lines as $line => $fields)
                 <div class="flex flex-row space-x-4 mx-3">
                     @foreach($fields as $key => $data)
+                        @php
+                            // Se estiver em modo de edição e o campo não deve ser editável, define como disabled
+                            $disabled = $isEdit && !$data['edit'];
+                            $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : '';
+                        @endphp
+
                         <div x-data class="{{ $data['sizing'] }}">
                             <label for="{{ $data['identifier'] }}" class="block mb-2 text-sm font-medium text-gray-700"> 
                                 {{ $data['label'] }} @isset($data['required']) <span class="text-red-500">*</span> @endisset
@@ -25,7 +31,8 @@
 
                                     placeholder="Selecione o {{ $data['label'] }}"
                                     id="{{ $data['identifier'] }}"
-                                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
+                                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30 {{ $disabledClasses }}"
+                                    @if($disabled) disabled @endif
                                 >
                                     <option value="">Selecionar...</option>
                                     @foreach ($selectsPopulate[$data['identifier']] as $key => $value)
@@ -40,7 +47,8 @@
                                     id="{{ $data['identifier'] }}"
                                     name="{{ $data['identifier'] }}"
                                     placeholder="{{ $data['placeholder'] }}"
-                                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30"
+                                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30 {{ $disabledClasses }}"
+                                    @if($disabled) disabled @endif
                                 />
                             @endif
 

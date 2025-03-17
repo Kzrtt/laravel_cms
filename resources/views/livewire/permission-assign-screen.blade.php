@@ -75,7 +75,7 @@
                         &nbsp;<span class="font-semibold">Cancelar</span>&nbsp;
                     </button>
 
-                    <button type="submit" class="bg-primary-300 text-white p-2 px-4 rounded-lg hover:cursor-pointer">
+                    <button type="submit" class="bg-primary-300 text-white p-2 px-4 rounded-lg hover:cursor-pointer hover:shadow-xl">
                         <i class="fad fa-check-circle p-1"></i>
                         &nbsp;<span class="font-semibold">Salvar</span>&nbsp;
                     </button>

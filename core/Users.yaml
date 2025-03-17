@@ -56,10 +56,11 @@ Users:
     usr_email:
       type: string
       label: "Email"
+      edit: true
       placeholder: "Informe o Email"
       helper: "Email do Usuário"
       groupIn: "Dados Usuário"
-      sizing: "mb-4 w-full max-w-md"
+      sizing: "mb-4 w-1/2"
       identifier: "email"
       validationRules: 
         - "required"
@@ -67,20 +68,22 @@ Users:
     usr_password:
       type: string
       label: "Senha"
+      edit: true
       placeholder: "Informe a Senha"
       helper: "Senha do Usuário"
       groupIn: "Dados Usuário"
-      sizing: "mb-4 w-full max-w-md"
+      sizing: "mb-4 w-1/2"
       identifier: "password"
       validationRules: 
         - "required"
       line: 1
     confirm_password:
       type: string
+      edit: false
       label: "Confirmar Senha"
       placeholder: "Confirme a senha"
       helper: "Confirme a senha"
-      sizing: "mb-4 w-1/3"
+      sizing: "mb-4 w-1/2"
       groupIn: "Dados Usuário"
       identifier: "confirm_password"
       validationRules: 
@@ -89,6 +92,7 @@ Users:
     persons_pes_id:
       type: relation
       label: "Operador"
+      edit: true
       placeholder: "Selecione o Operador"
       helper: "Pessoa vinculada a esse usuário"
       sizing: "mb-4 w-2/3"
@@ -108,6 +112,7 @@ Users:
     profiles_prf_id:
       type: relation
       label: "Perfil de Acesso"
+      edit: true
       placeholder: "Selecione o Perfil de Acesso"
       helper: "Perfil de Acesso desse usuário"
       sizing: "mb-4 w-1/3"

@@ -44,6 +44,7 @@ Person:
     pes_name:
       type: string
       label: "Nome"
+      edit: false
       placeholder: "Informe o nome"
       helper: "Nome do Usuário"
       sizing: "mb-4 w-full max-w-2lg"
@@ -56,6 +57,7 @@ Person:
     pes_email:
       type: string
       label: "Email"
+      edit: true
       placeholder: "Informe o Email"
       helper: "Email do Usuário"
       groupIn: "Dados Pessoais"
@@ -67,6 +69,7 @@ Person:
     pes_phone:
       type: string
       label: "Telefone"
+      edit: true
       placeholder: "Informe o telefone"
       helper: "Telefone do Usuário"
       sizing: "mb-4 w-full max-w-md"
@@ -76,6 +79,7 @@ Person:
     pes_cpf:
       type: string
       label: "CPF"
+      edit: false
       placeholder: "Informe o cpf"
       helper: "Documento do Usuário"
       sizing: "mb-4 w-full max-w-md"
@@ -88,6 +92,7 @@ Person:
     city_cit_id: 
       type: relation
       label: "Cidade"
+      edit: true
       placeholder: "Selecione a Cidade"
       helper: "Cidade do Endereço"
       sizing: "mb-4 w-4/4"
@@ -99,6 +104,7 @@ Person:
       line: 1
     pes_uf: 
       type: select
+      edit: true
       updateRemoteField:
         remoteIdentifier: city
         remoteEntity: City
@@ -145,6 +151,7 @@ Person:
     pes_neighborhood:
       type: string
       label: "Bairro"
+      edit: true
       placeholder: "Informe o bairro"
       helper: "Bairro do Endereço"
       sizing: "mb-4 w-2/4"
@@ -156,6 +163,7 @@ Person:
     pes_street:
       type: string
       label: "Logradouro"
+      edit: true
       placeholder: "Informe o Logradouro"
       helper: "Logradouro do Endereço"
       sizing: "mb-4 w-2/4"
@@ -167,6 +175,7 @@ Person:
     pes_number:
       type: string
       label: "Número"
+      edit: true
       placeholder: "Informe o Número"
       helper: "Número do Endereço"
       sizing: "mb-4 w-1/4"
@@ -178,6 +187,7 @@ Person:
     pes_complement:
       type: string
       label: "Complemento"
+      edit: true
       placeholder: "Informe o complemento"
       helper: "Complemento do Endereço"
       sizing: "mb-4 w-4/4"
@@ -187,6 +197,7 @@ Person:
     pes_postal_code:
       type: string
       label: "CEP"
+      edit: true
       placeholder: "Informe o cep"
       helper: "CEP do Endereço"
       sizing: "mb-4 w-1/6"

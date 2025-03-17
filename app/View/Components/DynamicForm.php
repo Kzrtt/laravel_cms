@@ -11,6 +11,7 @@ class DynamicForm extends Component
     public $formConfig;
     public $selectsPopulate;
     public $formData;
+    public $isEdit;
 
     /**
      * Cria uma nova instância do componente.
@@ -18,11 +19,12 @@ class DynamicForm extends Component
      * @param  array  $formConfig         Configuração do formulário (grupos, linhas e campos)
      * @param  array  $selectsPopulate    Dados para os selects, indexados pelo identifier dos campos
      */
-    public function __construct(array $formConfig, array $selectsPopulate, array $formData)
+    public function __construct(array $formConfig, array $selectsPopulate, array $formData, bool $isEdit)
     {
         $this->formConfig = $formConfig;
         $this->selectsPopulate = $selectsPopulate;
         $this->formData = $formData;
+        $this->isEdit = $isEdit;
     }
 
     /**

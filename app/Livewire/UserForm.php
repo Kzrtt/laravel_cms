@@ -24,6 +24,7 @@ class UserForm extends Component
     public $formData = array();
     public $selectsPopulate = array();
     public $remoteUpdates = array();
+    public $isEdit = false;
 
     //? Map associativo para construir parametro do insert [YAML]
     public $identifierToField = array();
@@ -56,6 +57,8 @@ class UserForm extends Component
         $this->formData['representedAgent'] = "";
 
         if(!is_null($id)) {
+            $this->isEdit = true;
+
             $genericCtrl = new GenericCtrl($local);
             $userRepresentedAgentCtrl = new GenericCtrl("UserRepresentedAgent");
 

@@ -27,21 +27,25 @@
         /**
          * @return object
          */
-        public function getObjectByField($field, $value) {
-            return $this->model::where($field, $value)->first();
+        public function getObjectByField($field, $value, $first=true) {
+            if($first) {
+                return $this->model::where($field, $value)->first();
+            } else {
+                return $this->model::where($field, $value)->get();
+            }
         }
 
         /**
          * @return object
          */
-        public function getObjectByFields(array $fields, array $values) {        
+        public function getObjectByFields(array $fields, array $values, $first=true) {        
             $query = $this->model::query();
         
             foreach ($fields as $index => $field) {
                 $query->where($field, $values[$index]);
             }
-        
-            return $query->first();
+            
+            return $first ? $query->first() : $query->get();
         }
 
         /**
