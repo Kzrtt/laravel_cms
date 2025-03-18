@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Controllers\YamlInterpreter;
+use App\Rules\ValidateCPF;
 
 /**
  * Classe para tratamento da rendereização dos formulários de maneira dinâmica
@@ -108,6 +109,8 @@ class FormComponent extends Component
         $this->formData = $formOutput['formData'];
         $this->identifierToField = $formOutput['identifierToField'];
         $this->remoteUpdates = $formOutput['remoteUpdates'];
+
+        //dd($this->rules);
     }
 
     public function updateRemoteField($parentIdentifier, $updateRemoteConfig) {

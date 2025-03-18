@@ -1,8 +1,8 @@
 <?php
     namespace App\Controllers;
 
-use App\Rules\ValidateCPF;
-use Symfony\Component\Yaml\Yaml;
+    use App\Rules\ValidateCPF;
+    use Symfony\Component\Yaml\Yaml;
 
     class YamlInterpreter {
         public $local = "";
@@ -174,9 +174,9 @@ use Symfony\Component\Yaml\Yaml;
                     }
 
                     if(@$data['customValidation']) {
-                        //$customRule = app("App\\Rules\\".$data['customValidation']);
-                        //$object = new $customRule;
-                        //$validationArray[] = new ValidateCPF();
+                        $customRule = app("App\\Rules\\".$data['customValidation']);
+                        $object = new $customRule;
+                        //$validationArray[] = new ValidateCPF;
                     }
     
                     $this->formOutput['rules']['formData.'.$data['identifier']] = $validationArray;

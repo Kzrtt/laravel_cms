@@ -33,7 +33,7 @@
                 <div class="space-x-2">
                     <button
                         type="button"
-                        @click="$dispatch('back')"
+                        @click="window.history.back()"
                         class="bg-primary-200/55 text-primary-600 p-2 rounded-lg hover:bg-primary-300 hover:text-white transition hover:cursor-pointer">
                         <i class="fad fa-times-circle p-1"></i>
                         &nbsp;<span class="font-semibold">Cancelar</span>&nbsp;
