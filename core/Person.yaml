@@ -75,6 +75,7 @@ Person:
       sizing: "mb-4 w-full max-w-md"
       groupIn: "Dados Pessoais"
       identifier: "phone"
+      mask: "(99) 99999-9999"
       line: 2
     pes_cpf:
       type: string
@@ -86,6 +87,7 @@ Person:
       groupIn: "Dados Pessoais"
       identifier: "cpf"
       customValidation: ValidateCPF
+      mask: "999.999.999-99"
       validationRules: 
         - "required"
       line: 2
@@ -203,6 +205,7 @@ Person:
       sizing: "mb-4 w-1/6"
       groupIn: "Endereço"
       identifier: "postal_code"
+      mask: "99999-999"
       validationRules: 
         - "required"
       line: 3
