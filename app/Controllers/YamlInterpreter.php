@@ -115,6 +115,7 @@
             $this->formOutput['formData'] = array();
             $this->formOutput['identifierToField'] = array();
             $this->formOutput['remoteUpdates'] = array();
+            $this->formOutput['saveFunctions'] = array();
             
             //? Carregando arquivo
             $formConfig = array();
@@ -184,6 +185,10 @@
 
                 if(isset($data['updateRemoteField'])) {
                     $this->formOutput['remoteUpdates'][$data['identifier']] = $data['updateRemoteField'];
+                }
+
+                if(isset($data['saveFunction'])) {
+                    $this->formOutput['saveFunctions'][$data['identifier']] = $data['saveFunction'];
                 }
 
                 $this->formOutput['formConfig'][$data['groupIn']][$data['line']][] = $data;

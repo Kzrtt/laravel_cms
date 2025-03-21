@@ -41,14 +41,20 @@
                         </button>
                     @endif
 
-                    <div class="flex items-center space-x-2 text-white ml-2 p-2 pl-3 hover:bg-primary-500/20 hover:shadow-sm rounded-lg hover:cursor-pointer">
-                        <div class="flex flex-col text-right">
-                            <p class="text-xs font-semibold text-primary-900/60 mb-1">Administrador</p>
-                            <p class="font-semibold text-sm text-white">Felipe Kurt Pohling</p>
+                    <div x-data="{ openProfileDrawer: false}">
+                        <div @click="openProfileDrawer = true"
+                            class="flex items-center space-x-2 text-white ml-2 p-2 pl-3 hover:bg-primary-500/20 hover:shadow-sm rounded-lg hover:cursor-pointer">
+                            <div class="flex flex-col text-right">
+                                <p class="text-xs font-semibold text-primary-900/60 mb-1">Administrador</p>
+                                <p class="font-semibold text-sm text-white">Felipe Kurt Pohling</p>
+                            </div>
+                            <div class="w-10 h-10 flex items-center justify-center bg-primary-500 rounded-lg font-bold text-white">
+                                F
+                            </div>
                         </div>
-                        <div class="w-10 h-10 flex items-center justify-center bg-primary-500 rounded-lg font-bold text-white">
-                            F
-                        </div>
+    
+                        <!-- Sidebar utilizando o componente Drawer -->
+                        
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Controllers\YamlInterpreter;
+use App\Controllers\Utils\SaveFunctions;
 use App\Rules\ValidateCPF;
 
 /**
@@ -31,6 +32,8 @@ class FormComponent extends Component
     public $formData = array();
     public $selectsPopulate = array();
     public $remoteUpdates = array();
+    public $saveFunctions = array();
+
     public $isEdit = false;
 
     //? Map associativo para construir parametro do insert [YAML]
@@ -109,8 +112,7 @@ class FormComponent extends Component
         $this->formData = $formOutput['formData'];
         $this->identifierToField = $formOutput['identifierToField'];
         $this->remoteUpdates = $formOutput['remoteUpdates'];
-
-        //dd($this->rules);
+        $this->saveFunctions = $formOutput['saveFunctions'];
     }
 
     public function updateRemoteField($parentIdentifier, $updateRemoteConfig) {
@@ -137,7 +139,12 @@ class FormComponent extends Component
             $genericCtrl = new GenericCtrl($this->params['_local']);
 
             foreach ($this->formData as $identifier => $value) {
-                $formData[$this->identifierToField[$identifier]] = $value;
+                if(array_key_exists($identifier, $this->saveFunctions)) {
+                    $saveFunction = $this->saveFunctions[$identifier];
+                    $formData[$this->identifierToField[$identifier]] = SaveFunctions::$saveFunction($value);
+                } else {
+                    $formData[$this->identifierToField[$identifier]] = $value;
+                }
             }
 
             if(!is_null($this->params['_id'])) {

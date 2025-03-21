@@ -31,4 +31,15 @@
         }
     }
 
+    if (!function_exists('zeroFill')) {
+        function zeroFill($string, $size) {
+            $zeros = "";
+            $length = ($size - strlen($string));
+            for ($i = 0; $i < $length; $i++) {
+                $zeros .= 0;
+            }
+            $string = $zeros . $string;
+            return $string;
+        }
+    }    
 ?>

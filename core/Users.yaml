@@ -74,6 +74,7 @@ Users:
       groupIn: "Dados Usuário"
       sizing: "mb-4 w-1/2"
       identifier: "password"
+      saveFunction: encrypt
       validationRules: 
         - "required"
       line: 1
