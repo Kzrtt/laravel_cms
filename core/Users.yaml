@@ -60,7 +60,7 @@ Users:
       placeholder: "Informe o Email"
       helper: "Email do Usuário"
       groupIn: "Dados Usuário"
-      sizing: "mb-4 w-1/2"
+      sizing: "mb-4 w-full"
       identifier: "email"
       validationRules: 
         - "required"
@@ -68,11 +68,12 @@ Users:
     usr_password:
       type: string
       label: "Senha"
-      edit: true
+      edit: false
+      hide: "!isEdit"
       placeholder: "Informe a Senha"
       helper: "Senha do Usuário"
       groupIn: "Dados Usuário"
-      sizing: "mb-4 w-1/2"
+      sizing: "mb-4 w-full"
       identifier: "password"
       saveFunction: encrypt
       validationRules: 
@@ -81,10 +82,11 @@ Users:
     confirm_password:
       type: string
       edit: false
+      hide: "!isEdit"
       label: "Confirmar Senha"
       placeholder: "Confirme a senha"
       helper: "Confirme a senha"
-      sizing: "mb-4 w-1/2"
+      sizing: "mb-4 w-full"
       groupIn: "Dados Usuário"
       identifier: "confirm_password"
       validationRules: 

@@ -51,7 +51,7 @@
                             >
                                 <option value="">Selecionar...</option>
                                 @foreach ($selectsPopulate['representedAgent'] as $key => $value)
-                                    <option value="{{ $key }}" {{ $formData['representedAgent'] == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                    <option value="{{ $key }}" {{ isset($formData['identifier']) && $formData['representedAgent'] == $key ? 'selected' : '' }}>{{ $value }}</option>
                                 @endforeach
                             </select>
 

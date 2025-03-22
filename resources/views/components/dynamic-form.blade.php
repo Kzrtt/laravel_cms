@@ -12,7 +12,11 @@
                             $disabledClasses = $disabled ? 'opacity-50 cursor-not-allowed' : '';
                         @endphp
 
-                        <div x-data class="{{ $data['sizing'] }}">
+                        <div
+                            x-data="{ isEdit: @entangle('isEdit') }"
+                            @isset($data['hide']) x-show="{{ $data['hide'] }}" @endisset
+                            class="{{ $data['sizing'] }}">
+
                             <label for="{{ $data['identifier'] }}" class="block mb-2 text-sm font-medium text-gray-700"> 
                                 {{ $data['label'] }} @isset($data['required']) <span class="text-red-500">*</span> @endisset
                             </label>
@@ -36,7 +40,7 @@
                                 >
                                     <option value="">Selecionar...</option>
                                     @foreach ($selectsPopulate[$data['identifier']] as $key => $value)
-                                        <option value="{{ $key }}" {{ $formData[$data['identifier']] == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                        <option value="{{ $key }}" {{ isset($formData[$data['identifier']]) && $formData[$data['identifier']] == $key ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
                             @else

@@ -4,45 +4,19 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
-use App\Controllers\YamlInterpreter;
 use Illuminate\Validation\ValidationException;
 use App\Controllers\GenericCtrl;
 use App\Controllers\Utils\SaveFunctions;
+use App\Traits\DynamicFormTrait;
 
-
-use App\Models\UserRepresentedAgent;
 
 #[Layout('components.layouts.app')]
 class UserForm extends Component
 {
-    //? Parametros usados pelo próprio livewire através das funções protected [YAML]
-    public $rules = array();
-    public $validationAttributes = array();
-    public $messages = array();
-    
-    //? Configurações para a UI do form [YAML]
-    public $formConfig = array();
-
-    //? Dados que vão ser carregados do form para o controller [YAML]
-    public $formData = array();
-    public $selectsPopulate = array();
-    public $remoteUpdates = array();
-    public $saveFunctions = array();
+    use DynamicFormTrait;
 
     public $isEdit = false;
-
-    //? Map associativo para construir parametro do insert [YAML]
-    public $identifierToField = array();
-
     public $params = array();
-
-    protected function rules() {
-        return $this->rules;
-    }
-
-    protected function messages() {
-        return $this->messages;
-    }
 
     public function mount($local, $id = null) {
         $this->params = session('params');
@@ -98,22 +72,6 @@ class UserForm extends Component
             }
             
         }
-    }
-
-    public function renderUIViaYaml() {
-        //? Carregando arquivo
-        $yamlInterpreter = new YamlInterpreter($this->params['_local']);
-        $formOutput = $yamlInterpreter->renderFormUIData();
-
-        $this->formConfig = $formOutput['formConfig'];
-        $this->selectsPopulate = $formOutput['selectsPopulate'];
-        $this->messages = $formOutput['messages'];
-        $this->rules = $formOutput['rules'];
-        $this->validationAttributes = $formOutput['validationAttributes'];
-        $this->formData = $formOutput['formData'];
-        $this->identifierToField = $formOutput['identifierToField'];
-        $this->remoteUpdates = $formOutput['remoteUpdates'];
-        $this->saveFunctions = $formOutput['saveFunctions'];
     }
 
     public function getRepresentedAgents() {

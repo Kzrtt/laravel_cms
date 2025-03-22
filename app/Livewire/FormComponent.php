@@ -3,12 +3,9 @@
 namespace App\Livewire;
 
 use App\Controllers\GenericCtrl;
-use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use App\Controllers\YamlInterpreter;
-use App\Controllers\Utils\SaveFunctions;
-use App\Rules\ValidateCPF;
+use App\Traits\DynamicFormTrait;
 
 /**
  * Classe para tratamento da rendereização dos formulários de maneira dinâmica
@@ -16,72 +13,45 @@ use App\Rules\ValidateCPF;
  * 
  * @author Felipe Kurt <fe.hatunaqueton@gmail.com>
  */
-
 #[Layout('components.layouts.app')]
 class FormComponent extends Component
 {
-    //? Parametros usados pelo próprio livewire através das funções protected [YAML]
-    public $rules = array();
-    public $validationAttributes = array();
-    public $messages = array();
-    
-    //? Configurações para a UI do form [YAML]
-    public $formConfig = array();
-
-    //? Dados que vão ser carregados do form para o controller [YAML]
-    public $formData = array();
-    public $selectsPopulate = array();
-    public $remoteUpdates = array();
-    public $saveFunctions = array();
+    use DynamicFormTrait;
 
     public $isEdit = false;
-
-    //? Map associativo para construir parametro do insert [YAML]
-    public $identifierToField = array();
 
     //? Parametros vindo do screen-renderer através do click do botão de add [YAML]
     public $params = array();
 
-    //* Funções para o tratamento de erros e validações do formulário
-    protected function rules() {
-        return $this->rules;
-    }
-
-    protected function messages() {
-        return $this->messages;
-    }
-
     //* Função que carrega os dados na tela
-    public function mount($local, $id = null) {
-        //? Recebendo parametros
+    public function mount($local, $id = null)
+    {
         $this->params = session('params');
         $this->params['_local'] = $local;
         $this->params['_id'] = $id;
 
-        $this->rules = array();
-        $this->validationAttributes = array();
-        $this->messages = array();
-        $this->formConfig = array();
-        $this->formData = array();
-        $this->identifierToField = array();
+        // Inicializa as variáveis antes de carregar o YAML
+        $this->rules = [];
+        $this->validationAttributes = [];
+        $this->messages = [];
+        $this->formConfig = [];
+        $this->formData = [];
+        $this->identifierToField = [];
 
         $this->renderUIViaYaml();
 
-        if(!is_null($id)) {
+        if (!is_null($id)) {
             $this->isEdit = true;
-
             $genericCtrl = new GenericCtrl($local);
-            $className = "App\\Models\\".$local;
+            $className = "App\\Models\\" . $local;
             $object = $genericCtrl->getObject($id);
-            
-            if($object instanceof $className) {
+
+            if ($object instanceof $className) {
                 $converted = [];
                 $objectArray = $object->toArray();
-
                 foreach ($this->identifierToField as $friendlyKey => $dbKey) {
                     $converted[$friendlyKey] = array_key_exists($dbKey, $objectArray) ? $objectArray[$dbKey] : null;
                 }
-
                 $this->formData = array_merge($this->formData, $converted);
             }
 
@@ -95,90 +65,36 @@ class FormComponent extends Component
                     }
                 }
             }
-            
         }
     }
 
-    public function renderUIViaYaml() {
-        //? Carregando arquivo
-        $yamlInterpreter = new YamlInterpreter($this->params['_local']);
-        $formOutput = $yamlInterpreter->renderFormUIData();
-
-        $this->formConfig = $formOutput['formConfig'];
-        $this->selectsPopulate = $formOutput['selectsPopulate'];
-        $this->messages = $formOutput['messages'];
-        $this->rules = $formOutput['rules'];
-        $this->validationAttributes = $formOutput['validationAttributes'];
-        $this->formData = $formOutput['formData'];
-        $this->identifierToField = $formOutput['identifierToField'];
-        $this->remoteUpdates = $formOutput['remoteUpdates'];
-        $this->saveFunctions = $formOutput['saveFunctions'];
-    }
-
-    public function updateRemoteField($parentIdentifier, $updateRemoteConfig) {
-        $genericCtrl = new GenericCtrl($this->params['_local']);
-
-        $remoteData = $genericCtrl->getRemoteData(
-            $this->formData[$parentIdentifier], 
-            $updateRemoteConfig
-        );
-
-        $this->selectsPopulate[$updateRemoteConfig['remoteIdentifier']] = $remoteData;
-    }
-
-    public function teste() {
-        dd($this->formData);
-    }
-
-    //* Função que envia o formulário
-    public function submitForm() {
+    public function submitForm()
+    {
         try {
             $this->validate();
 
-            $formData = array();
+            $formData = [];
             $genericCtrl = new GenericCtrl($this->params['_local']);
 
-            foreach ($this->formData as $identifier => $value) {
-                if(array_key_exists($identifier, $this->saveFunctions)) {
-                    $saveFunction = $this->saveFunctions[$identifier];
-                    $formData[$this->identifierToField[$identifier]] = SaveFunctions::$saveFunction($value);
-                } else {
-                    $formData[$this->identifierToField[$identifier]] = $value;
-                }
-            }
+            // Aplica as funções de salvamento aos dados do formulário
+            $this->applySaveFunctions($formData);
 
-            if(!is_null($this->params['_id'])) {
+            if (!is_null($this->params['_id'])) {
                 $genericCtrl->update($this->params['_id'], $formData);
             } else {
                 $genericCtrl->save($formData);
                 $this->reset('formData');
             }
 
-            $this->dispatch('alert',
-                icon: "success",
-                title: "Sucesso!",
-                position: "center"
-            );
-
+            $this->dispatch('alert', icon: "success", title: "Sucesso!", position: "center");
             $this->js("window.history.back()");
-        } catch (ValidationException $ex) {
-            $this->dispatch('alert',
-                icon: "error",
-                title: "Erro no Formulário",
-                text: $ex->validator->errors()->first(),
-                position: "center"
-            );
+        } catch (\Illuminate\Validation\ValidationException $ex) {
+            $this->dispatch('alert', icon: "error", title: "Erro no Formulário", text: $ex->validator->errors()->first(), position: "center");
         } catch (\Exception $ex) {
-            $this->dispatch('alert',
-                icon: "error",
-                title: "Erro Inesperado",
-                text: $ex->getMessage(),
-                position: "center"
-            );
-        }   
+            $this->dispatch('alert', icon: "error", title: "Erro Inesperado", text: $ex->getMessage(), position: "center");
+        }
     }
 
-    //* Função que renderiza a view
     public function render()
     {
         return view('livewire.form-component');
