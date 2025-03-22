@@ -130,7 +130,7 @@ Areas:
           - Delete
           - Edit
         showIf: session@level in [Administrator, Entity]
-      Users:
+      User:
         name: Usuários
         description: Área de gestão de usuários
         icon: fad fa-user-shield

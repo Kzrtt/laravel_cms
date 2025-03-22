@@ -4,6 +4,7 @@ use App\Livewire\Dashboard;
 use App\Livewire\FormComponent;
 use App\Livewire\ListComponent;
 use App\Livewire\PermissionAssignScreen;
+use App\Livewire\LoginScreen;
 use App\Livewire\Roles;
 use App\Livewire\UserForm;
 use Illuminate\Support\Facades\Route;
@@ -19,9 +20,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', Dashboard::class);
-Route::get('{local}/List', ListComponent::class)->name("list.component");
-Route::get('{local}/Form/{id?}', FormComponent::class)->name("form.component");
-Route::get('{local}/UserForm/{id?}', UserForm::class)->name("user-form");
-Route::get('{local}/ListRoles', Roles::class)->name("roles");
-Route::get('PermissionAssign/{id}', PermissionAssignScreen::class)->name("permission-assign");
+Route::get('/login', LoginScreen::class)->name("login.component");
+
+//? Rotas Para Usuários Credenciados
+Route::get('/admin/', Dashboard::class)->name("dashboard");
+Route::get('/admin/{local}/List', ListComponent::class)->name("list.component");
+Route::get('/admin/{local}/Form/{id?}', FormComponent::class)->name("form.component");
+Route::get('/admin/{local}/UserForm/{id?}', UserForm::class)->name("user-form");
+Route::get('/admin/{local}/ListRoles', Roles::class)->name("roles");
+Route::get('/admin/PermissionAssign/{id}', PermissionAssignScreen::class)->name("permission-assign");

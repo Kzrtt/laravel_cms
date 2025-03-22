@@ -1,4 +1,4 @@
-Users:
+User:
   startsOn: 'grid'
   identifier: 'usr_id'
   listingConfig:
@@ -144,4 +144,4 @@ Users:
     method: getAll
     controller: ListingCtrl
     params: 
-      model: Users
+      model: User
