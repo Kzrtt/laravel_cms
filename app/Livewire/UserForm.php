@@ -43,9 +43,10 @@ class UserForm extends Component
 
             $className = "App\\Models\\".$local;
             $object = $genericCtrl->getObject($id);
+            $type = "App\\Models\\".$object->usr_level;
             $representedAgent = $userRepresentedAgentCtrl->getObjectByFields(
                 ["ura_type", "users_usr_id"],
-                [$object->usr_level, $object->usr_id]
+                [$type, $object->usr_id]
             );
             
             if($object instanceof $className) {

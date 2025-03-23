@@ -7,6 +7,17 @@
         }
     }
 
+    if(!function_exists("getFriendlyAgentType")) {
+        function getFriendlyAgentType($agentType) {
+            $agentMap = array(
+                "Administrator" => "Administrador",
+                "Establishment" => "Estabelecimento"
+            );
+
+            return isset($agentMap[$agentType]) ? $agentMap[$agentType] : "Desconhecido";
+        }
+    } 
+
     if(!function_exists("getMessageForValidation")) {
         function getMessageForValidation($rule) {            
             $validationMap = array(

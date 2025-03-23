@@ -8,7 +8,7 @@
                 
                 <!-- Logo -->
                 <div class="flex items-center space-x-10 mt-1 hover:cursor-pointer">
-                    <div @click="window.location.href = '/'" class="flex items-center">
+                    <div @click="window.location.href = '/admin'" class="flex items-center">
                         <img src="{{ url('images/laravel_logo.png') }}" class="h-15 w-23">
                         <span class="text-xl font-bold text-primary-900/50 mt-1">LaravelCMS</span>
                     </div>
@@ -45,7 +45,7 @@
                         <div @click="openProfileDrawer = true"
                             class="flex items-center space-x-2 text-white ml-2 p-2 pl-3 hover:bg-primary-500/20 hover:shadow-sm rounded-lg hover:cursor-pointer">
                             <div class="flex flex-col text-right">
-                                <p class="text-xs font-semibold text-primary-900/60 mb-1">{{ auth()->user()->usr_level }}</p>
+                                <p class="text-xs font-semibold text-primary-900/60 mb-1">{{ getFriendlyAgentType(auth()->user()->usr_level) }}</p>
                                 <p class="font-semibold text-sm text-white">{{ auth()->user()->getPerson->pes_name }}</p>
                             </div>
                             <div class="w-10 h-10 flex items-center justify-center bg-primary-500 rounded-lg font-bold text-white">

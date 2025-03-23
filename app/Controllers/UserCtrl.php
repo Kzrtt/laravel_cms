@@ -14,6 +14,41 @@ class UserCtrl extends GenericCtrl {
     }
 
     /**
+     * @param int $userId
+     * @param string $oldPassword
+     * @param string $newPassword
+     * 
+     * @return array
+     */
+    public function updateUserPassword($userId, $oldPassword, $newPassword) {
+        try {
+            $criptedPassword = $this->tripleDES->encrypt($newPassword);
+            $user = $this->getObject($userId);
+
+            if($this->tripleDES->decrypt($user->usr_password) != $oldPassword) {  
+                return array(
+                    "status" => false,
+                    "message" => "A senha atual está incorreta...",
+                );
+            }   
+
+            $this->update($userId, array(
+                "usr_password" => $criptedPassword,
+            ));
+
+            return array(
+                "status" => true,
+                "message" => "Senha atualizada com sucesso!",
+            );
+        } catch (\Throwable $ex) {
+            return array(
+                "status" => false,
+                "message" => "Erro Inesperado ao Alterar a Senha"
+            );
+        }
+    }
+
+    /**
      * @param string $email
      * @param string $password
      * 
