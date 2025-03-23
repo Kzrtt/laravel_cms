@@ -7,6 +7,13 @@ use App\Controllers\UserCtrl;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Classe para tratamento da rendereização da tela de login e a lógica
+ * para armazenar o usuário no helper auth().
+ * 
+ * @author Felipe Kurt <fe.hatunaqueton@gmail.com>
+ */
+
 #[Layout('components.layouts.empty')]
 class LoginScreen extends Component
 {
@@ -25,7 +32,8 @@ class LoginScreen extends Component
 
         if(!$loginResponse['status']) {
             $this->dispatch(
-                'alert', icon: "error", 
+                'alert', 
+                icon: "error", 
                 title: "Erro no Login", 
                 text:  $loginResponse['message'],
                 position: "center"
@@ -34,6 +42,14 @@ class LoginScreen extends Component
         }
 
         Auth::login($loginResponse['user']);
+
+        $this->dispatch(
+            'alert', 
+            icon: "success", 
+            title: "Usuário Autenticado!", 
+            text:  "Redirecionando para Dashboard do sistema.",
+            position: "center"
+        );
 
         return redirect()->route('dashboard');
     }

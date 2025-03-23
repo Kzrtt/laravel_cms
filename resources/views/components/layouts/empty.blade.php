@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Login - LaravelCMS</title>
+        <title>LaravelCMS - Login</title>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
@@ -15,7 +15,7 @@
         @livewireStyles
         @vite(['resources/css/app.css', 'public/css/font-awesome-pro-master.min.css?v=0.0.1'])
     </head>
-    <body class="h-screen">
+    <body class="bg-gray-200 m-0 p-0 h-full">
         {{ $slot }}
 
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

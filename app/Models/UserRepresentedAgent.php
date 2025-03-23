@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class UserRepresentedAgent extends Model
 {
@@ -20,7 +21,7 @@ class UserRepresentedAgent extends Model
     ];
 
     public function getUser() {
-        return $this->belongsTo(Users::class, 'users_usr_id', 'usr_id');
+        return $this->belongsTo(User::class, 'users_usr_id', 'usr_id');
     }
 
     public function getAgent() {

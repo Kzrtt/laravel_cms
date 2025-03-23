@@ -1,5 +1,5 @@
 
-<div class="flex h-full">
+<div class="flex w-full min-h-screen">
     <!-- Lado Esquerdo: Área com cor primária -->
     <div class="flex flex-col justify-between w-1/3 bg-primary-300 text-white p-8">
         <!-- Conteúdo Superior: Logo, nome do sistema e descrição -->
