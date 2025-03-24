@@ -70,12 +70,14 @@
                 <i class="fad fa-key mr-1"></i> Dados de Acesso
             </button>
 
-            <button 
-                wire:click="loggout"
-                class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-red-600 bg-red-200/15 hover:bg-primary-200/30 hover:font-semibold"
-            >
-                <i class="fad fa-sign-out mr-1"></i> Loggout
-            </button>
+            <div x-data="loggout">
+                <button
+                    @click="confirmLoggout"
+                    class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-red-600 bg-red-200/15 hover:bg-primary-200/30 hover:font-semibold"
+                >
+                    <i class="fad fa-sign-out mr-1"></i> Loggout
+                </button>
+            </div>
         </nav>
     </div>
 
@@ -203,3 +205,24 @@
     </main>
 </div>
 
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('loggout', () => ({
+            confirmLoggout() {
+                Swal.fire({
+                    title: 'Deseja realmente sair?',
+                    text: 'Você precisará se autenticar novamente.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, sair!',
+                    cancelButtonText: 'Cancelar',
+                    scrollbarPadding: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.$wire.loggout();
+                    }
+                });
+            }
+        }));
+    });
+</script>

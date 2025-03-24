@@ -1,7 +1,7 @@
 <div class="flex flex-col justify-center items-center pt-10">
     <h1>Dashboard, Usuário Autenticado => {{ auth()->user()->getPerson->pes_name }}</h1>
 
-    <div class="w-100 mt-10">
+    <div class="w-100 mt-10 mb-10">
         <x-select label="Order Status" placeholder="Select one status"
             :options="[
                 ['name' => 'Active', 'id' => 1, 'description' => 'The status is active'],
@@ -11,6 +11,8 @@
             ]" option-label="name" option-value="id"
         />
     </div>
+
+    <x-checkbox id="rounded-sm" wire:model="model3" rounded="sm" label="SM" value="sm" md />
 
     <div class="mt-10 space-x-4">
         <x-custom-button 

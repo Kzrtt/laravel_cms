@@ -2,6 +2,7 @@
 @import '../../vendor/wireui/wireui/ts/global.css';
 @source '../../vendor/wireui/wireui';
 
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   /* Primary (Vermelho) */
