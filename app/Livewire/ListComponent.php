@@ -42,6 +42,8 @@ class ListComponent extends Component
     );
     public $startsOn = "list";
 
+    public $totalRegistries = 0;
+
     public $viewForm = "form.component";
     
     //? Registros para a listagem na página
@@ -68,6 +70,8 @@ class ListComponent extends Component
         $daoCtrl = app()->makeWith("App\\Controllers\\".$getConfig['controller'], $getConfig['params']);
 
         $this->listingData = $daoCtrl->$getMethod($this->params['_local']);
+
+        $this->totalRegistries = count($this->listingData);
     }
 
     //* Função que carrega as configs para poder montar os params para a UI

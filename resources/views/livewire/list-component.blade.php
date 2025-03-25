@@ -1,192 +1,145 @@
-<?php 
+@php
     use App\CMSFunctions;
-
     $functions = new CMSFunctions();
-?>
+@endphp
 
-<div class="flex justify-center w-full">  
-    <div class="w-4/5 flex flex-col justify-center p-5">
-        <p wire:loading>CarregandoList...</p>
-        <div wire:loading.remove x-data="{ listingMode: '{{$startsOn}}'}">
-            <!-- Titulo da página -->
-            <div class="flex flex-row items-center bg-white w-full container px-5 py-3 mt-4 rounded-lg">
-                <i class="{{$params['_icon']}} ml-2 text-primary-500 text-3xl"></i>
-                <div class="ml-3">
-                    <p class="text-primary-500/55 ml-3 font-semibold text-xl p-0 m-0">{{$params['_title']}}</p>
-                    <p class="text-gray-300 ml-3 text-md p-0 m-0">Listagem de Registros</p>
+<div class="flex flex-row justify-center mt-6 space-x-10 w-full min-h-screen" x-data="{ listingMode: '{{$startsOn}}' }">
+
+    <!-- MANTIDA: Sua parte esquerda original -->
+    <div class="w-100 rounded-md bg-white shadow-sm p-6">
+        <!-- Informações resumidas do usuário -->
+        <div class="flex flex-row mb-6">
+            <div class="flex justify-center items-center w-20 h-20 rounded-lg bg-primary-200/55">
+                <i class="{{ $params['_icon'] }} text-primary-500 text-3xl"></i>
+            </div>
+
+            <div class="flex flex-col justify-center ml-4 space-y-1">
+                <p class="font-semibold text-black/55 text-xl">Listagem de Registros</p>
+                <div class="inline-block self-start p-1 px-2 mt-1 rounded-md bg-primary-200/55 text-primary-600 text-xs">
+                    {{ $params['_title'] }}
                 </div>
-            </div> 
+            </div>          
+        </div>
 
-            <!-- Container da tabela [ACTIONS] [BUTTONS] [PAGINATION] [TABLE] -->
-            <div class="w-full mt-8 bg-white p-5 rounded-lg">
-                <!-- BUTTONS -->
-                <div class="flex flex-row justify-between w-full overflow-hidden mt-2 mb-8">
-                    <div class="space-x-2">
-                        <button @click="listingMode = 'list'"
-                            :class="{
-                                'bg-primary-300/20 text-primary-400': listingMode === 'list',
-                                'hover:bg-gray-300/20 text-gray-400': listingMode !== 'list'
-                            }"
-                            class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm hover:cursor-pointer">
+        <hr class="border-t-2 border-dashed border-primary-300/30 my-4">
 
-                            <i class="fad fa-th-list  text-2xl p-1"></i>
-                        </button>
+        <div class="p-2 rounded max-w-md">
+            <div class="flex flex-col gap-y-2 text-sm">
+                <div class="flex justify-between font-semibold text-gray-700">
+                    <span>Quantidade de Registros</span>
+                    <span class="text-gray-400 font-normal">{{ $totalRegistries }}</span>
+                </div>     
+                
+                <div class="flex justify-between font-semibold text-gray-700">
+                    <span>Mostrando</span>
+                    <span class="text-gray-400 font-normal">? de ?</span>
+                </div>  
+            </div>
 
-                        <button @click="listingMode = 'grid'"
-                            :class="{
-                                'bg-primary-300/20 text-primary-400': listingMode === 'grid',
-                                'hover:bg-gray-300/20 text-gray-400': listingMode !== 'grid'
-                            }" 
-                            class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm hover:cursor-pointer">
-                            <i class="fad fa-th-large text-2xl p-1"></i>
-                        </button>
-                    </div>
+            <div class="mt-2">
+                <span class="font-semibold text-gray-700 text-sm">Filtros</span><br>
+                <span class="text-gray-400 text-xs">Nenhum Filtro aplicado...</span>
+            </div>
+        </div>
+        
+        <hr class="border-t-2 border-dashed border-primary-300/30 my-4">
+        
+        <p class="mb-4 text-black/35 text-lg font-semibold">Listagem</p>
 
-                    <div class="space-x-4">
-                        @if($buttonsConfig['showSearchButton'])
-                            <button class="bg-primary-300 text-white p-2 px-4 rounded-lg hover:cursor-pointer">
-                                <i class="fad fa-search p-1"></i>
-                                &nbsp;<span class="font-semibold">Buscar</span>&nbsp;
-                            </button>
-                        @endif
+        <!-- Menu de Navegação -->
+        <nav class="flex flex-row space-x-3">
+            <button @click="listingMode = 'list'"
+                :class="{
+                    'bg-primary-300/20 text-primary-400': listingMode === 'list',
+                    'hover:bg-gray-300/20 text-gray-400': listingMode !== 'list'
+                }"
+                class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm hover:cursor-pointer">
 
-                        @if($buttonsConfig['showInsertButton'])
-                            <button
-                                wire:click="addNew"
-                                class="bg-primary-200/55 text-primary-600 p-2 px-4 rounded-lg hover:bg-primary-300 hover:text-white transition hover:cursor-pointer">
-                                <i class="fad fa-plus-circle p-1"></i>
-                                <span class="font-semibold">Adicionar</span>&nbsp;
-                            </button>
-                        @endif
-                    </div>
-                </div>
+                <i class="fad fa-th-list text-2xl p-1"></i>
+            </button>
 
-                <!-- TABLE -->
-                <div 
-                    :class="{ 
-                        'shadow-lg': listingMode === 'list'
-                    }"
-                    class="w-full overflow-hidden rounded-lg">
-                    <table x-show="listingMode === 'list'" class="w-full divide-y divide-gray-200">
-                        <thead class="bg-primary-300/80 h-15">
+            <button @click="listingMode = 'grid'"
+                :class="{
+                    'bg-primary-300/20 text-primary-400': listingMode === 'grid',
+                    'hover:bg-gray-300/20 text-gray-400': listingMode !== 'grid'
+                }" 
+                class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm hover:cursor-pointer">
+                <i class="fad fa-th-large text-2xl p-1"></i>
+            </button>
+        </nav>
+
+        <hr class="border-t-2 border-dashed border-primary-300/30 my-4">
+        
+        <p class="mb-4 text-black/35 text-lg font-semibold">Ações</p>
+
+        <!-- Menu de Navegação -->
+        <nav class="space-y-3">
+            @if($buttonsConfig['showInsertButton'])
+                <button 
+                    wire:click="addNew"
+                    class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-primary-600 bg-primary-200/20 hover:bg-primary-400/40 hover:font-semibold"
+                >
+                    <i class="fad fa-plus-circle mr-1"></i> Adicionar Registro
+                </button>
+            @endif
+            
+            @if($buttonsConfig['showSearchButton'])
+                <button 
+                    class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-primary-600 bg-primary-200/20 hover:bg-primary-400/40 hover:font-semibold"
+                >
+                    <i class="fad fa-search mr-1"></i> Buscar
+                </button>
+            @endif
+        </nav>
+    </div>
+
+    <!-- REFATORADO: Parte direita com exibição da listagem -->
+    <main class="flex w-250 p-6 mb rounded-md bg-white">
+        <div class="w-full">
+            <div>
+                <h1 class="text-xl font-semibold mb-1 text-black/75" 
+                    x-text="listingMode === 'list' ? 'Tabela de Registros' : 'Quadro de Registros'">
+                </h1>
+                <p class="text-md text-black/45 mb-4">Aplique filtros nos registros apresentados no painel esquerdo.</p>
+            </div>
+
+            <hr class="border-t-2 mb-6 border-dashed border-primary-300/30 my-4">
+
+            <!-- TABELA -->
+            <div x-show="listingMode === 'list'" class="w-full overflow-hidden shadow-lg rounded-lg transition-all duration-300">
+                <table class="w-full divide-y divide-gray-200">
+                    <thead class="bg-primary-300/80 h-15">
+                        <tr>
+                            @foreach($tableConfig as $key => $data)
+                                <th class="px-6 py-3 text-left text-sm font-big text-primary-900/50 uppercase tracking-wider">{{ $data['name'] }}</th>
+                            @endforeach
+                            <th class="px-6 py-3 text-right text-sm font-big text-primary-900/50 uppercase tracking-wider">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach($listingData as $object)    
                             <tr>
                                 @foreach($tableConfig as $key => $data)
-                                    <th class="px-6 py-3 text-left text-sm font-big text-primary-900/50 uppercase tracking-wider">{{$data['name']}}</th>
-                                @endforeach
-                                <th class="px-6 py-3 text-right text-sm font-big text-primary-900/50 uppercase tracking-wider">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach($listingData as $object)    
-                                <tr>
-                                    @foreach($tableConfig as $key => $data)
-                                        <td class="px-6 py-4 whitespace-nowrap {{$data['style']}}">
-                                            @if(@$data['getRelation']) 
-                                                @php
-                                                    // Divide a string em segmentos
-                                                    $segments = explode('->', $data['getRelation']); // ex: ['getPerson', 'getAddress', 'city']
-                                                    $value = $object; // Inicia com o objeto principal
-
-                                                    // Percorre cada segmento e atualiza o valor
-                                                    foreach ($segments as $segment) {
-                                                        // Se for método (começa com "get") ou propriedade, ambos funcionam da mesma forma
-                                                        // Use "optional" para evitar erros se algum segmento for nulo
-                                                        $value = optional($value)->{$segment};
-                                                    }
-                                                @endphp
-
-                                                {{ $value }}
-                                            @elseif(@$data['listingFunction'])
-                                                {!! $functions->{$data['listingFunction']}($object->$key) !!}
-                                            @else
-                                                {{ $object->$key }}
-                                            @endif
-                                        </td>
-                                    @endforeach
-
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="w-full flex justify-end space-x-2">
-                                            @if($buttonsConfig['showDetailsButton'])
-                                                <button class="p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:bg-blue-500 hover:shadow-sm hover:cursor-pointer">
-                                                    <i class="fad fa-info-circle text-xl p-1"></i>
-                                                </button>
-                                            @endif
-
-                                            @if($buttonsConfig['showEditButton'])
-                                                <button
-                                                    wire:click="editRegistry({{ $object->$identifier }})"
-                                                    class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm hover:cursor-pointer">
-                                                    <i class="fad fa-edit text-xl p-1"></i>
-                                                </button>
-                                            @endif
-
-                                            @if($buttonsConfig['showDeleteButton'])
-                                                <button 
-                                                    wire:click="delete({{$object->$identifier}})"
-                                                    class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm hover:cursor-pointer">
-                                                    <i class="fad fa-trash-alt text-xl p-1"></i>
-                                                </button>
-                                            @endif
-
-                                            @if(isset($additionalSingleData))
-                                                @foreach ($additionalSingleData as $name => $buttonData)
-                                                    <button 
-                                                        wire:click=""
-                                                        class="{{ $buttonData['style'] }}">
-                                                        <i class="{{ $buttonData['icon'] }} text-xl p-1"></i>
-                                                    </button>
-                                                @endforeach
-                                            @endif
-                                        </div>
+                                    <td class="px-6 py-4 whitespace-nowrap {{ $data['style'] ?? '' }}">
+                                        @if(@$data['getRelation']) 
+                                            @php
+                                                $segments = explode('->', $data['getRelation']);
+                                                $value = $object;
+                                                foreach ($segments as $segment) {
+                                                    $value = optional($value)->{$segment};
+                                                }
+                                            @endphp
+                                            {{ $value }}
+                                        @elseif(@$data['listingFunction'])
+                                            {!! $functions->{$data['listingFunction']}($object->$key) !!}
+                                        @else
+                                            {{ $object->$key }}
+                                        @endif
                                     </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                @endforeach
 
-                    <div x-show="listingMode === 'grid'" class="w-full rounded-lg">
-                        <div class="grid grid-cols-5 gap-10">
-                            <!-- Exemplo de card em grid -->
-                            @foreach($listingData as $object)
-                                <div class="bg-gray-100 relative rounded-lg shadow">
-                                    <div class="flex items-center justify-center w-22 h-22 bg-white rounded-full absolute top-6 left-1/2 transform -translate-x-1/2">
-                                        <div class="flex items-center justify-center w-20 h-20 bg-primary-300/20 rounded-full">
-                                            <i class="{{$params['_icon']}} text-3xl text-primary-500"></i>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-18 rounded-t-lg bg-primary-300/30"></div>
-                                    
-                                    <div class="px-4 py-2 mt-8 space-y-1">
-                                        @foreach($gridConfig as $key => $data)
-                                            <{{$data['html']}} class="{{@$data['tagStyle']}} w-full truncate">
-                                                <span class="{{@$data['labelStyle']}}">{{$data['name']}}:</span> 
-                                                <span class="{{@$data['fieldStyle']}}">
-                                                    @if(@$data['getRelation']) 
-                                                        @php
-                                                            // Divide a string em segmentos
-                                                            $segments = explode('->', $data['getRelation']); // ex: ['getPerson', 'getAddress', 'city']
-                                                            $value = $object; // Inicia com o objeto principal
-
-                                                            // Percorre cada segmento e atualiza o valor
-                                                            foreach ($segments as $segment) {
-                                                                // Se for método (começa com "get") ou propriedade, ambos funcionam da mesma forma
-                                                                // Use "optional" para evitar erros se algum segmento for nulo
-                                                                $value = optional($value)->{$segment};
-                                                            }
-                                                        @endphp
-
-                                                        {{ $value }}
-                                                    @elseif(@$data['listingFunction'])
-                                                        {!! $functions->{$data['listingFunction']}($object->$key) !!}
-                                                    @else
-                                                        {{ $object->$key }}
-                                                    @endif
-                                                </span>
-                                            </{{$data['html']}}>
-                                        @endforeach
-                                    </div>
-
-                                    <div class="flex flex-wrap gap-2 justify-end mt-8 mb-4 mr-4">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="w-full flex justify-end space-x-2">
                                         @if($buttonsConfig['showDetailsButton'])
                                             <button class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:cursor-pointer hover:bg-blue-500 hover:shadow-sm">
                                                 <i class="fad fa-info-circle text-xl p-1"></i>
@@ -194,17 +147,15 @@
                                         @endif
 
                                         @if($buttonsConfig['showEditButton'])
-                                            <button
-                                                wire:click="editRegistry({{ $object->$identifier }})"
-                                                class="relative p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:cursor-pointer hover:text-white hover:bg-success-500 hover:shadow-sm">
-                                                <i class="fad fa-edit  text-xl p-1"></i>
+                                            <button wire:click="editRegistry({{ $object->$identifier }})"
+                                                class="p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm hover:cursor-pointer">
+                                                <i class="fad fa-edit text-xl p-1"></i>
                                             </button>
                                         @endif
 
                                         @if($buttonsConfig['showDeleteButton'])
-                                            <button 
-                                                wire:click="delete({{$object->$identifier}})"
-                                                class="relative p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:cursor-pointer hover:text-white hover:bg-primary-500 hover:shadow-sm">
+                                            <button wire:click="delete({{ $object->$identifier }})"
+                                                class="p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm hover:cursor-pointer">
                                                 <i class="fad fa-trash-alt text-xl p-1"></i>
                                             </button>
                                         @endif
@@ -219,56 +170,85 @@
                                             @endforeach
                                         @endif
                                     </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- GRID -->
+            <div x-show="listingMode === 'grid'" class="w-full rounded-lg transition-all duration-300">
+                <div class="grid grid-cols-3 gap-6">
+                    @foreach($listingData as $object)
+                        <div class="bg-gray-100 relative rounded-lg shadow">
+                            <div class="flex items-center justify-center w-20 h-20 bg-white rounded-full absolute top-6 left-1/2 transform -translate-x-1/2">
+                                <div class="flex items-center justify-center w-16 h-16 bg-primary-300/20 rounded-full">
+                                    <i class="{{ $params['_icon'] }} text-2xl text-primary-500"></i>
                                 </div>
-                            @endforeach
+                            </div>
+                            <div class="w-full h-16 rounded-t-lg bg-primary-300/30"></div>
+
+                            <div class="px-4 py-2 mt-10 space-y-1">
+                                @foreach($gridConfig as $key => $data)
+                                    <{{$data['html']}} class="{{ @$data['tagStyle'] }} w-full truncate">
+                                        <span class="{{ @$data['labelStyle'] }}">{{ $data['name'] }}:</span>
+                                        <span class="{{ @$data['fieldStyle'] }}">
+                                            @if(@$data['getRelation']) 
+                                                @php
+                                                    $segments = explode('->', $data['getRelation']);
+                                                    $value = $object;
+                                                    foreach ($segments as $segment) {
+                                                        $value = optional($value)->{$segment};
+                                                    }
+                                                @endphp
+                                                {{ $value }}
+                                            @elseif(@$data['listingFunction'])
+                                                {!! $functions->{$data['listingFunction']}($object->$key) !!}
+                                            @else
+                                                {{ $object->$key }}
+                                            @endif
+                                        </span>
+                                    </{{$data['html']}}>
+                                @endforeach
+                            </div>
+
+                            <div class="flex gap-2 justify-end mt-4 mb-4 px-4">
+                                @if($buttonsConfig['showDetailsButton'])
+                                    <button class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:cursor-pointer hover:bg-blue-500 hover:shadow-sm">
+                                        <i class="fad fa-info-circle text-xl p-1"></i>
+                                    </button>
+                                @endif
+
+                                @if($buttonsConfig['showEditButton'])
+                                    <button wire:click="editRegistry({{ $object->$identifier }})"
+                                        class="p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm hover:cursor-pointer">
+                                        <i class="fad fa-edit text-xl p-1"></i>
+                                    </button>
+                                @endif
+
+                                @if($buttonsConfig['showDeleteButton'])
+                                    <button wire:click="delete({{ $object->$identifier }})"
+                                        class="p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm hover:cursor-pointer">
+                                        <i class="fad fa-trash-alt text-xl p-1"></i>
+                                    </button>
+                                @endif
+
+                                @if(isset($additionalSingleData))
+                                    @foreach ($additionalSingleData as $name => $buttonData)
+                                        <button 
+                                            wire:click="{{ $buttonData['onTap']['function'] }}({{ $buttonData['onTap']['params'] }}, '{{ $object->$identifier }}')"
+                                            class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:cursor-pointer hover:text-white hover:bg-blue-500 hover:shadow-sm">
+                                            <i class="{{ $buttonData['icon'] }} text-xl p-1"></i>
+                                        </button>
+                                    @endforeach
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-
-                <!-- PAGINATION -->
-                <div class="flex flex-row justify-between w-full overflow-hidden mt-10 mb-2">
-                    <!-- PAGES -->
-                    <div class="space-x-1">
-                        <button class="relative p-1 rounded-lg transition duration-300 bg-gray-300/20 hover:shadow-sm">
-                            <i class="fad fa-angle-double-left text-gray-400 text-xl p-1"></i>
-                        </button>
-
-                        <button class="relative p-1 rounded-lg transition duration-300 bg-gray-300/20 hover:shadow-sm">
-                            <i class="fad fa-angle-left text-gray-400 text-xl p-1"></i>
-                        </button>
-
-                        <button class="relative px-3 py-1 rounded-lg transition duration-300 bg-primary-300/20 hover:shadow-sm">
-                            <span class="font-semibold text-primary-400 text-xl">1</span>
-                        </button>
-
-                        <button class="relative px-3 py-1 rounded-lg transition duration-300 text-gray-400 hover:bg-primary-300/20 hover:text-primary-400 hover:shadow-sm">
-                            <span class="font-semibold text-xl">2</span>
-                        </button>
-
-                        <button class="relative p-1 rounded-lg transition duration-300 bg-gray-300/20 hover:shadow-sm">
-                            <i class="fad fa-angle-double-right text-gray-400 text-xl p-1"></i>
-                        </button>
-
-                        <button class="relative p-1 rounded-lg transition duration-300 bg-gray-300/20 hover:shadow-sm">
-                            <i class="fad fa-angle-right text-gray-400 text-xl p-1"></i>
-                        </button>
-                    </div>
-
-                    <!-- REGISTRY COUNT -->
-                    <div class="flex flex-row items-center space-x-4">
-                        <select class="block w-24 p-0.5 border border-gray-300 rounded-md shadow-sm transition-colors duration-200 bg-gray-400/20 hover:bg-blue-100 focus:outline-none">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="15">20</option>
-                            <option value="15">25</option>
-                        </select>
-
-                        <p class="text-sm font-semibold text-gray-400 mr-1">Exibindo 2 de 2 Registros</p>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </div>
+    </main>
+
 </div>

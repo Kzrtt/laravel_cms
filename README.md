@@ -19,8 +19,9 @@
 
 ## 🖼️ Prints do Projeto
 
+![View para atribuição de permissões para os perfis de acesso do sistema](./docs/permission-screen.png)
 ![Dropdown que direciona para as telas de controle do sistema](./docs/settings-dropdown.png)
-![Tela de listagem genérica renderizando o Person.yaml](./docs/list-persons.png)
+![Tela de listagem genérica renderizando o Person.yaml](./docs/listing-screen.png)
 ![Tela de formuário genérica renderizando o cadastro de Person.yaml](./docs/form-persons.png)
 ![View customizada para criação dos usuários no modo de edição renderizando parcialmente o Users.yaml](./docs/edit-users.png)
 
