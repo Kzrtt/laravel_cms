@@ -26,6 +26,7 @@
                 if(!isset($this->permissionsOutput[$group])) {
                     $this->permissionsOutput[$group] = array(
                         "name" => $data['name'],
+                        "icon" => $data['icon'],
                         "subItens" => array(),
                     );
                 }

@@ -1,6 +1,7 @@
 Areas:
   Gestao:
     name: Gestão
+    icon: fad fa-tools
     subItens:
       Roles:
         name: Funções
@@ -24,6 +25,7 @@ Areas:
 
   Financeiro:
     name: Financeiro
+    icon: fad fa-money-bill-wave
     subItens:
       Invoices:
         name: Faturas
@@ -56,6 +58,7 @@ Areas:
 
   RecursosHumanos:
     name: Recursos Humanos
+    icon: fad fa-users
     subItens:
       Employees:
         name: Funcionários
@@ -85,6 +88,7 @@ Areas:
 
   TI:
     name: TI
+    icon: fad fa-user-robot
     subItens:
       Servers:
         name: Servidores
@@ -119,6 +123,7 @@ Areas:
   
   Sistema:
     name: Sistema
+    icon: fad fa-galaxy
     subItens:
       Profile:
         name: Perfis de Acesso
@@ -153,6 +158,7 @@ Areas:
 
   Notifications:
     name: Notificações
+    icon: fad fa-bell
     subItens:
       Notification:
         name: Notificações

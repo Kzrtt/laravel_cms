@@ -62,7 +62,11 @@
                 </div>
 
                 <!-- TABLE -->
-                <div class="w-full overflow-hidden rounded-lg">
+                <div 
+                    :class="{ 
+                        'shadow-lg': listingMode === 'list'
+                    }"
+                    class="w-full overflow-hidden rounded-lg">
                     <table x-show="listingMode === 'list'" class="w-full divide-y divide-gray-200">
                         <thead class="bg-primary-300/80 h-15">
                             <tr>

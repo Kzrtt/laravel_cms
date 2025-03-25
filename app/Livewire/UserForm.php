@@ -82,7 +82,14 @@ class UserForm extends Component
         $profile = $profileCtrl->getObject($prfId);
 
         $fetchModel = "App\\Models\\".$profile->prf_entity;
-        $this->selectsPopulate['representedAgent'] = $fetchModel::select()->get()->pluck("est_fantasy", "est_id")->toArray();
+
+        $entityMap = array(
+            "Establishment" => array("label" => "est_fantasy", "id" => "est_id"),
+            "Admin" => array("label" => "adm_fantasy", "id" => "adm_id"),
+        );
+        
+        $this->selectsPopulate['representedAgent'] = 
+            $fetchModel::select()->get()->pluck($entityMap[$profile->prf_entity]['label'], $entityMap[$profile->prf_entity]['id'])->toArray();
     }
 
     public function submitForm() {
