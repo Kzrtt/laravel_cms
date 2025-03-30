@@ -18,7 +18,7 @@
         </div>
 
         <div class="self-start p-2 px-2 mt-1 mb-6 rounded-lg bg-secondary-200/30 text-secondary-600 text-md font-semibold">
-            <i class="fad fa-university m-1"></i> {{ auth()->user()->getRepresentedAgent->getAgent->est_fantasy }}
+            <i class="fad fa-university m-1"></i> {{ getAgentName(auth()->user()->usr_level) }}
         </div>
 
         <hr class="border-t-2 border-dashed border-primary-300/30 my-4">

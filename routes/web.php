@@ -7,6 +7,7 @@ use App\Livewire\ListComponent;
 use App\Livewire\PermissionAssignScreen;
 use App\Livewire\LoginScreen;
 use App\Livewire\Roles;
+use App\Livewire\UserPermissionAssignScreen;
 use App\Livewire\UserForm;
 use Illuminate\Support\Facades\Route;
 
@@ -32,5 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/{local}/Form/{id?}', FormComponent::class)->name("form.component");
     Route::get('/admin/{local}/UserForm/{id?}', UserForm::class)->name("user-form");
     Route::get('/admin/{local}/ListRoles', Roles::class)->name("roles");
+
     Route::get('/admin/PermissionAssign/{id}', PermissionAssignScreen::class)->name("permission-assign");
+    Route::get('/admin/UserPermissionAssign/{id}', UserPermissionAssignScreen::class)->name("user-permission-assign");
 });

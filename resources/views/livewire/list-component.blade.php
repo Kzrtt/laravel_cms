@@ -50,7 +50,7 @@
         <nav class="flex flex-row space-x-3">
             <button @click="listingMode = 'list'"
                 :class="{
-                    'bg-primary-300/20 text-primary-400': listingMode === 'list',
+                    'bg-secondary-300/20 text-secondary-400': listingMode === 'list',
                     'hover:bg-gray-300/20 text-gray-400': listingMode !== 'list'
                 }"
                 class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm hover:cursor-pointer">
@@ -60,7 +60,7 @@
 
             <button @click="listingMode = 'grid'"
                 :class="{
-                    'bg-primary-300/20 text-primary-400': listingMode === 'grid',
+                    'bg-secondary-300/20 text-secondary-400': listingMode === 'grid',
                     'hover:bg-gray-300/20 text-gray-400': listingMode !== 'grid'
                 }" 
                 class="relative p-2 rounded-lg transition duration-300 hover:shadow-sm hover:cursor-pointer">
@@ -77,7 +77,7 @@
             @if($buttonsConfig['showInsertButton'])
                 <button 
                     wire:click="addNew"
-                    class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-primary-600 bg-primary-200/20 hover:bg-primary-400/40 hover:font-semibold"
+                    class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-secondary-600 bg-secondary-200/20 hover:bg-secondary-400/40 hover:font-semibold"
                 >
                     <i class="fad fa-plus-circle mr-1"></i> Adicionar Registro
                 </button>
@@ -85,7 +85,7 @@
             
             @if($buttonsConfig['showSearchButton'])
                 <button 
-                    class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-primary-600 bg-primary-200/20 hover:bg-primary-400/40 hover:font-semibold"
+                    class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-secondary-600 bg-secondary-200/20 hover:bg-secondary-400/40 hover:font-semibold"
                 >
                     <i class="fad fa-search mr-1"></i> Buscar
                 </button>

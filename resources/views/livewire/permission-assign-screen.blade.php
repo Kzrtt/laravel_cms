@@ -4,7 +4,30 @@
     $allSubareas = [];
     foreach ($permissionsConfig as $group) {
         if (isset($group['subItens']) && is_array($group['subItens'])) {
-            $allSubareas = array_merge($allSubareas, $group['subItens']);
+            foreach ($group['subItens'] as $subarea) {
+                $area = $subarea['area'];
+
+                if (!isset($this->permissionData[$area])) {
+                    continue;
+                }
+
+                $grantedActions = [];
+
+                foreach ($subarea['permissions'] as $action) {
+                    if (!empty($this->permissionData[$area][$action])) {
+                        $grantedActions[] = $action;
+                    }
+                }
+
+                // Se tiver pelo menos uma permissão concedida, inclui
+                if (!empty($grantedActions)) {
+                    $allSubareas[] = [
+                        'area' => $area,
+                        'name' => $subarea['name'],
+                        'permissions' => $grantedActions,
+                    ];
+                }
+            }
         }
     }
 @endphp

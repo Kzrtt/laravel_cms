@@ -12,7 +12,7 @@ use TallStackUi\Traits\Interactions;
 
 
 /**
- * Classe para atribuição e remoção das permissões de um usuário
+ * Classe para atribuição e remoção das permissões de um perfil de usuário
  * 
  * @author Felipe Kurt <fe.hatunaqueton@gmail.com>
  */
@@ -211,6 +211,8 @@ class PermissionAssignScreen extends Component
                 title: "Sucesso!",
                 position: "center"
             );
+
+            $this->js("window.location.reload()");
         } catch (ValidationException $ex) {
             $this->dispatch('alert',
                 icon: "error",
