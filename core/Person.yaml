@@ -3,26 +3,23 @@ Person:
   identifier: 'pes_id'
   listingConfig:
     grid:
-      pes_id:
-        name: Id
-        tagStyle: 'mb-4'
-        labelStyle: 'font-semibold text-primary-400 text-xl pb-2'
-        fieldStyle: 'text-xl'
-        html: 'p'
       pes_name:
         name: Nome
-        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
-        fieldStyle: 'truncate'
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
         html: 'p'
       pes_cpf:
         name: Cpf
-        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
-        fieldStyle: 'truncate'
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
         html: 'p'
       pes_created_at:
         name: Criado Em
-        labelStyle: 'font-semibold text-primary-400 text-md pb-2'
-        fieldStyle: 'truncate'
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
         html: 'p'
         listingFunction: getDate
     table:

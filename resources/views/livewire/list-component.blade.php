@@ -106,21 +106,52 @@
             <hr class="border-t-2 mb-6 border-dashed border-primary-300/30 my-4">
 
             <!-- TABELA -->
-            <div x-show="listingMode === 'list'" class="w-full overflow-hidden shadow-lg rounded-lg transition-all duration-300">
-                <table class="w-full divide-y divide-gray-200">
-                    <thead class="bg-primary-300/80 h-15">
-                        <tr>
+            <div x-show="listingMode === 'list'" class="grid gap-4 transition-all duration-300">
+                @foreach($listingData as $object)
+                    <div class="bg-white shadow-md rounded-xl p-4 border border-gray-100 hover:shadow-lg hover:scale-[1.01] transition-all duration-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="text-primary-300 text-lg font-semibold mt-0">
+                                Registro #{{ $object->$identifier }}
+                            </div>
+            
+                            <div class="flex space-x-2">
+                                @if($buttonsConfig['showDetailsButton'])
+                                    <button class="p-2 rounded-lg text-blue-400 bg-blue-300/20 hover:text-white hover:cursor-pointer hover:bg-blue-500 transition">
+                                        <i class="fad fa-info-circle text-lg p-1"></i>
+                                    </button>
+                                @endif
+            
+                                @if($buttonsConfig['showEditButton'])
+                                    <button wire:click="editRegistry({{ $object->$identifier }})"
+                                        class="p-2 rounded-lg text-success-400 bg-success-300/20 hover:text-white hover:cursor-pointer hover:bg-success-500 transition">
+                                        <i class="fad fa-edit text-g p-1"></i>
+                                    </button>
+                                @endif
+            
+                                @if($buttonsConfig['showDeleteButton'])
+                                    <button wire:click="delete({{ $object->$identifier }})"
+                                        class="p-2 rounded-lg text-red-400 bg-red-300/20 hover:text-white hover:cursor-pointer hover:bg-red-500 transition">
+                                        <i class="fad fa-trash-alt text-lg p-1"></i>
+                                    </button>
+                                @endif
+            
+                                @if(isset($additionalSingleData))
+                                    @foreach ($additionalSingleData as $name => $buttonData)
+                                        <button 
+                                            wire:click="{{ $buttonData['onTap']['function'] }}({{ $buttonData['onTap']['params'] }}, '{{ $object->$identifier }}')"
+                                            class="p-2 rounded-lg text-blue-400 bg-blue-300/20 hover:text-white hover:cursor-pointer hover:bg-blue-500 transition">
+                                            <i class="{{ $buttonData['icon'] }} text-lg p-1"></i>
+                                        </button>
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+            
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-sm">
                             @foreach($tableConfig as $key => $data)
-                                <th class="px-6 py-3 text-left text-sm font-big text-primary-900/50 uppercase tracking-wider">{{ $data['name'] }}</th>
-                            @endforeach
-                            <th class="px-6 py-3 text-right text-sm font-big text-primary-900/50 uppercase tracking-wider">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($listingData as $object)    
-                            <tr>
-                                @foreach($tableConfig as $key => $data)
-                                    <td class="px-6 py-4 whitespace-nowrap {{ $data['style'] ?? '' }}">
+                                <div>
+                                    <div class="font-semibold text-secondary-500/50 uppercase text-xs mb-0.5">{{ $data['name'] }}</div>
+                                    <div class="mb-1 text-gray-700/75">
                                         @if(@$data['getRelation']) 
                                             @php
                                                 $segments = explode('->', $data['getRelation']);
@@ -135,102 +166,72 @@
                                         @else
                                             {{ $object->$key }}
                                         @endif
-                                    </td>
-                                @endforeach
-
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="w-full flex justify-end space-x-2">
-                                        @if($buttonsConfig['showDetailsButton'])
-                                            <button class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:cursor-pointer hover:bg-blue-500 hover:shadow-sm">
-                                                <i class="fad fa-info-circle text-xl p-1"></i>
-                                            </button>
-                                        @endif
-
-                                        @if($buttonsConfig['showEditButton'])
-                                            <button wire:click="editRegistry({{ $object->$identifier }})"
-                                                class="p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm hover:cursor-pointer">
-                                                <i class="fad fa-edit text-xl p-1"></i>
-                                            </button>
-                                        @endif
-
-                                        @if($buttonsConfig['showDeleteButton'])
-                                            <button wire:click="delete({{ $object->$identifier }})"
-                                                class="p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm hover:cursor-pointer">
-                                                <i class="fad fa-trash-alt text-xl p-1"></i>
-                                            </button>
-                                        @endif
-
-                                        @if(isset($additionalSingleData))
-                                            @foreach ($additionalSingleData as $name => $buttonData)
-                                                <button 
-                                                    wire:click="{{ $buttonData['onTap']['function'] }}({{ $buttonData['onTap']['params'] }}, '{{ $object->$identifier }}')"
-                                                    class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:cursor-pointer hover:text-white hover:bg-blue-500 hover:shadow-sm">
-                                                    <i class="{{ $buttonData['icon'] }} text-xl p-1"></i>
-                                                </button>
-                                            @endforeach
-                                        @endif
                                     </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
             </div>
 
             <!-- GRID -->
             <div x-show="listingMode === 'grid'" class="w-full rounded-lg transition-all duration-300">
                 <div class="grid grid-cols-3 gap-6">
                     @foreach($listingData as $object)
-                        <div class="bg-gray-100 relative rounded-lg shadow">
-                            <div class="flex items-center justify-center w-20 h-20 bg-white rounded-full absolute top-6 left-1/2 transform -translate-x-1/2">
-                                <div class="flex items-center justify-center w-16 h-16 bg-primary-300/20 rounded-full">
+                        <div class="bg-gray-100 relative rounded-lg shadow hover:shadow-lg hover:scale-[1.01] transition-all duration-200">
+                            <div class="flex items-center justify-center w-20 h-20 bg-white rounded-full absolute top-6 right-3">
+                                <div class="flex items-center justify-center w-17 h-17 bg-primary-300/20 rounded-full">
                                     <i class="{{ $params['_icon'] }} text-2xl text-primary-500"></i>
                                 </div>
                             </div>
                             <div class="w-full h-16 rounded-t-lg bg-primary-300/30"></div>
 
-                            <div class="px-4 py-2 mt-10 space-y-1">
-                                @foreach($gridConfig as $key => $data)
-                                    <{{$data['html']}} class="{{ @$data['tagStyle'] }} w-full truncate">
-                                        <span class="{{ @$data['labelStyle'] }}">{{ $data['name'] }}:</span>
-                                        <span class="{{ @$data['fieldStyle'] }}">
-                                            @if(@$data['getRelation']) 
-                                                @php
-                                                    $segments = explode('->', $data['getRelation']);
-                                                    $value = $object;
-                                                    foreach ($segments as $segment) {
-                                                        $value = optional($value)->{$segment};
-                                                    }
-                                                @endphp
-                                                {{ $value }}
-                                            @elseif(@$data['listingFunction'])
-                                                {!! $functions->{$data['listingFunction']}($object->$key) !!}
-                                            @else
-                                                {{ $object->$key }}
-                                            @endif
-                                        </span>
-                                    </{{$data['html']}}>
-                                @endforeach
+                            <div class="px-4 pb-2 pt-0 mt-5 space-y-1">
+                                <span class="font-semibold text-primary-300 text-xl">Registro #{{ $object->$identifier }}</span>
+
+                                <div class="mt-6">
+                                    @foreach($gridConfig as $key => $data)
+                                        <{{$data['html']}} class="{{ @$data['tagStyle'] }} w-full truncate">
+                                            <span class="{{ @$data['labelStyle'] }}">{{ $data['name'] }}</span>
+                                            <span class="{{ @$data['fieldStyle'] }}">
+                                                @if(@$data['getRelation']) 
+                                                    @php
+                                                        $segments = explode('->', $data['getRelation']);
+                                                        $value = $object;
+                                                        foreach ($segments as $segment) {
+                                                            $value = optional($value)->{$segment};
+                                                        }
+                                                    @endphp
+                                                    {{ $value }}
+                                                @elseif(@$data['listingFunction'])
+                                                    {!! $functions->{$data['listingFunction']}($object->$key) !!}
+                                                @else
+                                                    {{ $object->$key }}
+                                                @endif
+                                            </span>
+                                        </{{$data['html']}}>
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div class="flex gap-2 justify-end mt-4 mb-4 px-4">
                                 @if($buttonsConfig['showDetailsButton'])
                                     <button class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:text-white hover:cursor-pointer hover:bg-blue-500 hover:shadow-sm">
-                                        <i class="fad fa-info-circle text-xl p-1"></i>
+                                        <i class="fad fa-info-circle text-lg p-1"></i>
                                     </button>
                                 @endif
 
                                 @if($buttonsConfig['showEditButton'])
                                     <button wire:click="editRegistry({{ $object->$identifier }})"
                                         class="p-2 rounded-lg transition duration-300 text-success-400 bg-success-300/20 hover:text-white hover:bg-success-500 hover:shadow-sm hover:cursor-pointer">
-                                        <i class="fad fa-edit text-xl p-1"></i>
+                                        <i class="fad fa-edit text-lg p-1"></i>
                                     </button>
                                 @endif
 
                                 @if($buttonsConfig['showDeleteButton'])
                                     <button wire:click="delete({{ $object->$identifier }})"
                                         class="p-2 rounded-lg transition duration-300 text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:shadow-sm hover:cursor-pointer">
-                                        <i class="fad fa-trash-alt text-xl p-1"></i>
+                                        <i class="fad fa-trash-alt text-lg p-1"></i>
                                     </button>
                                 @endif
 
@@ -239,7 +240,7 @@
                                         <button 
                                             wire:click="{{ $buttonData['onTap']['function'] }}({{ $buttonData['onTap']['params'] }}, '{{ $object->$identifier }}')"
                                             class="relative p-2 rounded-lg transition duration-300 text-blue-400 bg-blue-300/20 hover:cursor-pointer hover:text-white hover:bg-blue-500 hover:shadow-sm">
-                                            <i class="{{ $buttonData['icon'] }} text-xl p-1"></i>
+                                            <i class="{{ $buttonData['icon'] }} text-lg p-1"></i>
                                         </button>
                                     @endforeach
                                 @endif

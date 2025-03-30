@@ -6,11 +6,11 @@
             $html = "";
 
             if($status) {
-                $html.= '<span class="inline-flex items-center justify-center px-3 py-1 rounded-lg bg-success-200/50 bg-opacity-50 text-success-700 font-semibold">';
+                $html.= '<span class="inline-flex items-center justify-center mt-2 px-3 py-1 rounded-lg bg-success-200/50 bg-opacity-50 text-success-700 font-semibold">';
                     $html.= '<i class="fad fa-check-circle mr-2"></i>Ativo';
                 $html.= '</span>';
             } else {
-                $html.= '<span class="inline-flex items-center px-3 py-1 rounded-full bg-danger-200/50 bg-opacity-50 text-danger-700 font-semibold">';
+                $html.= '<span class="inline-flex items-center mt-2 px-3 py-1 rounded-full bg-danger-200/50 bg-opacity-50 text-danger-700 font-semibold">';
                     $html.= '<i class="fad fa-times-circle mr-2"></i>Inativo';
                 $html.= '</span>';
             }

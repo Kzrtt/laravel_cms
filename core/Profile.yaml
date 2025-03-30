@@ -1,23 +1,19 @@
 Profile:
-  startsOn: grid
+  startsOn: list
   identifier: prf_id
   listingConfig:
     grid:
-      prf_id:
-        name: Id
-        tagStyle: 'mb-4'
-        labelStyle: 'font-semibold text-primary-400 text-xl pb-2'
-        fieldStyle: 'text-xl'
-        html: 'p'
       prf_name:
         name: Nome
-        labelStyle: 'font-semibold text-primary-400 text-md'
-        fieldStyle: ''
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
         html: 'p'
       prf_entity:
         name: Entidade
-        labelStyle: 'font-semibold text-primary-400 text-md'
-        fieldStyle: 'mt-1'
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
         html: 'p'
     table:
       prf_id:
