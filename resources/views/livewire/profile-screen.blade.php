@@ -17,7 +17,7 @@
             </div>          
         </div>
 
-        <div class="self-start p-2 px-2 mt-1 mb-6 rounded-lg bg-primary-200/30 text-primary-600 text-md font-semibold">
+        <div class="self-start p-2 px-2 mt-1 mb-6 rounded-lg bg-secondary-200/30 text-secondary-600 text-md font-semibold">
             <i class="fad fa-university m-1"></i> {{ auth()->user()->getRepresentedAgent->getAgent->est_fantasy }}
         </div>
 
@@ -53,8 +53,8 @@
             <button 
                 @click="selectedTab = 'personal'" 
                 :class="selectedTab === 'personal' 
-                    ? 'bg-primary-200/30 text-primary-600 w-full text-left font-semibold px-3 py-2 rounded-lg' 
-                    : 'w-full text-left px-3 py-2 text-black/55 rounded hover:cursor-pointer hover:text-primary-600 hover:bg-primary-200/15'
+                    ? 'bg-secondary-200/30 text-secondary-600 w-full text-left font-semibold px-3 py-2 rounded-lg' 
+                    : 'w-full text-left px-3 py-2 text-black/55 rounded hover:cursor-pointer hover:text-secondary-600 hover:bg-secondary-200/15'
                 "
             >
                 <i class="fad fa-user-circle mr-1"></i> Informações Pessoais
@@ -63,8 +63,8 @@
             <button 
                 @click="selectedTab = 'password'" 
                 :class="selectedTab === 'password' 
-                    ? 'bg-primary-200/30 text-primary-600 w-full text-left font-semibold px-3 py-2 rounded-lg' 
-                    : 'w-full text-left px-3 py-2 text-black/55 rounded hover:cursor-pointer hover:text-primary-600 hover:bg-primary-200/15'
+                    ? 'bg-secondary-200/30 text-secondary-600 w-full text-left font-semibold px-3 py-2 rounded-lg' 
+                    : 'w-full text-left px-3 py-2 text-black/55 rounded hover:cursor-pointer hover:text-secondary-600 hover:bg-secondary-200/15'
                 "
             >
                 <i class="fad fa-key mr-1"></i> Dados de Acesso
@@ -134,7 +134,7 @@
                         <input 
                             wire:model.lazy.debounce.500ms="passwordForm.current"
                             :type="showPassword1 ? 'text' : 'password'" placeholder="Sua senha"
-                            class="w-full rounded-r-md px-3 py-2 text-gray-700 focus:outline-none"
+                            class="w-full border-none rounded-r-md px-3 py-2 text-gray-700 !focus:outline-none focus:ring-0"
                         >
     
                         <button 
@@ -156,7 +156,7 @@
                         <input 
                             wire:model.lazy.debounce.500ms="passwordForm.new"
                             :type="showPassword2 ? 'text' : 'password'" placeholder="Nova senha"
-                            class="w-full rounded-r-md px-3 py-2 text-gray-700 focus:outline-none"
+                            class="w-full border-none focus-within:none rounded-r-md px-3 py-2 text-gray-700 !focus:outline-none focus:ring-0"
                         >
     
                         <button 
@@ -178,7 +178,7 @@
                         <input 
                             wire:model.lazy.debounce.500ms="passwordForm.confirm"
                             :type="showPassword3 ? 'text' : 'password'" placeholder="Confirmar Senha"
-                            class="w-full rounded-r-md px-3 py-2 text-gray-700 focus:outline-none"
+                            class="w-full border-none rounded-r-md px-3 py-2 text-gray-700 !focus:outline-none focus:ring-0"
                         >
     
                         <button 

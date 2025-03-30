@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.5",
         "symfony/yaml": "^6.4",
+        "tallstackui/tallstackui": "2.3.2",
         "wireui/wireui": "2.4.0"
     },
     "require-dev": {

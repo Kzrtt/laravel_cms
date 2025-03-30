@@ -42,7 +42,7 @@
                         <input 
                             wire:model.lazy.debounce.500ms="loginForm.email"
                             type="email" placeholder="Seu email"
-                            class="w-full rounded-r-md px-3 py-2 text-gray-700 focus:outline-none"
+                            class="w-full border-none rounded-r-md px-3 py-2 text-gray-700 !focus:outline-none focus:ring-0"
                         >
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                         <input 
                             wire:model.lazy.debounce.500ms="loginForm.password"
                             :type="showPassword ? 'text' : 'password'" placeholder="Sua senha"
-                            class="w-full rounded-r-md px-3 py-2 text-gray-700 focus:outline-none"
+                            class="w-full border-none rounded-r-md px-3 py-2 text-gray-700 !focus:outline-none focus:ring-0"
                         >
 
                         <button 

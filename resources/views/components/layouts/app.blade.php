@@ -12,11 +12,14 @@
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
+        <tallstackui:script /> 
         @livewireStyles
         @vite(['resources/css/app.css', 'public/css/font-awesome-pro-master.min.css?v=0.0.1'])
     </head>
     <body class="bg-gray-200 m-0 p-0">
         @livewire('header')
+
+        <x-ts-toast /> 
 
         {{ $slot }}
 

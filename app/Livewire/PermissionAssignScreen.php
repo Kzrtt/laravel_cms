@@ -6,7 +6,10 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Controllers\YamlInterpreter;
 use App\Controllers\GenericCtrl;
+use App\Models\UserPermission;
 use Illuminate\Validation\ValidationException;
+use TallStackUi\Traits\Interactions; 
+
 
 /**
  * Classe para atribuição e remoção das permissões de um usuário
@@ -17,9 +20,15 @@ use Illuminate\Validation\ValidationException;
 #[Layout('components.layouts.app')]
 class PermissionAssignScreen extends Component
 {
+    use Interactions;
+
     public $permissionsConfig = array();
     public $permissionData = array();
     public $databasePermissions = array();
+    public $massPermissionData = array(
+        'subarea' => '',
+        'permission' => [],
+    );
 
     public $profileName = "";
     public $prfId = "";
@@ -28,6 +37,9 @@ class PermissionAssignScreen extends Component
     public $totalSubAreas = 0;
     public $permissionsAssigned = 0;
     public $totalUsers = 0;
+
+    public $permissionModal = false;
+    public $selectedSubarea = "";
 
     public function mount($id) {
         $profileCtrl = new GenericCtrl("Profile");
@@ -66,6 +78,97 @@ class PermissionAssignScreen extends Component
                     $this->permissionData[$subItemValue['area']][$action] = false;
                 }
             }
+        }
+    }
+
+    public function openModal() { 
+        $this->permissionModal = true;
+        $this->massPermissionData['permission'] = []; 
+    }
+
+    public function massRemovePermissions() {
+        try {
+            $userCtrl = new GenericCtrl("User");
+            $profileCtrl = new GenericCtrl("Profile");
+            $userPermissionCtrl = new GenericCtrl("UserPermission");
+
+            $profile = $profileCtrl->getObject($this->prfId);
+
+            $users = $userCtrl->getObjectByField(
+                "usr_level", 
+                $profile->prf_entity, 
+                false
+            );
+
+            $count = 0;
+            $countPermissions = 0;
+            foreach ($users as $usr) {
+                foreach ($this->massPermissionData['permission'] as $key => $permission) {
+                    $usrPermission = $userPermissionCtrl->getObjectByFields(
+                        array("usp_area", "usp_action", "users_usr_id"),
+                        array($this->massPermissionData['subarea'], $permission, $usr->usr_id),
+                    );
+
+                    if($usrPermission instanceof UserPermission) {
+                        $userPermissionCtrl->delete($usrPermission->usp_id);
+                        $countPermissions += 1;
+                    }
+                }
+
+                $count += 1;
+            }
+
+            $this->permissionModal = false;
+            $this->toast()->success('Sucesso!', $countPermissions.' Permissões Removidas entre '.$count.' Usuários')->send();
+        } catch (\Throwable $th) {
+            $this->permissionModal = false;
+            $this->toast()->error('Erro!', 'Ocorreu um erro ao conceder as permissões')->send();
+        }
+    }
+
+    public function massAssignPermissions() {
+        try {
+            $userCtrl = new GenericCtrl("User");
+            $profileCtrl = new GenericCtrl("Profile");
+            $userPermissionCtrl = new GenericCtrl("UserPermission");
+
+            $profile = $profileCtrl->getObject($this->prfId);
+
+            $users = $userCtrl->getObjectByField(
+                "usr_level", 
+                $profile->prf_entity, 
+                false
+            );
+
+            $count = 0;
+            $countPermissions = 0;
+            foreach ($users as $usr) {
+                foreach ($this->massPermissionData['permission'] as $key => $permission) {
+                    $usrPermission = $userPermissionCtrl->getObjectByFields(
+                        array("usp_area", "usp_action", "users_usr_id"),
+                        array($this->massPermissionData['subarea'], $permission, $usr->usr_id),
+                    );
+
+                    if(!$usrPermission instanceof UserPermission) {
+                        $userPermissionCtrl->save([
+                            'usp_area' => $this->massPermissionData['subarea'],
+                            'usp_action' => $permission,
+                            'users_usr_id' => $usr->usr_id,
+                        ]);
+
+                        $countPermissions += 1;
+                    }
+                }
+
+                $count += 1;
+            }
+
+            $this->permissionModal = false;
+            $this->toast()->success('Sucesso!', $countPermissions.' Permissões Concedidas entre '.$count.' Usuários')->send();
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            $this->permissionModal = false;
+            $this->toast()->error('Erro!', 'Ocorreu um erro ao conceder as permissões')->send();
         }
     }
 

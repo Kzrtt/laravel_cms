@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\config\HeaderToggleParams;
 use Livewire\Component;
 use Symfony\Component\Yaml\Yaml;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Classe para criação do menu de maneira dinâmica através do arquivo
@@ -29,6 +30,11 @@ class Header extends Component
         $route = $data['_view'] ?? "list.component";
 
         return redirect()->route($route, ["local" => $data['_local']]);
+    }
+
+    public function loggout() {
+        Auth::logout();
+        return redirect()->route('login');
     }
 
     //* Função que carrega os parâmetros para a UI para renderização do menu

@@ -16,9 +16,10 @@ class UserPermission extends Model
     protected $fillable = [
         'usp_area',
         'usp_action',
+        'users_usr_id'
     ];
 
     public function getUser() {
-        return $this->belongsTo(Users::class, 'users_usr_id', 'usr_id');
+        return $this->belongsTo(User::class, 'users_usr_id', 'usr_id');
     }
 }

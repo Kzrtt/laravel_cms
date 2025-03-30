@@ -1,6 +1,13 @@
 @import "tailwindcss";
+
+/* WireUI */
 @import '../../vendor/wireui/wireui/ts/global.css';
 @source '../../vendor/wireui/wireui';
+
+/* TallStackUI */
+@import '../../vendor/tallstackui/tallstackui/css/v4.css'; 
+@plugin '@tailwindcss/forms'; 
+@source '../../vendor/tallstackui/tallstackui/**/*.php'; 
 
 @custom-variant dark (&:where(.dark, .dark *));
 

@@ -1,8 +1,117 @@
 @php
     $startingTab = array_key_first($permissionsConfig);
+
+    $allSubareas = [];
+    foreach ($permissionsConfig as $group) {
+        if (isset($group['subItens']) && is_array($group['subItens'])) {
+            $allSubareas = array_merge($allSubareas, $group['subItens']);
+        }
+    }
 @endphp
 
-<div class="flex flex-row justify-center mt-6 space-x-10 w-full min-h-screen" x-data="{ selectedTab: '{{ $startingTab }}' }">
+<div 
+    class="flex flex-row justify-center mt-6 space-x-10 w-full min-h-screen" 
+    x-data="permissionMassiveAssign()">
+
+    <x-ts-modal 
+        title="Atribuição de Permissões em Massa" 
+        wire="permissionModal" 
+        center
+        size="5xl"
+    >
+        <div class="w-full rounded-lg bg-amber-200/40 p-4 mt-2 mb-6 text-amber-400 font-semibold">
+            <i class="fad fa-exclamation-triangle text-xl ml-1 mr-2"></i>
+            Todos os usuários desse nível terão a permissão escolhida concedida ou removida.
+        </div>
+
+        <div 
+            x-data="{
+                selectedSubarea: '',
+                subareas: @js($allSubareas),
+            }"
+        >
+            <!-- SELECT de SubÁrea -->
+            <label class="block text-sm font-medium text-gray-600/70 mb-2">Selecionar Subárea</label>
+            <div class="flex rounded-md border border-gray-300 text-gray-700/50 focus-within:ring-1 focus-within:ring-primary-500/30">
+                <div class="flex items-center px-3 bg-gray-50 border-r border-gray-300 rounded-l-md">
+                    <i class="fad fa-layer-group"></i>
+                </div>
+
+                <select
+                    x-model="selectedSubarea"
+                    wire:model.defer="massPermissionData.subarea"
+                    class="w-full border-none px-3 py-2 text-gray-700 focus:outline-none focus:ring-0"
+                    @change="$wire.set('massPermissionData.permission', [])"
+                >
+                    <option value="">Selecione a Subárea</option>
+                    <template x-for="subarea in subareas" :key="subarea.area">
+                        <option :value="subarea.area" x-text="subarea.name"></option>
+                    </template>
+                </select>
+            </div>
+
+            <hr class="border-t-2 border-dashed border-primary-300/30 my-4">
+
+            <label class="block text-sm font-medium text-gray-600/70 mb-2 mt-4">Permissões da Subárea</label>
+
+            <!-- PERMISSÕES da SubÁrea Selecionada -->
+            <div x-show="selectedSubarea" x-transition>
+                <template x-for="subarea in subareas" :key="subarea.area">
+                    <div 
+                        x-show="selectedSubarea === subarea.area"
+                        class="flex flex-row space-x-4"
+                    >
+                        <template x-for="permission in subarea.permissions" :key="permission">
+                            <div class="mb-2">
+                                <label class="inline-flex items-center space-x-2 hover:cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        class="rounded text-primary-500 focus:ring-primary-500"
+                                        :id="`massive-${subarea.area}-${permission}`"
+                                        :value="permission"
+                                        wire:model="massPermissionData.permission"
+                                    >
+                                    <label 
+                                        :for="`massive-${subarea.area}-${permission}`" 
+                                        class="text-sm text-gray-700" 
+                                        x-text="getFriendlyPermission(permission)">
+                                    </label>
+                                </label>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+            <div class="flex flex-row justify-end items-center mt-4 space-x-2">
+                <!-- Botão REMOVER Permissões -->
+                <button 
+                    type="button"
+                    @click="$wire.call('massRemovePermissions')"
+                    class="p-2 px-4 rounded-lg bg-red-100 text-red-500 hover:bg-red-500 hover:text-white hover:cursor-pointer transition"
+                >
+                    <i class="fad fa-times-circle p-1"></i>
+                    <span class="font-semibold">Remover Permissões</span>
+                </button>
+
+                <!-- Botão CONCEDER Permissões -->
+                <button 
+                    type="button"
+                    @click="$wire.call('massAssignPermissions')"
+                    class="p-2 px-4 rounded-lg bg-green-100 text-green-600 hover:bg-green-600 hover:text-white hover:cursor-pointer transition"
+                >
+                    <i class="fad fa-check-circle p-1"></i>
+                    <span class="font-semibold">Conceder Permissões</span>
+                </button>
+            </div>
+
+            <x-slot:footer>
+                <div class="w-full flex justify-end items-center mt-2">
+                    <span class="text-sm text-black/40">{{ $profileName }}</span>                    
+                </div>
+            </x-slot:footer>
+        </div>
+    </x-ts-modal>
 
     <!-- MANTIDA: Sua parte esquerda original -->
     <div class="w-100 rounded-md bg-white shadow-sm p-6">
@@ -78,6 +187,7 @@
                             </div>
 
                             <button 
+                                wire:click="openModal"
                                 type="button"
                                 class="p-2 mr-3 rounded-lg text-primary-400 bg-primary-300/20 hover:text-white hover:bg-primary-500 hover:cursor-pointer hover:shadow-sm">
                                 <i class="fad fa-user-shield text-xl p-1"></i>
@@ -138,3 +248,24 @@
         </form>
     </main>
 </div>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('permissionMassiveAssign', () => ({
+            selectedTab: '{{ $startingTab }}',
+            selectedSubarea: '',
+            subareas: @js($allSubareas),
+            permissionData: {},
+
+            getFriendlyPermission(permission) {
+                const map = {
+                    'Consult': 'Consultar',
+                    'Insert': 'Inserir',
+                    'Delete': 'Deletar',
+                    'Edit': 'Edição'
+                };
+                return map[permission] ?? '?';
+            }
+        }))
+    });
+</script>
