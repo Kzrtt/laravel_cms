@@ -88,7 +88,7 @@ class FormComponent extends Component
                 $this->reset('formData');
             }
 
-            $this->toast()->success("Registro Criado!", "Registro de ".$this->params['_title']." foi criado com sucesso!");
+            $this->toast()->success("Registro Criado!", "Registro de ".$this->params['_title']." foi criado com sucesso!")->send();
             $this->js("window.history.back()");
         } catch (\Illuminate\Validation\ValidationException $ex) {
             $this->dispatch('alert', icon: "error", title: "Erro no Formulário", text: $ex->validator->errors()->first(), position: "center");

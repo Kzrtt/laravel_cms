@@ -8,6 +8,7 @@ use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Layout;
 use App\Controllers\YamlInterpreter;
+use TallStackUi\Traits\Interactions; 
 
 /**
  * Classe para tratamento da visualização dinâmica dos registros
@@ -20,6 +21,7 @@ use App\Controllers\YamlInterpreter;
 class ListComponent extends Component
 {
     use LivewireAlert;
+    use Interactions;
 
     protected $listeners = array("refresh" => '$refresh');
 
@@ -49,8 +51,11 @@ class ListComponent extends Component
     //? Registros para a listagem na página
     public $listingData = array();
     public $identifier = "";
-    
-    public $daoCtrl = null;
+
+    //? Variaveis pra controle dos registros
+    public $getterMethod = "";
+    public $controllerClass = "";
+    public $controllerParams = [];
 
     public function renderUIViaYaml() {
         $yamlInterpreter = new YamlInterpreter($this->params['_local']);
@@ -66,13 +71,24 @@ class ListComponent extends Component
 
         //? Carregando o controlador dinâmicamente
         $getConfig = $listOutput['getConfig'];
-        $getMethod = $getConfig['method'];
-        $daoCtrl = app()->makeWith("App\\Controllers\\".$getConfig['controller'], $getConfig['params']);
 
-        $this->listingData = $daoCtrl->$getMethod($this->params['_local']);
+        //? Guarda apenas os dados simples (serializáveis)
+        $this->getterMethod = $getConfig['method'];
+        $this->controllerClass = "App\\Controllers\\" . $getConfig['controller'];
+        $this->controllerParams = $getConfig['params'];
 
-        $this->totalRegistries = count($this->listingData);
+        // Faz a primeira carga dos dados
+        $this->getData();
     }
+
+    public function getData() {
+        if ($this->controllerClass && $this->getterMethod) {
+            $controller = app()->makeWith($this->controllerClass, $this->controllerParams);
+            $this->listingData = $controller->{$this->getterMethod}($this->params['_local']);
+            $this->totalRegistries = count($this->listingData);
+        }
+    }
+    
 
     //* Função que carrega as configs para poder montar os params para a UI
     public function mount($local) {
@@ -106,13 +122,8 @@ class ListComponent extends Component
             $genericCtrl = new GenericCtrl($this->params['_local']);
             $genericCtrl->delete($id);
 
-            $this->dispatch('alert',
-                icon: "success",
-                title: "Registro Removido!",
-                position: "center"
-            );
-
-            $this->js("window.location.reload()");
+            $this->toast()->success("Removido!", "Registro de ".$this->params['_title']." removido com sucesso!")->send();
+            $this->getData();
         } catch (QueryException $ex) {
             if ($ex->getCode() == '23000') {
                 // Aqui você pode lançar um erro customizado ou retornar uma mensagem de erro
