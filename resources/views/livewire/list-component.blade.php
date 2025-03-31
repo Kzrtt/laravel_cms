@@ -170,6 +170,10 @@
                                 </div>
                             @endforeach
                         </div>
+
+                        <div class="flex flex-row justify-end">
+                            <i class="{{ $params['_icon'] }} text-primary-500/30 text-3xl"></i>
+                        </div>
                     </div>
                 @endforeach
             </div>

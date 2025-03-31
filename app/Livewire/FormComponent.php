@@ -6,6 +6,7 @@ use App\Controllers\GenericCtrl;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Traits\DynamicFormTrait;
+use TallStackUi\Traits\Interactions; 
 
 /**
  * Classe para tratamento da rendereização dos formulários de maneira dinâmica
@@ -17,6 +18,7 @@ use App\Traits\DynamicFormTrait;
 class FormComponent extends Component
 {
     use DynamicFormTrait;
+    use Interactions;
 
     public $isEdit = false;
 
@@ -86,7 +88,7 @@ class FormComponent extends Component
                 $this->reset('formData');
             }
 
-            $this->dispatch('alert', icon: "success", title: "Sucesso!", position: "center");
+            $this->toast()->success("Registro Criado!", "Registro de ".$this->params['_title']." foi criado com sucesso!");
             $this->js("window.history.back()");
         } catch (\Illuminate\Validation\ValidationException $ex) {
             $this->dispatch('alert', icon: "error", title: "Erro no Formulário", text: $ex->validator->errors()->first(), position: "center");
