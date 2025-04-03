@@ -206,28 +206,21 @@ class PermissionAssignScreen extends Component
                 }
             }
 
-            $this->dispatch('alert',
-                icon: "success",
-                title: "Sucesso!",
-                position: "center"
-            );
+            $this->dialog()
+            ->success("Sucesso!", "Permissões de '".$this->profileName."' Alteradas com Sucesso")
+            ->flash()
+            ->send();
 
             $this->js("window.location.reload()");
         } catch (ValidationException $ex) {
-            $this->dispatch('alert',
-                icon: "error",
-                title: "Erro no Formulário",
-                text: $ex->validator->errors()->first(),
-                position: "center"
-            );
+            $this->dialog()
+            ->error("Erro no Formulário", $ex->validator->errors()->first())
+            ->send();
         } catch (\Exception $ex) {
-            $this->dispatch('alert',
-                icon: "error",
-                title: "Erro Inesperado",
-                text: $ex->getMessage(),
-                position: "center"
-            );
-        }   
+            $this->dialog()
+            ->error("Erro Inesperado", $ex->getMessage())
+            ->send();
+        }  
     }
 
     public function render()

@@ -8,12 +8,14 @@ use Illuminate\Validation\ValidationException;
 use App\Controllers\GenericCtrl;
 use App\Controllers\Utils\SaveFunctions;
 use App\Traits\DynamicFormTrait;
+use TallStackUi\Traits\Interactions; 
 
 
 #[Layout('components.layouts.app')]
 class UserForm extends Component
 {
     use DynamicFormTrait;
+    use Interactions;
 
     public $isEdit = false;
     public $params = array();
@@ -154,28 +156,20 @@ class UserForm extends Component
                 $this->reset('formData');
             }
             
-
-            $this->dispatch('alert',
-                icon: "success",
-                title: "Sucesso!",
-                position: "center"
-            );
+            $this->dialog()
+            ->success("Sucesso!", "Usuário criado com sucesso!")
+            ->flash()
+            ->send();
 
             $this->js("window.history.back()");
         } catch (ValidationException $ex) {
-            $this->dispatch('alert',
-                icon: "error",
-                title: "Erro no Formulário",
-                text: $ex->validator->errors()->first(),
-                position: "center"
-            );
+            $this->dialog()
+            ->error("Erro no Formulário", $ex->validator->errors()->first())
+            ->send();
         } catch (\Exception $ex) {
-            $this->dispatch('alert',
-                icon: "error",
-                title: "Erro Inesperado",
-                text: $ex->getMessage() . " | " . $ex->getFile() . " | " . $ex->getLine() ,
-                position: "center"
-            );
+            $this->dialog()
+            ->error("Erro Inesperado", $ex->getMessage())
+            ->send();
         }   
     }
     

@@ -6,6 +6,7 @@ use App\Models\config\HeaderToggleParams;
 use Livewire\Component;
 use Symfony\Component\Yaml\Yaml;
 use Illuminate\Support\Facades\Auth;
+use TallStackUi\Traits\Interactions; 
 
 /**
  * Classe para criação do menu de maneira dinâmica através do arquivo
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
  */
 class Header extends Component
 {
+    use Interactions;
+
     //? Configurações para o menu
     public $menuTabs = array();
     public $configTabs = array();
@@ -32,10 +35,19 @@ class Header extends Component
         return redirect()->route($route, ["local" => $data['_local']]);
     }
 
+    public function confirmLoggout() {
+        $this->dialog()
+        ->question('Atenção!', 'Tem certeza Sair?')
+        ->confirm(text: "Sair", method: 'loggout')
+        ->cancel("Cancelar")
+        ->send();
+    }
+
     public function loggout() {
         Auth::logout();
         return redirect()->route('login');
     }
+
 
     //* Função que carrega os parâmetros para a UI para renderização do menu
     public function mount() {

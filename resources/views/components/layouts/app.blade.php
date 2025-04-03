@@ -19,6 +19,7 @@
     <body class="bg-gray-200 m-0 p-0">
         @livewire('header')
 
+        <x-ts-dialog /> 
         <x-ts-toast /> 
 
         {{ $slot }}

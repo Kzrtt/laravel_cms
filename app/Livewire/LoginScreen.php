@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Controllers\UserCtrl;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
+use TallStackUi\Traits\Interactions; 
 
 /**
  * Classe para tratamento da rendereização da tela de login e a lógica
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 #[Layout('components.layouts.empty')]
 class LoginScreen extends Component
 {
+    use Interactions;
+
     public $loginForm = array(
         "email" => "",
         "password" => "",
@@ -31,25 +34,27 @@ class LoginScreen extends Component
         );
 
         if(!$loginResponse['status']) {
-            $this->dispatch(
-                'alert', 
-                icon: "error", 
-                title: "Erro no Login", 
-                text:  $loginResponse['message'],
-                position: "center"
-            );
+            $this->dialog()
+            ->error("Erro no Login", $loginResponse['message'])
+            ->send();
+
             return;
         }
 
         Auth::login($loginResponse['user']);
 
-        $this->dispatch(
-            'alert', 
-            icon: "success", 
-            title: "Usuário Autenticado!", 
-            text:  "Redirecionando para Dashboard do sistema.",
-            position: "center"
-        );
+        $this->dialog()
+        ->success("Usuário Autenticado!", "Redirecionando para Dashboard do sistema.")
+        ->send();
+
+        $usrName = auth()->user()->getPerson->pes_name;
+        $usrLevel = auth()->user()->getProfile->prf_name;
+        $usrRepresentedAgent = getAgentName(auth()->user()->usr_level);
+
+        $this->toast()
+        ->success("Autenticado com {$usrLevel}", "{$usrName} representando {$usrRepresentedAgent}")
+        ->flash()
+        ->send();
 
         return redirect()->route('dashboard');
     }

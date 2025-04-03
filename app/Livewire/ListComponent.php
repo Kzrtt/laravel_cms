@@ -117,6 +117,18 @@ class ListComponent extends Component
 
     //* Função que remove um registro
     public function delete($id) {
+        $this->dialog()
+        ->question('Atenção!', 'Tem certeza que deseja remover esse registro?')
+        ->confirm(text: "Remover", method: 'commitDelete', params: $id)
+        ->cancel("Cancelar", "cancelled", "Remoção Cancelada com Sucesso!")
+        ->send();
+    }
+
+    public function cancelled($message) {
+        $this->toast()->error('Cancelado', $message)->send();
+    }
+
+    public function commitDelete($id) {
         //TODO::Implementar validação de permissão para o delete com o Auth
         try {
             $genericCtrl = new GenericCtrl($this->params['_local']);
@@ -127,12 +139,9 @@ class ListComponent extends Component
         } catch (QueryException $ex) {
             if ($ex->getCode() == '23000') {
                 // Aqui você pode lançar um erro customizado ou retornar uma mensagem de erro
-                $this->dispatch('alert',
-                    icon: "warning",
-                    title: "Cuidado!",
-                    text: "Não é possível apagar este '".$this->params['_local']."', pois há registros vinculados a ele.",
-                    position: "center"
-                );
+                $this->dialog()
+                ->error("Erro", "Não foi possivel apagar este registro de '".$this->params['_title']."', pois há registros vinculados a ele.")
+                ->send();
             }
         } 
     }

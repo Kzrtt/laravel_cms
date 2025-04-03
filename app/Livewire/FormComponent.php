@@ -83,18 +83,29 @@ class FormComponent extends Component
 
             if (!is_null($this->params['_id'])) {
                 $genericCtrl->update($this->params['_id'], $formData);
+                $this->dialog()
+                ->success("Registro Alterado!", "Registro #".$this->params['_id']."  de ".$this->params['_title']." foi alterado com sucesso!")
+                ->flash()
+                ->send();
             } else {
                 $genericCtrl->save($formData);
                 $this->reset('formData');
+                $this->dialog()
+                ->success("Registro Criado!", "Registro de ".$this->params['_title']." foi criado com sucesso!")
+                ->flash()
+                ->send();
             }
-
-            $this->toast()->success("Registro Criado!", "Registro de ".$this->params['_title']." foi criado com sucesso!")->send();
+            
             $this->js("window.history.back()");
         } catch (\Illuminate\Validation\ValidationException $ex) {
-            $this->dispatch('alert', icon: "error", title: "Erro no Formulário", text: $ex->validator->errors()->first(), position: "center");
+            $this->dialog()
+            ->error("Erro no Formulário", $ex->validator->errors()->first())
+            ->send();
         } catch (\Exception $ex) {
-            $this->dispatch('alert', icon: "error", title: "Erro Inesperado", text: $ex->getMessage(), position: "center");
-        }
+            $this->dialog()
+            ->error("Erro Inesperado", $ex->getMessage())
+            ->send();
+        } 
     }
 
     public function render()

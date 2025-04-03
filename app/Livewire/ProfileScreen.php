@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\DynamicFormTrait;
 use App\Controllers\UserCtrl;
 use App\Controllers\GenericCtrl;
+use TallStackUi\Traits\Interactions; 
 
 /**
  * Classe para tratamento da rendereização da tela de perfil de usuário
@@ -20,6 +21,7 @@ use App\Controllers\GenericCtrl;
 class ProfileScreen extends Component
 {
     use DynamicFormTrait;
+    use Interactions;
 
     public $isEdit = true;
     public $params = array();
@@ -59,6 +61,14 @@ class ProfileScreen extends Component
         }
     }
 
+    public function confirmLoggout() {
+        $this->dialog()
+        ->question('Atenção!', 'Tem certeza Sair?')
+        ->confirm(text: "Sair", method: 'loggout')
+        ->cancel("Cancelar")
+        ->send();
+    }
+
     public function loggout() {
         Auth::logout();
         return redirect()->route('login');
@@ -70,13 +80,10 @@ class ProfileScreen extends Component
             $userId = auth()->user()->usr_id;
             
             if($this->passwordForm['new'] != $this->passwordForm['confirm']) {
-                $this->dispatch(
-                    'alert', 
-                    icon: "error", 
-                    title: "Erro no Formulário", 
-                    text: "As senhas não conferem", 
-                    position: "center"
-                );
+                $this->dialog()
+                ->error("Erro no Formulário!", "As Senhas não conferem")
+                ->send();
+
                 return;
             }
 
@@ -87,19 +94,20 @@ class ProfileScreen extends Component
             );
 
             if(!$response['status']) {
-                $this->dispatch(
-                    'alert', 
-                    icon: "error", 
-                    title: "Erro...", 
-                    text: $response['message'], 
-                    position: "center"
-                );
+                $this->dialog()
+                ->error("Erro!", $response['message'])
+                ->send();
+
                 return;
             }
 
-            $this->dispatch('alert', icon: "success", title: "Sucesso!", position: "center");
+            $this->dialog()
+            ->success('Sucesso!', "Senha Alterada!")
+            ->flash()
+            ->send();
+
             $this->reset('passwordForm');
-            $this->js("window.refresh()");
+            $this->js("window.location.reload()");
         } catch (\Illuminate\Validation\ValidationException $ex) {
             $this->dispatch('alert', icon: "error", title: "Erro no Formulário", text: $ex->validator->errors()->first(), position: "center");
         } catch (\Exception $ex) {
@@ -120,12 +128,20 @@ class ProfileScreen extends Component
 
             $genericCtrl->update(auth()->user()->getPerson->pes_id, $formData);
 
-            $this->dispatch('alert', icon: "success", title: "Sucesso!", position: "center");
-            $this->js("window.refresh()");
+            $this->dialog()
+            ->success('Sucesso!', "Dados Alterados com Sucesso!")
+            ->flash()
+            ->send();
+            
+            $this->js("window.location.reload()");
         } catch (\Illuminate\Validation\ValidationException $ex) {
-            $this->dispatch('alert', icon: "error", title: "Erro no Formulário", text: $ex->validator->errors()->first(), position: "center");
+            $this->dialog()
+            ->error("Erro no Formulário!", $ex->validator->errors()->first())
+            ->send();
         } catch (\Exception $ex) {
-            $this->dispatch('alert', icon: "error", title: "Erro Inesperado", text: $ex->getMessage(), position: "center");
+            $this->dialog()
+            ->error("Erro Inesperado", $ex->getMessage())
+            ->send();
         }
     }
 

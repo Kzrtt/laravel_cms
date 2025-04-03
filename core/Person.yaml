@@ -88,19 +88,6 @@ Person:
       validationRules: 
         - "required"
       line: 2
-    city_cit_id: 
-      type: relation
-      label: "Cidade"
-      edit: true
-      placeholder: "Selecione a Cidade"
-      helper: "Cidade do Endereço"
-      sizing: "mb-4 w-4/4"
-      groupIn: "Endereço"
-      identifier: "city"
-      validationRules: 
-        - "required"
-      values:
-      line: 1
     pes_uf: 
       type: select
       edit: true
@@ -146,6 +133,19 @@ Person:
       identifier: "uf"
       validationRules: 
         - "required"
+      line: 1
+    city_cit_id: 
+      type: relation
+      label: "Cidade"
+      edit: true
+      placeholder: "Selecione a Cidade"
+      helper: "Cidade do Endereço"
+      sizing: "mb-4 w-4/4"
+      groupIn: "Endereço"
+      identifier: "city"
+      validationRules: 
+        - "required"
+      values:
       line: 1
     pes_neighborhood:
       type: string
