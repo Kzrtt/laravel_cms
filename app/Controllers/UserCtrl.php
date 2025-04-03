@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\Utils\TripleDES;
+use Illuminate\Support\Facades\Session;
 
 class UserCtrl extends GenericCtrl {
     public $model = "User";
@@ -11,6 +12,24 @@ class UserCtrl extends GenericCtrl {
     public function __construct() {
         parent::__construct($this->model);
         $this->tripleDES = new TripleDES();
+    }
+
+    public function buildUserPermissionsInSession($userId) {
+        try {
+            $user = $this->getObject($userId);
+
+            $usrPermissions = array();
+            foreach ($user->permissions as $key => $value) {
+                $usrPermissions[$value->usp_area][$value->usp_action] = true;
+            }
+
+            Session::put('usr_permissions', $usrPermissions);
+        } catch (\Throwable $ex) {
+            return array(
+                "status" => false,
+                "message" => $ex->getMessage()
+            );
+        }
     }
 
     /**

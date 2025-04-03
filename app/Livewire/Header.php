@@ -55,6 +55,8 @@ class Header extends Component
         $filePath = base_path('core/configMenu.yaml');
         $menuConfig = Yaml::parseFile($filePath);
 
+        $usrPermissions = session('usr_permissions');
+
         //? Criando ids para manipulação dos tabs e subTabs
         $tabId = 1;
         $subTabId = 1;
@@ -68,15 +70,17 @@ class Header extends Component
             //? Telas que vão aparecer no menu da engrenagem
             if($area == "Sistema") {
                 foreach($dataArea['subItens'] as $subItem => $value) {
-                    $this->configTabs[] = array(
-                        "id" => $configTabId,
-                        "name" => $value['name'],
-                        "icon" => $value['icon'],
-                        "area" => $subItem,
-                        "customView" => $value['customView'] ?? null
-                    );
-
-                    $configTabId++;
+                    if(key_exists($subItem, $usrPermissions)) {
+                        $this->configTabs[] = array(
+                            "id" => $configTabId,
+                            "name" => $value['name'],
+                            "icon" => $value['icon'],
+                            "area" => $subItem,
+                            "customView" => $value['customView'] ?? null
+                        );
+    
+                        $configTabId++;
+                    }
                 }
 
                 continue;
@@ -98,15 +102,21 @@ class Header extends Component
 
             //? Armazenamento das subTabs
             foreach ($dataArea['subItens'] as $subItem => $value) {
-                $this->menuTabs[$area]['subTabs'][] = array(
-                    "id" => $subTabId,
-                    "name" => $value['name'],
-                    "icon" => $value['icon'],
-                    "area" => $subItem,
-                    "customView" => $value['customView'] ?? null,
-                );
+                if(key_exists($subItem, $usrPermissions)) {
+                    $this->menuTabs[$area]['subTabs'][] = array(
+                        "id" => $subTabId,
+                        "name" => $value['name'],
+                        "icon" => $value['icon'],
+                        "area" => $subItem,
+                        "customView" => $value['customView'] ?? null,
+                    );
+    
+                    $subTabId++;
+                }
+            }
 
-                $subTabId++;
+            if(isset($this->menuTabs[$area]['subTabs']) && count($this->menuTabs[$area]['subTabs']) == 0) {
+                unset($this->menuTabs[$area]);
             }
         }
 

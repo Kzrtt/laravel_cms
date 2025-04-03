@@ -33,6 +33,28 @@
         }
     }
 
+    if(!function_exists("removeUserPermissionInSession")) {
+        function removeUserPermissionInSession($local, $action) {
+            $permissions = session('usr_permissions');
+        
+            if (isset($permissions[$local][$action])) {
+                unset($permissions[$local][$action]);
+                session()->put('usr_permissions', $permissions);
+            }
+        }
+    }
+
+    if(!function_exists("addUserPermissionInSession")) {
+        function addUserPermissionInSession($local, $action) {
+            $permissions = session('usr_permissions');
+        
+            if (!isset($permissions[$local][$action])) {
+                $permissions[$local][$action] = true;
+                session()->put('usr_permissions', $permissions);
+            }
+        }
+    }
+
     if(!function_exists("getMessageForValidation")) {
         function getMessageForValidation($rule) {            
             $validationMap = array(

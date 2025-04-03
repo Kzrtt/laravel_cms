@@ -122,6 +122,7 @@ class UserPermissionAssignScreen extends Component
 
                         //? Caso a permissão exista na database mas o valor agora está falso ela é apagada
                         $permissionCtrl->delete($this->databasePermissions[$area][$action]);
+                        removeUserPermissionInSession($area, $action);
                         unset($this->databasePermissions[$area][$action]);
                         $this->permissionsAssigned -= 1;
 
@@ -136,6 +137,7 @@ class UserPermissionAssignScreen extends Component
                             'users_usr_id' => $this->usrId,
                         ]);
 
+                        addUserPermissionInSession($area, $action);
                         $this->databasePermissions[$area][$action] = $nPermission->usp_id;
                         $this->permissionsAssigned += 1;
                     }

@@ -1,5 +1,9 @@
 <div class="flex flex-col justify-center items-center pt-10">
-    <h1>Dashboard, Usuário Autenticado => {{ auth()->user()->getPerson->pes_name }}</h1>
+    @php
+        //prettyPrint(session('usr_permissions'));
+    @endphp
+
+    <h1 class="mt-10">Dashboard, Usuário Autenticado => {{ auth()->user()->getPerson->pes_name }}</h1>
 
     <div class="w-100 mt-10 mb-10">
         <x-select label="Order Status" placeholder="Select one status"

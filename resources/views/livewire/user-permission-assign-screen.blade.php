@@ -112,7 +112,7 @@
 
                                 <button type="submit" class="bg-primary-300 text-white p-2 px-4 rounded-lg hover:cursor-pointer hover:shadow-lg">
                                     <i class="fad fa-check-circle p-1"></i>
-                                    &nbsp;<span class="font-semibold">Conceder Permissões</span>&nbsp;
+                                    &nbsp;<span class="font-semibold">Alterar Permissões</span>&nbsp;
                                 </button>
                             </div>
                         </div>

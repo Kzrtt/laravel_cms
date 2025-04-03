@@ -51,6 +51,8 @@ class LoginScreen extends Component
         $usrLevel = auth()->user()->getProfile->prf_name;
         $usrRepresentedAgent = getAgentName(auth()->user()->usr_level);
 
+        $userCtrl->buildUserPermissionsInSession(auth()->user()->usr_id);
+
         $this->toast()
         ->success("Autenticado com {$usrLevel}", "{$usrName} representando {$usrRepresentedAgent}")
         ->flash()

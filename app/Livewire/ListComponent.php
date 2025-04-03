@@ -92,23 +92,42 @@ class ListComponent extends Component
 
     //* Função que carrega as configs para poder montar os params para a UI
     public function mount($local) {
-        //? Recebendo parametros do click
-        $this->params = session('params');
-        $this->params['_local'] = $local;
-        $this->renderUIViaYaml();
+        if(@session('usr_permissions')[$local]['Consult']) {
+            //? Recebendo parametros do click
+            $this->params = session('params');
+            $this->params['_local'] = $local;
+            $this->renderUIViaYaml();
+        } else {
+            $this->dialog()
+            ->error("Atenção!", "Você não possui permissão para consultar esses registros")
+            ->flash()
+            ->send();
+            
+            return redirect()->route('dashboard');
+        }
     }
 
     //* Função que troca de tela para o form
     public function addNew() {
-        $route = $this->viewForm;
-    
-        return redirect()->route($route, ["local" => $this->params['_local']]);
+        if(@session('usr_permissions')[$this->params['_local']]['Insert']) {
+            $route = $this->viewForm;
+            return redirect()->route($route, ["local" => $this->params['_local']]);
+        } else {
+            $this->dialog()
+            ->error('Atenção!', "Você não possui permissão para editar esse tipo de registro")
+            ->send();
+        }
     }
 
     public function editRegistry($id) {
-        $route = $this->viewForm;
-
-        return redirect()->route($route, ["local" => $this->params['_local'], "id" => $id]);
+        if(@session('usr_permissions')[$this->params['_local']]['Edit']) {
+            $route = $this->viewForm;
+            return redirect()->route($route, ["local" => $this->params['_local'], "id" => $id]);
+        } else {
+            $this->dialog()
+            ->error('Atenção!', "Você não possui permissão para editar esse tipo de registro")
+            ->send();
+        }
     }
 
     public function redirectTo($route, $id) {
@@ -117,11 +136,17 @@ class ListComponent extends Component
 
     //* Função que remove um registro
     public function delete($id) {
-        $this->dialog()
-        ->question('Atenção!', 'Tem certeza que deseja remover esse registro?')
-        ->confirm(text: "Remover", method: 'commitDelete', params: $id)
-        ->cancel("Cancelar", "cancelled", "Remoção Cancelada com Sucesso!")
-        ->send();
+        if(@session('usr_permissions')[$this->params['_local']]['Delete']) {
+            $this->dialog()
+            ->question('Atenção!', 'Tem certeza que deseja remover esse registro?')
+            ->confirm(text: "Remover", method: 'commitDelete', params: $id)
+            ->cancel("Cancelar", "cancelled", "Remoção Cancelada com Sucesso!")
+            ->send();
+        } else {
+            $this->dialog()
+            ->error('Atenção!', "Você não possui permissão para deletar esse tipo de registro")
+            ->send();
+        }
     }
 
     public function cancelled($message) {

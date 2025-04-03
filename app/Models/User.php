@@ -39,4 +39,8 @@ class User extends Model implements AuthenticatableContract
         return $this->hasOne(UserRepresentedAgent::class, 'users_usr_id', 'usr_id');
     }
 
+    public function permissions()
+    {
+        return $this->hasMany(UserPermission::class, 'users_usr_id', 'usr_id');
+    }
 }

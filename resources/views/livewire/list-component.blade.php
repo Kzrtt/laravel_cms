@@ -73,7 +73,7 @@
 
         <!-- Menu de Navegação -->
         <nav class="space-y-3">
-            @if($buttonsConfig['showInsertButton'])
+            @if($buttonsConfig['showInsertButton'] && @session('usr_permissions')[$params['_local']]['Insert'])
                 <button 
                     wire:click="addNew"
                     class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-secondary-600 bg-secondary-200/20 hover:bg-secondary-400/40 hover:font-semibold"
