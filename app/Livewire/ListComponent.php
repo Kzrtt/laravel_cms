@@ -114,7 +114,7 @@ class ListComponent extends Component
             return redirect()->route($route, ["local" => $this->params['_local']]);
         } else {
             $this->dialog()
-            ->error('Atenção!', "Você não possui permissão para editar esse tipo de registro")
+            ->error('Atenção!', "Você não possui permissão para criarn novos registros desse tipo")
             ->send();
         }
     }

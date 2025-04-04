@@ -16,8 +16,6 @@
         />
     </div>
 
-    <x-checkbox id="rounded-sm" wire:model="model3" rounded="sm" label="SM" value="sm" md />
-
     <div class="mt-10 space-x-4">
         <x-custom-button 
             color="primary" 
