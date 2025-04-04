@@ -64,7 +64,7 @@ Product:
     measurement_units_msu_id:
       type: relation
       label: "Unidade de Medida"
-      edit: false
+      edit: true
       placeholder: "Selecione a Unidade de Medida"
       helper: "Unidade de Medida do Produto"
       sizing: "mb-4 w-1/4"
