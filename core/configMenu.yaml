@@ -3,26 +3,33 @@ Areas:
     name: Gestão
     icon: fad fa-tools
     subItens:
-      Roles:
-        name: Funções
-        description: Gerenciamento de funções e permissões
-        customView: roles
-        icon: fad fa-user-shield
+      MeasurementUnit:
+        name: Unidades de Medida
+        description: Gerenciamento das unidades de medida
+        icon: fad fa-ruler-triangle
+        actions:
+          - Consult
+          - Insert
+          - Delete
+          - Edit
+      Brand:
+        name: Marcas
+        description: Gerenciamento das marcas
+        icon: fad fa-tags
         actions: 
           - Consult
           - Insert
           - Delete
           - Edit
-        showIf: session@level=Administrator
-      Reports:
-        name: Relatórios
-        description: Visualização de relatórios gerenciais
-        icon: fad fa-chart-line
+      Product:
+        name: Produtos
+        description: Gerenciamento dos Produtos
+        icon: fad fa-bags-shopping
         actions: 
           - Consult
           - Insert
-        showIf: session@level in [Administrator, Manager]
-
+          - Delete
+          - Edit
   Financeiro:
     name: Financeiro
     icon: fad fa-money-bill-wave

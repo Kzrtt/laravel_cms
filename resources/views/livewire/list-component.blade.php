@@ -195,7 +195,9 @@
                                 <div class="mt-6">
                                     @foreach($gridConfig as $key => $data)
                                         <{{$data['html']}} class="{{ @$data['tagStyle'] }} w-full truncate">
-                                            <span class="{{ @$data['labelStyle'] }}">{{ $data['name'] }}</span>
+                                            @if(!is_null($object->$key) && $object->$key != "")
+                                                <span class="{{ @$data['labelStyle'] }}">{{ $data['name'] }}</span>
+                                            @endif
                                             <span class="{{ @$data['fieldStyle'] }}">
                                                 @if(@$data['getRelation']) 
                                                     @php
@@ -209,7 +211,7 @@
                                                 @elseif(@$data['listingFunction'])
                                                     {!! $functions->{$data['listingFunction']}($object->$key) !!}
                                                 @else
-                                                    {{ $object->$key }}
+                                                    @if(!is_null($object->$key) && $object->$key != "") {{ $object->$key }} @endif
                                                 @endif
                                             </span>
                                         </{{$data['html']}}>

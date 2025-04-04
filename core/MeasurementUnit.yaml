@@ -1,0 +1,65 @@
+MeasurementUnit:
+  startsOn: 'grid'
+  identifier: 'msu_id'
+  listingConfig:
+    grid:
+      msu_name:
+          name: Nome
+          tagStyle: 'flex flex-row justify-between'
+          labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+          fieldStyle: 'truncate text-gray-700/75'
+          html: 'p'
+      msu_unit:
+        name: Sigla
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
+        html: 'p'
+    table:
+      msu_id:
+        name: Id
+        style: 'font-semibold'
+      msu_name:
+        name: Nome
+        style: 'font-semibold'
+      msu_unit:
+        name: Sigla
+        style: 'font-semibold'
+  formConfig:
+    view: "form.component"
+    msu_name:
+      type: string
+      label: "Nome"
+      edit: true
+      placeholder: "Informe o nome"
+      helper: "Nome da Unidade de Medida"
+      sizing: "mb-4 w-full max-w-2lg"
+      groupIn: "Dados Gerais"
+      identifier: "name"
+      validationRules: 
+        - "required"
+        - "min:3"
+      line: 1
+    msu_unit:
+      type: string
+      label: "Sigla"
+      edit: true
+      placeholder: "Informe a sigla"
+      helper: "Sigla da Unidade de Medida"
+      sizing: "mb-4 w-full max-w-xs"
+      groupIn: "Dados Gerais"
+      identifier: "unit"
+      validationRules: 
+        - "required"
+      line: 1
+  buttonsConfig:
+    showDeleteButton: true
+    showEditButton: true
+    showDetailsButton: true
+    showInsertButton: true
+    showSearchButton: true
+  getConfig:
+    controller: ListingCtrl
+    method: getAll
+    params: 
+      model: MeasurementUnit

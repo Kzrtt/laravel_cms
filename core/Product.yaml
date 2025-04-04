@@ -1,0 +1,104 @@
+Product:
+  startsOn: 'grid'
+  identifier: 'prd_id'
+  listingConfig:
+    grid: 
+      prd_name:
+        name: 'Nome:' 
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
+        html: 'p'
+      brands_brd_id:
+        name: 'Marca: ' 
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'text-gray-700/75'
+        getRelation: "brand->brd_name"
+        html: 'p'
+      measurement_units_msu_id:
+        name: 'Unidade de Medida: ' 
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'text-gray-700/75'
+        getRelation: "measurementUnit->msu_name"
+        html: 'p'
+      prd_description:
+        name: 'Descrição:' 
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'text-gray-700/75'
+        html: 'p'
+    table:
+      prd_id:
+        name: Id
+        style: "font-semibold"
+      prd_name:
+        name: Nome
+        style: "font-semibold"
+      brands_brd_id:
+        name: Marca
+        style: "font-semibold"
+        getRelation: "brand->brd_name"
+      measurement_units_msu_id:
+        name: Unidade de Medida
+        style: 'font-semibold'
+        getRelation: "measurementUnit->msu_name"
+      prd_description:
+        name: Descrição
+        style: 'font-semibold'
+  formConfig:
+    view: "form.component"
+    prd_name:
+      type: string
+      label: "Nome"
+      edit: true
+      placeholder: "Informe o Nome"
+      helper: "Nome do Produto"
+      groupIn: "Dados Produto"
+      sizing: "mb-4 w-full"
+      identifier: "name"
+      validationRules: 
+        - "required"
+      line: 1
+    measurement_units_msu_id:
+      type: relation
+      label: "Unidade de Medida"
+      edit: false
+      placeholder: "Selecione a Unidade de Medida"
+      helper: "Unidade de Medida do Produto"
+      sizing: "mb-4 w-1/4"
+      groupIn: "Dados Produto"
+      identifier: "measurement_unit"
+      validationRules: 
+        - "required"
+      fillOnStart:  
+        controller: GenericCtrl
+        params:
+          model: "MeasurementUnit"
+        method: getAll
+        pluck:
+          - msu_name
+          - msu_id
+      line: 1
+    prd_description:
+      type: string
+      label: "Descrição"
+      edit: true
+      placeholder: "Informe a Descrição"
+      helper: "Descrição do Produto"
+      groupIn: "Dados Produto"
+      sizing: "mb-4 w-full"
+      identifier: "description"
+      line: 2
+  buttonsConfig:
+    showDeleteButton: true
+    showEditButton: true
+    showDetailsButton: false
+    showInsertButton: true
+    showSearchButton: true
+  getConfig: 
+    method: getAll
+    controller: ListingCtrl
+    params: 
+      model: Product

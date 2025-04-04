@@ -160,7 +160,7 @@
 
             <template x-if="selectedTab && {{ json_encode($menuTabs) }}[selectedTab]">
                 <template x-for="subTab in {{ json_encode($menuTabs) }}[selectedTab].subTabs" :key="subTab.id">
-                    <button @click="selectedSubTab = subTab.id; $wire.changeScreen({ _local: subTab.name, _icon: subTab.icon, _title: subTab.name, _view: subTab.customView })"
+                    <button @click="selectedSubTab = subTab.id; $wire.changeScreen({ _local: subTab.area, _icon: subTab.icon, _title: subTab.name, _view: subTab.customView })"
                             :class="{
                                 'bg-primary-200/55 text-primary-600': selectedSubTab === subTab.id || selectedSubTab == subTab.area,
                                 'text-gray-400': selectedSubTab !== subTab.id,

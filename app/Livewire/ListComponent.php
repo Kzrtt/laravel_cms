@@ -99,7 +99,7 @@ class ListComponent extends Component
             $this->renderUIViaYaml();
         } else {
             $this->dialog()
-            ->error("Atenção!", "Você não possui permissão para consultar esses registros")
+            ->error("Atenção!", "Você não possui permissão para consultar esses registros ({$local})")
             ->flash()
             ->send();
             

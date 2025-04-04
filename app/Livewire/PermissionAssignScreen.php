@@ -110,6 +110,7 @@ class PermissionAssignScreen extends Component
                     );
 
                     if($usrPermission instanceof UserPermission) {
+                        removeUserPermissionInSession($usrPermission->usp_area, $usrPermission->usp_action);
                         $userPermissionCtrl->delete($usrPermission->usp_id);
                         $countPermissions += 1;
                     }
@@ -150,6 +151,7 @@ class PermissionAssignScreen extends Component
                     );
 
                     if(!$usrPermission instanceof UserPermission) {
+                        addUserPermissionInSession($this->massPermissionData['subarea'], $permission);
                         $userPermissionCtrl->save([
                             'usp_area' => $this->massPermissionData['subarea'],
                             'usp_action' => $permission,
