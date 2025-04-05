@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Controllers\ActionLogCtrl;
 use App\Controllers\GenericCtrl;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -82,20 +83,27 @@ class FormComponent extends Component
             $this->applySaveFunctions($formData);
 
             if (!is_null($this->params['_id'])) {
-                $genericCtrl->update($this->params['_id'], $formData);
+                $object = $genericCtrl->update($this->params['_id'], $formData);
                 $this->dialog()
                 ->success("Registro Alterado!", "Registro #".$this->params['_id']."  de ".$this->params['_title']." foi alterado com sucesso!")
                 ->flash()
                 ->send();
             } else {
-                $genericCtrl->save($formData);
+                $object = $genericCtrl->save($formData);
                 $this->reset('formData');
                 $this->dialog()
                 ->success("Registro Criado!", "Registro de ".$this->params['_title']." foi criado com sucesso!")
                 ->flash()
                 ->send();
             }
-            
+
+            ActionLogCtrl::addLogInSystem(
+                $this->params['_local'], 
+                is_null($this->params['_id']) ? "Insert" : "Edit", 
+                $object->toArray(), 
+                $this->params['_id'] ?? 0,
+            );
+    
             $this->js("window.history.back()");
         } catch (\Illuminate\Validation\ValidationException $ex) {
             $this->dialog()

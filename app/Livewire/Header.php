@@ -26,6 +26,11 @@ class Header extends Component
     public $showNotification = true;
     public $showConfig = true;
 
+    public function home() {
+        session()->put('params', '');   
+        return redirect()->route("dashboard");
+    }
+
     public function changeScreen($data)
     {
         session()->put('params', $data);

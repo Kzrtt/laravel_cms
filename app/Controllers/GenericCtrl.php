@@ -16,6 +16,7 @@
         public function update($id, $data) {
             $registry = $this->getObject($id);
             $registry->update($data);
+            $registry->refresh();
 
             return $registry;
         }

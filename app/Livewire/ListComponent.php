@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Controllers\ActionLogCtrl;
 use App\Controllers\GenericCtrl;
 use Illuminate\Database\QueryException;
 use Livewire\Component;
@@ -157,7 +158,15 @@ class ListComponent extends Component
         //TODO::Implementar validação de permissão para o delete com o Auth
         try {
             $genericCtrl = new GenericCtrl($this->params['_local']);
+            $object = $genericCtrl->getObject($id);
             $genericCtrl->delete($id);
+
+            ActionLogCtrl::addLogInSystem(
+                $this->params['_local'], 
+                "Delete", 
+                $object->toArray(), 
+                $id
+            );
 
             $this->toast()->success("Removido!", "Registro de ".$this->params['_title']." removido com sucesso!")->send();
             $this->getData();
