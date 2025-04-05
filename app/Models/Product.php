@@ -19,6 +19,8 @@ class Product extends Model
     protected $fillable = [
         'prd_name',
         'prd_description',
+        'prd_current_stock',
+        'prd_min_stock',
         'measurement_units_msu_id'
     ];
 
