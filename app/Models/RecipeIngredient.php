@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RecipeProduct extends Model
+class RecipeIngredient extends Model
 {
     use HasFactory;
 
-    protected $table = 'recipe_products';
-    protected $primaryKey = 'rep_id';
+    protected $table = 'recipe_ingredients';
+    protected $primaryKey = 'rei_id';
 
     public $timestamps = false;
 
     protected $fillable = [
-        'rep_quantity',
+        'rei_quantity',
         'recipe_rec_id',
-        'products_prd_id',
+        'ingredients_ing_id',
         'measurement_unit_msu_id'
     ];
 }

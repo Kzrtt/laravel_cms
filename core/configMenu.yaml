@@ -21,11 +21,33 @@ Areas:
           - Insert
           - Delete
           - Edit
-      Product:
-        name: Produtos
-        description: Gerenciamento dos Produtos
-        icon: fad fa-bags-shopping
+      Ingredient:
+        name: Ingredientes
+        description: Gerenciamento dos Ingredientes
+        icon: fad fa-utensils-alt
         actions: 
+          - Consult
+          - Insert
+          - Delete
+          - Edit
+  Produtos:
+    name: Produtos
+    icon: fad fa-cauldron
+    subItens:
+      Recipe:
+        name: Receitas
+        description: Gestão das receitas do sistema
+        icon: fad fa-book-spells
+        actions:
+          - Consult
+          - Insert
+          - Delete 
+          - Edit
+      RecipeUsage:
+        name: Uso de Receita
+        description: Gestão dos uso de receitas
+        icon: fad fa-cauldron
+        actions:
           - Consult
           - Insert
           - Delete
@@ -34,65 +56,15 @@ Areas:
     name: Financeiro
     icon: fad fa-money-bill-wave
     subItens:
-      Invoices:
-        name: Faturas
-        description: Gestão de faturas e pagamentos
-        icon: fad fa-file-invoice-dollar
-        actions: 
-          - Consult
-          - Insert
-          - Delete
-          - Edit
-        showIf: session@level in [Administrator, Finance]
-      Expenses:
-        name: Despesas
-        description: Controle de despesas operacionais
+      Purchase:
+        name: Compras
+        description: Gestão das compras de ingredientes
         icon: fad fa-money-bill-wave
         actions: 
           - Consult
           - Insert
           - Delete
           - Edit
-        showIf: session@level in [Administrator, Finance]
-      Budget:
-        name: Orçamento
-        description: Planejamento e acompanhamento orçamentário
-        icon: fad fa-wallet
-        actions: 
-          - Consult
-          - Insert
-        showIf: session@level in [Administrator]
-
-  RecursosHumanos:
-    name: Recursos Humanos
-    icon: fad fa-users
-    subItens:
-      Employees:
-        name: Funcionários
-        description: Cadastro e gerenciamento de funcionários
-        icon: fad fa-users
-        actions: 
-          - Consult
-        showIf: session@level in [Administrator, HR]
-      Payroll:
-        name: Folha de Pagamento
-        description: Processamento da folha de pagamento
-        icon: fad fa-file-invoice
-        actions: 
-          - Consult
-          - Insert
-          - Edit
-        showIf: session@level in [HR]
-      Recruitment:
-        name: Recrutamento
-        description: Gestão de processos seletivos
-        icon: fad fa-user-plus
-        actions: 
-          - Consult
-          - Insert
-          - Delete
-        showIf: session@level in [Administrator, HR, Recruiter]
-
   TI:
     name: TI
     icon: fad fa-user-robot

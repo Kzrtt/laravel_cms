@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PurchaseProduct extends Model
+class PurchaseIngredient extends Model
 {
     use HasFactory;
 
-    protected $table = 'purchase_products';
-    protected $primaryKey = 'prc_id';
+    protected $table = 'purchase_ingredients';
+    protected $primaryKey = 'pui_id';
 
     public $timestamps = false;
 
     protected $fillable = [
-        'prc_unit_price',
-        'prc_quantity',
-        'prc_due_date',
+        'pui_unit_price',
+        'pui_quantity',
+        'pui_due_date',
         'purchase_pur_id',
-        'products_prd_id'
+        'ingredients_ing_id'
     ];
 }

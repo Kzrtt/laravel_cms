@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Ingredient extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
-    protected $primaryKey = 'prd_id';
+    protected $table = 'ingredients';
+    protected $primaryKey = 'ing_id';
 
     public $timestamps = true;
-    const CREATED_AT = 'prd_created_at';
-    const UPDATED_AT = 'prd_updated_at';
+    const CREATED_AT = 'ing_created_at';
+    const UPDATED_AT = 'ing_updated_at';
 
     protected $fillable = [
-        'prd_name',
-        'prd_description',
-        'prd_current_stock',
-        'prd_min_stock',
+        'ing_name',
+        'ing_description',
+        'ing_current_stock',
+        'ing_min_stock',
         'measurement_units_msu_id'
     ];
 

@@ -1,9 +1,9 @@
-Product:
+Ingredient:
   startsOn: 'grid'
-  identifier: 'prd_id'
+  identifier: 'ing_id'
   listingConfig:
     grid: 
-      prd_name:
+      ing_name:
         name: 'Nome:' 
         tagStyle: 'flex flex-row justify-between'
         labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
@@ -23,17 +23,17 @@ Product:
         fieldStyle: 'text-gray-700/75'
         getRelation: "measurementUnit->msu_name"
         html: 'p'
-      prd_description:
+      ing_description:
         name: 'Descrição:' 
         tagStyle: 'flex flex-row justify-between'
         labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
         fieldStyle: 'text-gray-700/75'
         html: 'p'
     table:
-      prd_id:
+      ing_id:
         name: Id
         style: "font-semibold"
-      prd_name:
+      ing_name:
         name: Nome
         style: "font-semibold"
       brands_brd_id:
@@ -44,18 +44,18 @@ Product:
         name: Unidade de Medida
         style: 'font-semibold'
         getRelation: "measurementUnit->msu_name"
-      prd_description:
+      ing_description:
         name: Descrição
         style: 'font-semibold'
   formConfig:
     view: "form.component"
-    prd_name:
+    ing_name:
       type: string
       label: "Nome"
       edit: true
       placeholder: "Informe o Nome"
-      helper: "Nome do Produto"
-      groupIn: "Dados Produto"
+      helper: "Nome do Ingrediente"
+      groupIn: "Dados Ingrediente"
       sizing: "mb-4 w-full"
       identifier: "name"
       validationRules: 
@@ -66,9 +66,9 @@ Product:
       label: "Unidade de Medida"
       edit: true
       placeholder: "Selecione a Unidade de Medida"
-      helper: "Unidade de Medida do Produto"
+      helper: "Unidade de Medida do Ingrediente"
       sizing: "mb-4 w-1/4"
-      groupIn: "Dados Produto"
+      groupIn: "Dados Ingrediente"
       identifier: "measurement_unit"
       validationRules: 
         - "required"
@@ -81,16 +81,40 @@ Product:
           - msu_name
           - msu_id
       line: 1
-    prd_description:
+    ing_current_stock:
+      type: string
+      label: "Estoque Atual"
+      edit: true
+      placeholder: "Inseira o Estoque atual do ingrediente"
+      helper: "Estoque Atual"
+      sizing: "mb-4 w-1/2"
+      groupIn: "Dados Ingrediente"
+      identifier: "current_stock"
+      validationRules: 
+        - "required"
+      line: 2
+    ing_min_stock:
+      type: string
+      label: "Estoque Mínimo"
+      edit: true
+      placeholder: "Estoque minimo para emissão de alerta"
+      helper: "Estoque Mínimo"
+      sizing: "mb-4 w-1/2"
+      groupIn: "Dados Ingrediente"
+      identifier: "min_stock"
+      validationRules: 
+        - "required"
+      line: 2
+    ing_description:
       type: string
       label: "Descrição"
       edit: true
       placeholder: "Informe a Descrição"
-      helper: "Descrição do Produto"
-      groupIn: "Dados Produto"
+      helper: "Descrição do Ingrediente"
+      groupIn: "Dados Ingrediente"
       sizing: "mb-4 w-full"
       identifier: "description"
-      line: 2
+      line: 3
   buttonsConfig:
     showDeleteButton: true
     showEditButton: true
@@ -101,4 +125,4 @@ Product:
     method: getAll
     controller: ListingCtrl
     params: 
-      model: Product
+      model: Ingredient
