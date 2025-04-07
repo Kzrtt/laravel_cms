@@ -23,9 +23,13 @@ class Recipe extends Model
         'rec_portions',
     ];
 
-    public function products() {
+    public function recipeIngredients() {
+        return $this->hasMany(RecipeIngredient::class, 'recipe_rec_id', 'rec_id');
+    }
+
+    public function ingredients() {
         return $this->belongsToMany(
-            Product::class,
+            Ingredient::class,
             'recipe_products',
             'recipe_rec_id',
             'products_prd_id',

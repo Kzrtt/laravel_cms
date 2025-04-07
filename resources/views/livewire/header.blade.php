@@ -160,7 +160,16 @@
 
             <template x-if="selectedTab && {{ json_encode($menuTabs) }}[selectedTab]">
                 <template x-for="subTab in {{ json_encode($menuTabs) }}[selectedTab].subTabs" :key="subTab.id">
-                    <button @click="selectedSubTab = subTab.id; $wire.changeScreen({ _local: subTab.area, _icon: subTab.icon, _title: subTab.name, _view: subTab.customView })"
+                    <button @click="
+                                selectedSubTab = subTab.id; 
+                                $wire.changeScreen({ 
+                                    _local: subTab.area, 
+                                    _icon: subTab.icon, 
+                                    _title: subTab.name, 
+                                    _view: subTab.customView,
+                                    _tab: selectedTab
+                                })
+                            "
                             :class="{
                                 'bg-primary-200/55 text-primary-600': selectedSubTab === subTab.id || selectedSubTab == subTab.area,
                                 'text-gray-400': selectedSubTab !== subTab.id,
@@ -190,15 +199,15 @@
         <!-- Links de configuração -->
         @foreach($configTabs as $item)
             <button 
-                @click="open = false"
-                wire:click='changeScreen(
-                    {{ json_encode([
-                        "_local" => $item["area"], 
-                        "_icon" => $item["icon"], 
-                        "_view" => $item["customView"], 
-                        "_title" => $item["name"],
-                    ]) }}
-                )'
+                @click="
+                    open = false; 
+                    $wire.changeScreen({ 
+                        _local: '{{ $item["area"] }}', 
+                        _icon: '{{ $item["icon"] }}', 
+                        _view: '{{ $item["customView"] ?? '' }}', 
+                        _title: '{{ $item["name"] }}', 
+                        _tab: selectedTab 
+                })"
                 class="flex items-center w-full px-4 py-2 text-gray-400 hover:bg-secondary-200/55 hover:text-secondary-600 hover:cursor-pointer"
             >
                 <i class="{{ $item['icon'] }} mr-2"></i>

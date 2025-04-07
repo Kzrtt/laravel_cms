@@ -25,17 +25,7 @@ class UserForm extends Component
         $this->params['_local'] = $local;
         $this->params['_id'] = $id;
 
-        $this->rules = array();
-        $this->validationAttributes = array();
-        $this->messages = array();
-        $this->formConfig = array();
-        $this->formData = array();
-        $this->identifierToField = array();
-
         $this->renderUIViaYaml();
-
-        $this->selectsPopulate['representedAgent'] = array();
-        $this->formData['representedAgent'] = "";
 
         if(!is_null($id)) {
             $this->isEdit = true;

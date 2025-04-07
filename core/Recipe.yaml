@@ -1,0 +1,101 @@
+Recipe:
+  startsOn: grid
+  identifier: rec_id
+  listingConfig:
+    grid:
+      rec_name:
+        name: Nome
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
+        html: 'p'
+      rec_preparation_time:
+        name: Tempo de Preparo
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
+        listingFunction: getTimeFormatted
+        html: 'p'
+      rec_portions: 
+        name: Porções
+        tagStyle: 'flex flex-row justify-between'
+        labelStyle: 'font-semibold text-secondary-500/50 text-md pb-2'
+        fieldStyle: 'truncate text-gray-700/75'
+        html: 'p'
+    table:
+      rec_id:
+        name: Id
+        style: "font-semibold"
+      rec_name:
+        name: Nome
+        style: "font-semibold"
+      rec_preparation_time:
+        name: Tempo de Preparo
+        style: "font-semibold"
+        listingFunction: getTimeFormatted
+      rec_portions:
+        name: Porções
+        style: "font-semibold"
+  formConfig:
+    view: recipe-form
+    rec_name:
+      type: string
+      label: "Nome"
+      edit: true
+      placeholder: "Informe o Nome"
+      helper: "Nome da Receita"
+      groupIn: "Dados Receita"
+      sizing: "mb-4 w-full"
+      identifier: "name"
+      validationRules: 
+        - "required"
+      line: 1
+    rec_preparation:
+      type: string
+      label: "Modo de Preparo"
+      edit: true
+      placeholder: "Informe o modo de preparo"
+      helper: "Modo de Preparo"
+      groupIn: "Dados Receita"
+      sizing: "mb-4 w-full"
+      identifier: "preparation"
+      validationRules: 
+        - "required"
+      line: 2
+    rec_preparation_time:
+      type: string
+      label: "Tempo de Preparo"
+      edit: true
+      placeholder: "Informe o tempo"
+      helper: "Tempo de Preparo (Horas:Minutos)"
+      groupIn: "Dados Receita"
+      sizing: "mb-4 w-1/2"
+      identifier: "preparation_time"
+      mask: "99:99"
+      saveFunction: stringToTime
+      validationRules: 
+        - "required"
+      line: 3
+    rec_portions:
+      type: string
+      label: "Porções"
+      edit: true
+      placeholder: "Informe as Porções"
+      helper: "Porções da Receita"
+      groupIn: "Dados Receita"
+      sizing: "mb-4 w-1/2"
+      identifier: "portions"
+      validationRules: 
+        - "required"
+      line: 3
+  buttonsConfig:
+    showDeleteButton: true
+    showEditButton: true
+    showDetailsButton: false
+    showInsertButton: true
+    showSearchButton: true
+  getConfig: 
+    method: getAll
+    controller: ListingCtrl
+    params:
+      model: Recipe

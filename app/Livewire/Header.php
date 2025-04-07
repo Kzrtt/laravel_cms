@@ -129,6 +129,9 @@ class Header extends Component
         $params = null;
         $params = session('params', $params);
 
+        if(!is_null($params)) {
+            $this->initialTab = $params['_tab'];
+        }
         $this->initialSubTab = $params != null ? ucfirst($params['_local']) : "";
     }   
 

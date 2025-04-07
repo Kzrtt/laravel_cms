@@ -21,5 +21,17 @@
         public function getDate($date) {
             return $date->format('d/m/Y');
         }
+
+        public function getTimeFormatted($time) {
+            // Supondo que $time seja uma string no formato "HH:MM:SS"
+            list($hours, $minutes, $seconds) = explode(':', $time);
+        
+            // Converte as horas e minutos para inteiros para remover zeros à esquerda
+            $hours = intval($hours);
+            $minutes = intval($minutes);
+        
+            // Retorna no formato "99h99m"
+            return sprintf('%dh%dm', $hours, $minutes);
+        }
     }
 ?>
