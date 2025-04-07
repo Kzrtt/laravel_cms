@@ -204,7 +204,7 @@
                     $wire.changeScreen({ 
                         _local: '{{ $item["area"] }}', 
                         _icon: '{{ $item["icon"] }}', 
-                        _view: '{{ $item["customView"] ?? '' }}', 
+                        _view: '{{ $item["customView"] }}', 
                         _title: '{{ $item["name"] }}', 
                         _tab: selectedTab 
                 })"

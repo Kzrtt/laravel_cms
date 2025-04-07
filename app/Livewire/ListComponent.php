@@ -135,6 +135,10 @@ class ListComponent extends Component
         return redirect()->route($route, ["id" => $id]);
     }
 
+    public function openModal($modal, $id) {
+        $this->dispatch('openModal', array('id' => $id, 'modal' => $modal))->to(ModalManager::class);
+    }
+
     //* Função que remove um registro
     public function delete($id) {
         if(@session('usr_permissions')[$this->params['_local']]['Delete']) {

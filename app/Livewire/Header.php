@@ -35,7 +35,7 @@ class Header extends Component
     {
         session()->put('params', $data);
 
-        $route = $data['_view'] ?? "list.component";
+        $route = $data['_view'] == "" ? "list.component" : $data['_view'];
 
         return redirect()->route($route, ["local" => $data['_local']]);
     }
@@ -129,7 +129,7 @@ class Header extends Component
         $params = null;
         $params = session('params', $params);
 
-        if(!is_null($params)) {
+        if(!is_null($params) && isset($params['_tab'])) {
             $this->initialTab = $params['_tab'];
         }
         $this->initialSubTab = $params != null ? ucfirst($params['_local']) : "";
