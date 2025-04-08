@@ -100,6 +100,7 @@
     
             //? Carregando o controlador dinâmicamente
             $this->listOutput['getConfig'] = $listingConfig['getConfig'];
+            $this->listOutput['saveConfig'] = $listingConfig['saveConfig'];
     
             //? Marcando campo do id
             $this->listOutput['identifier'] = $listingConfig['identifier'];    
@@ -117,12 +118,17 @@
             $this->formOutput['identifierToField'] = array();
             $this->formOutput['remoteUpdates'] = array();
             $this->formOutput['saveFunctions'] = array();
+            $this->formOutput['saveConfig'] = array();
             
             //? Carregando arquivo
             $formConfig = array();
     
             if(file_exists($this->file)) {
                 $formConfig = Yaml::parseFile($this->file)[$this->local];
+            }
+
+            if(isset($formConfig['saveConfig'])) {
+                $this->formOutput['saveConfig'] = $formConfig['saveConfig'];
             }
     
             foreach ($formConfig['formConfig'] as $field => $data) {

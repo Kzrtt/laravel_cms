@@ -69,6 +69,8 @@ class FormComponent extends Component
                 }
             }
         }
+
+        prettyPrint($this->saveConfig);
     }
 
     public function submitForm()
@@ -89,7 +91,13 @@ class FormComponent extends Component
                 ->flash()
                 ->send();
             } else {
-                $object = $genericCtrl->save($formData);
+                if(isset($this->saveConfig) && count($this->saveConfig) > 0) {
+                    $saveConfigCtrl = app($this->saveConfig['controller']);
+                    $object = $saveConfigCtrl->{$this->saveConfig['method']}($formData);
+                } else {
+                    $object = $genericCtrl->save($formData);
+                }
+                
                 $this->reset('formData');
                 $this->dialog()
                 ->success("Registro Criado!", "Registro de ".$this->params['_title']." foi criado com sucesso!")

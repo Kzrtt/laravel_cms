@@ -20,6 +20,8 @@ trait DynamicFormTrait {
     public $formData = [];
     public $identifierToField = [];
 
+    public $saveConfig = [];
+
     //* Funções para o tratamento de erros e validações do formulário
     protected function rules() {
         return $this->rules;
@@ -43,6 +45,7 @@ trait DynamicFormTrait {
         $this->identifierToField = $formOutput['identifierToField'];
         $this->remoteUpdates = $formOutput['remoteUpdates'];
         $this->saveFunctions = $formOutput['saveFunctions'];
+        $this->saveConfig = $formOutput['saveConfig'];
     }
 
     /**

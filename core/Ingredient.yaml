@@ -119,10 +119,14 @@ Ingredient:
     showDeleteButton: true
     showEditButton: true
     showDetailsButton: false
-    showInsertButton: true
+    showInsertButton: false
     showSearchButton: true
+    showInsertWithModalButton: 'selectEstablishmentModal'
   getConfig: 
     method: getAll
     controller: ListingCtrl
     params: 
       model: Ingredient
+  saveConfig:
+    method: saveIngredient
+    controller: "App\\Controllers\\IngredientCtrl"     
