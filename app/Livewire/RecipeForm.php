@@ -26,6 +26,9 @@ class RecipeForm extends Component
     public $ingredients = array();
     public $measurementUnits = array();
 
+    public $estId = "";
+    public $establishmentName = "";
+
     public $formIngredients = array();
 
     public function addIngredient() {
@@ -66,6 +69,7 @@ class RecipeForm extends Component
     public function mount($local, $id = null) {
         $this->params = session('params');
         $this->params['_id'] = $id;
+        $this->estId = session('est_id');
 
         $this->loadSelects();
         $this->renderUIViaYaml();
@@ -75,6 +79,7 @@ class RecipeForm extends Component
 
             $genericCtrl = new GenericCtrl($local);
             $recipe = $genericCtrl->getObject($id);
+            $this->estId = $recipe->establishment_est_id;
             
             if($recipe instanceof Recipe) {
                 $converted = [];
@@ -106,7 +111,11 @@ class RecipeForm extends Component
                     }
                 }
             }
-        }
+        } 
+
+        $establishmentCtrl = new GenericCtrl("Establishment");
+        $establishment = $establishmentCtrl->getObject($this->estId);
+        $this->establishmentName = $establishment->est_fantasy;
     }
 
     public function loadSelects() {
@@ -183,6 +192,7 @@ class RecipeForm extends Component
             if(!is_null($this->params['_id'])) {
                 $recipe = $genericCtrl->update($this->params['_id'], $formData);
             } else {
+                $formData['establishment_est_id'] = $this->estId;
                 $recipe = $genericCtrl->save($formData);
             }
             

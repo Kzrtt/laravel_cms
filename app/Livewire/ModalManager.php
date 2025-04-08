@@ -10,11 +10,19 @@ class ModalManager extends Component
 {
     public $modalArray = array(
         "recipeDetailsModal" => false,
+        "selectEstablishmentModal" => false,
     );
 
     public $params = array(
         "recipe" => null,
+        "selectEstablishmentModal" => array(
+            "establishments" => [],
+            "redirectTo" => "",
+            "local" => ""
+        ),
     );
+
+    public $selectedEstablishment = "";
 
     #[On('openModal')]
     public function openModal($params)
@@ -27,7 +35,21 @@ class ModalManager extends Component
             $recipe = $recipeCtrl->getObject($params['id']);
 
             $this->params['recipe'] = $recipe;
+        } else if($modal == "selectEstablishmentModal") {
+            $establishmentCtrl = new GenericCtrl("Establishment");
+            $establishments = $establishmentCtrl->getAll();
+
+            $this->params['selectEstablishmentModal']['redirectTo'] = $params['viewForm'];
+            $this->params['selectEstablishmentModal']['local'] = $params['local'];
+            $this->params['selectEstablishmentModal']['establishments'] = $establishments;
         }
+    }
+
+    public function redirectTo() {
+        $params = $this->params['selectEstablishmentModal'];
+
+        session()->put('est_id', $this->selectedEstablishment);
+        return redirect()->route($params['redirectTo'], ["local" => $params['local']]);
     }
 
     public function render()

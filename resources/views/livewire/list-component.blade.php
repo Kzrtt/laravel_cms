@@ -83,6 +83,15 @@
                     <i class="fad fa-plus-circle mr-1"></i> Adicionar Registro
                 </button>
             @endif
+
+            @if(isset($buttonsConfig['showInsertWithModalButton'])) 
+                <button 
+                    wire:click="addNewWithModal('{{ $buttonsConfig['showInsertWithModalButton'] }}')"
+                    class="w-full text-left px-3 py-2 rounded hover:cursor-pointer text-secondary-600 bg-secondary-200/20 hover:bg-secondary-400/40 hover:font-semibold"
+                >
+                    <i class="fad fa-plus-circle mr-1"></i> Adicionar Registro
+                </button>
+            @endif
             
             @if($buttonsConfig['showSearchButton'])
                 <button 

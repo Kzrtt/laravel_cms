@@ -108,6 +108,15 @@ class ListComponent extends Component
         }
     }
 
+    public function addNewWithModal($modal) {
+        $route = $this->viewForm;
+        $this->dispatch('openModal', array(
+            'viewForm' => $route, 
+            "modal" => $modal,
+            "local" => $this->params['_local'],
+        ))->to(ModalManager::class);
+    }   
+
     //* Função que troca de tela para o form
     public function addNew() {
         if(@session('usr_permissions')[$this->params['_local']]['Insert']) {
