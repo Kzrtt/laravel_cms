@@ -19,10 +19,22 @@
         <tallstackui:script /> 
         @livewireStyles
         @vite(['resources/css/app.css', 'public/css/font-awesome-pro-master.min.css?v=0.0.1'])
+
+        <style>
+            ul {
+                list-style-type: disc;
+                margin-left: 20px;
+            }
+
+            ol {
+                list-style-type: decimal;
+                margin-left: 20px;
+            }
+        </style>
     </head>
     <body class="bg-gray-200 m-0 p-0">
         @livewire('header')
-
+        
         <x-ts-dialog /> 
         <x-ts-toast /> 
 

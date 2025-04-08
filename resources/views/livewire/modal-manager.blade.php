@@ -24,7 +24,9 @@
 
             <p class="text-primary-300 text-xl mt-0 mb-0">Modo de Preparo</p>
             <div class="p-2 rounded max-w">
-                <span class="text-gray-400 font-normal">{{ $recipe->rec_preparation }}</span>
+                <x-markdown>
+                    {!! $recipe->rec_preparation !!}
+                </x-markdown>
             </div>
         @endif
     </x-ts-modal>

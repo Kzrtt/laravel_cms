@@ -4,6 +4,8 @@
 @endphp
 
 <div class="flex flex-row justify-center mt-6 space-x-10 w-full min-h-screen" x-data="{ listingMode: '{{$startsOn}}' }">
+    <x-ts-loading />
+
     <!-- MANTIDA: Sua parte esquerda original -->
     <div class="w-100 rounded-md bg-white shadow-sm p-6">
         <!-- Informações resumidas do usuário -->
