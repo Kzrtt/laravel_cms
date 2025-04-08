@@ -27,9 +27,9 @@ class Purchase extends Model
         return $this->belongsTo(Supplier::class, 'suppliers_sup_id', 'sup_id');
     }
 
-    public function products() {
+    public function ingredients() {
         return $this->belongsToMany(
-            Product::class,
+            Ingredient::class,
             'purchase_products',
             'purchase_pur_id',
             'products_prd_id',

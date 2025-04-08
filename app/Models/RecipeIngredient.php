@@ -20,4 +20,12 @@ class RecipeIngredient extends Model
         'ingredients_ing_id',
         'measurement_unit_msu_id'
     ];
+
+    public function ingredient() {
+        return $this->belongsTo(Ingredient::class, 'ingredients_ing_id', 'ing_id');
+    }
+
+    public function measurementUnit() {
+        return $this->belongsTo(MeasurementUnit::class, 'measurement_unit_msu_id', 'msu_id');
+    }
 }

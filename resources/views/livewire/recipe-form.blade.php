@@ -14,7 +14,7 @@
             </div>
 
             <div class="flex flex-col justify-center ml-4 space-y-1">
-                <p class="font-semibold text-black/55 text-xl">Inclusão de Registro</p>
+                <p class="font-semibold text-black/55 text-xl">{{ $isEdit ? "Edição" : "Inclusão" }} de Registro</p>
                 <div class="inline-block self-start p-1 px-2 mt-1 rounded-md bg-primary-200/55 text-primary-600 text-xs">
                     Receita
                 </div>

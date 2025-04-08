@@ -43,6 +43,35 @@
                                         <option value="{{ $key }}" {{ isset($formData[$data['identifier']]) && $formData[$data['identifier']] == $key ? 'selected' : '' }}>{{ $value }}</option>
                                     @endforeach
                                 </select>
+                            @elseif ($data['type'] == "markdown") 
+                                <div
+                                    x-data
+                                    x-init="
+                                        const easyMDE = new EasyMDE({ element: $refs.markdownEditor });
+                                        easyMDE.codemirror.on('change', () => {
+                                            $dispatch('easyMDEChange', easyMDE.value());
+                                        });
+                                        $watch('content', (value) => {
+                                            if (value !== easyMDE.value()) {
+                                                easyMDE.value(value);
+                                            }
+                                        });
+                                    "
+                                    wire:ignore
+                                >
+                                    <textarea
+                                        x-ref="markdownEditor"
+                                        class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary-500/30 focus:border-primary-500/30 {{ $disabledClasses }}"
+                                    >
+                                        {{ $formData[$data['identifier']] }}
+                                    </textarea>
+
+                                    <script>
+                                        document.addEventListener('easyMDEChange', event => {
+                                            @this.set('formData.{{ $data['identifier'] }}', event.detail);
+                                        });
+                                    </script>
+                                </div>
                             @else
                                 <!-- Input -->
                                 <input

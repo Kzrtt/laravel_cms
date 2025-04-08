@@ -51,7 +51,7 @@ Recipe:
         - "required"
       line: 1
     rec_preparation:
-      type: string
+      type: markdown
       label: "Modo de Preparo"
       edit: true
       placeholder: "Informe o modo de preparo"
