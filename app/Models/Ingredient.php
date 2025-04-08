@@ -21,7 +21,8 @@ class Ingredient extends Model
         'ing_description',
         'ing_current_stock',
         'ing_min_stock',
-        'measurement_units_msu_id'
+        'measurement_units_msu_id',
+        'establishment_est_id'
     ];
 
     public function measurementUnit() {

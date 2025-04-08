@@ -21,6 +21,7 @@ class Recipe extends Model
         'rec_preparation',
         'rec_preparation_time',
         'rec_portions',
+        'establishment_est_id'
     ];
 
     public function recipeIngredients() {

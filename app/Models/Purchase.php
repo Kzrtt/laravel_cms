@@ -21,6 +21,7 @@ class Purchase extends Model
         'pur_name',
         'pur_payment_method',
         'suppliers_sup_id',
+        
     ];
 
     public function supplier() {
